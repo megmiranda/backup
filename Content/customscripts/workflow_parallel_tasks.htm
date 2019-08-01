@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head>
+    </head>
+    <body>
+        <h1>Creating Parallel Tasks in Your TD Workflow</h1>
+        <p>In TD Workflow,  you can have tasks run in parallel. By default, tasks are run sequentially. To have TD&#160;Workflow tasks run in parallel, you must specify the parallel parameter as _parallel: True. It is also recommended that you use the +group syntax to group the tasks that you want to have run in parallel.</p>
+        <p>&#160;</p>
+        <p>You can define as many tasks as you want to run in parallel, however TD can only run up to 10 separate processing threads at a given time. Tasks can have one of four different states, only one of which is Running. As long as only ten tasks have concurrent states of running each of those tasks is executed in parallel. </p>
+        <h1>Parallel task order example</h1>
+        <p>The following example groups two tasks and has them running in parallel. </p><pre xml:space="preserve"><b>+group:</b>
+<b>_parallel: True</b>
++step1:
+ echo&gt;: "hello!"
+ +py_custom_code:
+ docker:
+ image: "digdag/digdagpython:3.6.8stretch"
+ py&gt;: tasks.printMessage
++step2: 
+ td_run&gt;: my_other_saved_query</pre>
+        <h1>Default task order example</h1>
+        <p>For example by default, in the following workflow, the task step1 is executed first and because there is a custom script included in the step, the Python program “tasks.printMessage” is run in a separate Docker container, and when it completes, the subsequent task in step 2 is executed.</p>
+        <p>&#160;</p><pre xml:space="preserve">+step1:
+ echo&gt;: "hello!"
++py_custom_code:
+ docker:
+ image: "digdag/digdagpython:3.6.8stretch"
+ py&gt;: tasks.printMessage
++step2:
+ td_run&gt;: my_other_saved_query</pre><pre xml:space="preserve">&#160;</pre>
+        <p>TD Workflow runs until all tasks complete. Long running tasks that go beyond the set TTL (Time To Live) are timed out. Even if the task is executing a custom script. Periodically the task is polled to check on the status of the script running in the container and log messages can be seen on the TD Console and CLI using the “td wf log &lt;attemptid&gt;” command.</p>
+    </body>
+</html>

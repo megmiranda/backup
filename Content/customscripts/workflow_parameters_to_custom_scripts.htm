@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head>
+    </head>
+    <body>
+        <h1>Passing Parameters to Custom Scripts used in TD Workflow</h1>
+        <p>You can use environment variables to pass parameters and credentials to the custom script using _env.
+ </p><pre xml:space="preserve">
+<b>_env:</b>
+TD_API_KEY: ${secret:apikey}
+TD_API_SERVER: ${secret:endpoint}
+AWS_ACCESS_KEY_ID: ${secret:aws_access_key_id}
+AWS_SECRET_ACCESS_KEY: ${secret:aws_secret_access_key}</pre>
+    </body>
+</html>

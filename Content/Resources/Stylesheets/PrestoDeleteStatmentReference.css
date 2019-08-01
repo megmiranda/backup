@@ -1,0 +1,156 @@
+/*<meta />*/
+
+p
+{
+	font-size: 12pt;
+	margin-top: 0pt;
+	margin-bottom: 0pt;
+}
+
+ol
+{
+	font-size: 12pt;
+	margin-top: 0pt;
+	margin-bottom: 0pt;
+}
+
+ul
+{
+	font-size: 12pt;
+	margin-top: 0pt;
+	margin-bottom: 0pt;
+}
+
+li
+{
+	font-size: 12pt;
+	margin-top: 0pt;
+	margin-bottom: 0pt;
+}
+
+td
+{
+	font-size: 12pt;
+	vertical-align: top;
+}
+
+h1.Heading1
+{
+	margin-top: 5pt;
+	margin-bottom: 5pt;
+	mc-heading-level: 1;
+	font-weight: bold;
+	font-size: 24pt;
+}
+
+p.NormalWeb
+{
+	font-size: 12pt;
+	margin-top: 5pt;
+	margin-bottom: 5pt;
+}
+
+span.Hyperlink
+{
+	color: #0000FF;
+	text-decoration: underline;
+}
+
+li.li_1
+{
+	margin-top: 5pt;
+	margin-bottom: 5pt;
+}
+
+ul.ul_1
+{
+	list-style-type: disc;
+	margin-left: 36pt;
+}
+
+h2.Heading2
+{
+	margin-top: 5pt;
+	margin-bottom: 5pt;
+	mc-heading-level: 2;
+	font-weight: bold;
+	font-size: 18pt;
+}
+
+p.HTMLPreformatted
+{
+	font-size: 10pt;
+}
+
+li.icon
+{
+	font-size: 12pt;
+	margin-top: 5pt;
+	margin-bottom: 5pt;
+}
+
+li.icon_1
+{
+	font-size: 12pt;
+	margin-top: 5pt;
+	margin-bottom: 5pt;
+	list-style-type: disc;
+}
+
+td.td_1
+{
+	vertical-align: middle;
+	padding-top: 1pt;
+	padding-bottom: 1pt;
+	padding-left: 1pt;
+	padding-right: 1pt;
+}
+
+table.table_1
+{
+	border-collapse: collapse;
+}
+
+p.HTMLCode
+{
+	font-size: 10pt;
+}
+
+span.Emphasis
+{
+	font-style: italic;
+}
+
+p.wysiwygindent1
+{
+	font-size: 12pt;
+	margin-top: 5pt;
+	margin-bottom: 5pt;
+}
+
+h3.Heading3
+{
+	margin-top: 5pt;
+	margin-bottom: 5pt;
+	mc-heading-level: 3;
+	font-weight: bold;
+	font-size: 14pt;
+}
+
+span.HTMLCode
+{
+	font-size: 10pt;
+}
+
+ol.ol_1
+{
+	list-style-type: decimal;
+	margin-left: 36pt;
+}
+
+ul.ul_2
+{
+	list-style-type: square;
+	margin-left: 36pt;
+}
+

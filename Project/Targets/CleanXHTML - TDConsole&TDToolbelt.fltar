@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CatapultTarget
+  Version="2"
+  Comment="MadCap Clean XHTML Target"
+  Type="CleanXHTML"
+  Destinations=""
+  GlossaryTermConversion="marked"
+  MasterToc="/Project/TOCs/Hive 2 Upgrade.fltoc"
+  ExcludeUnreferencedContent="true"
+  ConvertStylesheetStylesToInlineStyles="false">
+  <PrintedOutput
+    CollapseMargins="true"
+    GenerateTOCProxy="true"
+    GenerateIndexProxy="true"
+    GenerateGlossaryProxy="true" />
+  <Destinations>
+    <Destination
+      Link="/Project/Destinations/zendesk1 - Hive 2 upgrade.fldes"
+      Publish="true" />
+  </Destinations>
+  <Glossaries />
+</CatapultTarget>

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head>
+    </head>
+    <body>
+        <h1>Sanity Check functions</h1>
+        <h3>ASSERT</h3>
+        <h5>Signature</h5>
+        <p class="HTMLCode_1">assert(boolean condition [, string errMsg])</p>
+        <h5>Description</h5>
+        <p><span class="span_5">ASSERT</span><span class="span_4">&#160;throws HiveException if condition is not met</span>
+        </p>
+        <h5>Example</h5>
+        <p class="HTMLPreformatted_5"><span class="span_4">SELECT count(1) FROM stock_price WHERE assert(price &gt; 0.0);</span><span class="span_4"><br /></span><span class="span_4">SELECT count(1) FROM stock_price WHERE assert(price &gt; 0.0, 'price MUST be more than 0.0')</span>
+        </p>
+        <h3> RAISE_ERROR</h3>
+        <h5>Signature</h5>
+        <p><span class="span_4">raise_error()</span><span class="span_4"><br /></span><span class="span_4">raise_error(string errMsg)</span>
+        </p>
+        <h5>Description</h5>
+        <p><span class="span_5">RAISE_ERROR</span><span class="span_4">&#160;throws an error</span>
+        </p>
+        <h5>Example</h5>
+        <p class="HTMLTypewriter_2">SELECT product_id, price, raise_error('Found an invalid record') FROM xxx WHERE price &lt; 0.0</p>
+        <h2> </h2>
+    </body>
+</html>

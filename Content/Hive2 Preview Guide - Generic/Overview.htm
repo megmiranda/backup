@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" xml:lang="en-us">
+    <head><title></title>
+        <link href="../Resources/Stylesheets/Hive2 Preview Guide - Generic.css" rel="stylesheet" />
+    </head>
+    <body>
+        <h1 class="Heading1"><a name="_w5pbcg2a0aja"></a>Overview</h1>
+        <p><span class="span_3">Hive 0.13 is one of our core query engines, which has been s</span><span class="span_3">upported since the beginning of Treasure Data. Many of our customers use and rely on it.</span>
+        </p>
+        <p>&#160;</p>
+        <p><span class="span_3">However, at this point, ongoing open source community development on Hive is focused on the Hive 2.x (and very similar Hive 3.x) code lines. Newer Hive releases offer</span><span class="span_3"> substantial enhancements in many areas for enterprise customers, including:</span>
+        </p>
+        <ul class="ul_1">
+            <li class="li_1">Bug fixes and stability improvements</li>
+        </ul>
+        <ul class="ul_1">
+            <li class="li_1">Support for improvements in the underlying Hadoop environment</li>
+            <li><span class="span_3">Potential for integration with advanced enterprise security schemes, such as Tre</span><span class="span_3">asure Data’s policy-based access control</span>
+            </li>
+            <li class="li_1">The introduction of Tez, an efficient runtime that supersedes MapReduce</li>
+            <li class="li_1">Ongoing performance Improvements around query optimization</li>
+            <li class="li_1">Resource Management and Monitoring</li>
+            <li><span class="span_3">Introduction of true ANSI SQL compliance (vs. Hiv</span><span class="span_3">e 0.13, which used a ‘SQL-like’ query language HiveQL) -- providing more direct portability between Hive and Presto SQL dialects in the TD environment where needed</span>
+            </li>
+        </ul>
+        <p class="p_6">&#160;</p>
+        <h2 class="Heading2"><a name="_apn3kfvn1399"></a>Introducing Apache Hive 2 at Treasure Data</h2>
+        <p><span class="span_3">To deliver more of the value of recent Hive deve</span><span class="span_3">lopments to Treasure Data customers and offer better capabilities in our long term roadmap, we are introducing new releases based on the Apache Hive 2.x project, alongside our existing Hive 0.13 support. </span>
+        </p>
+        <p>&#160;</p>
+        <p><span class="span_3">Using Hive 2.x as a starting point will allow us t</span><span class="span_3">o build more TD-specific enhancements on a stable, performant foundation, and take advantage of new improvements from the Apache Hive projects, without impacting current customer workloads.</span>
+        </p>
+        <p>&#160;</p>
+        <p><span class="span_3">Sometimes this document uses the term “Hive 2” to refer to all of</span><span class="span_3"> TD’s planned new Hive releases in 2019 and 2020. However, we want to avoid using Apache Hive version numbers as our own versions, for several reasons:</span>
+        </p>
+        <ul class="ul_1">
+            <li><span class="span_3">Our Hive releases may not track exactly the content of specific Apache open source releases. For example</span><span class="span_3">, TD Hive 0.13 contains numerous features backported from later Hive releases. It can be misleading to refer to the documentation from a specific Apache Hive release.</span>
+            </li>
+            <li><span class="span_3">We plan to use Apache Hive 2.3 as the basis for multiple TD Hive releases in 2019 and 202</span><span class="span_3">0. These releases should support the same SQL dialect, but will include major internal enhancements such as the Tez runtime framework, query optimizations, vectorized execution, and more efficient access to data in S3. These improvements will change the be</span><span class="span_3">havior of Hive enough that we want new version numbers for them, so customers have an easy way to choose whether to use them. </span>
+            </li>
+        </ul>
+        <h3 class="Heading3"><a name="_qxso1en92p4"></a>Hive 0.13 Support Alongside Hive 2</h3>
+        <p class="p_7">We believe that our Hive releases in 2019 and 2020 will offer compelling new value so that customers will choose to adopt the newer Hive as their business permits. </p>
+        <p>&#160;</p>
+        <p><span class="span_3">Starting to use Hive 2 upon its release for new implementation gets you more of that value</span><span class="span_3"> sooner. Rewriting existing Hive 0.13 workloads to run in Hive 2 will be required to take advantage of most of the enhancements.</span>
+        </p>
+        <p>&#160;</p>
+        <h3 class="Heading3"><a name="_3m3xaif8pb9b"></a>TD’s Future Hive Roadmap</h3>
+        <p><span class="span_3">The following image is a draft of our current Hive related roadmap, with approximate timelines. (As s</span><span class="span_3">tated in the disclaimer at the start of this guide, this roadmap, while based on our best current understanding of our plans, is subject to change.) </span>
+        </p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p class="p_7">
+            <img src="../Resources/Images/Hive2 Preview Guide - Generic/Overview.png" style="height: 352px;width: 624px;" class="img_1" />
+        </p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <h2 class="Heading2"><a name="_xjlbwh74sjl8"></a>Making Hive 0.13 Code Hive 2 Compatible</h2>
+        <p>In practice, most queries from Hive 0.13 should work with minimal or no modification in Hive 2. </p>
+        <p>&#160;</p>
+        <p>However, Hive 2 is stricter than Hive 0.13&#160; in several details. Specifically: </p>
+        <ul class="ul_1">
+            <li>Hive 2 uses ANSI SQL syntax. </li>
+        </ul>
+        <ul class="ul_2">
+            <li>Hive 0.13 used a MySQL-like dialect, called HiveQL, that borrowed many ANSI SQL features but included some non-standard constructs as well. These must be rewritten with ANSI-compliant alternatives.</li>
+            <li>Treasure Data added some additional extensions to Hive syntax that were deprecated but that have still been supported for certain legacy customers. These must now be removed.</li>
+        </ul>
+        <ul class="ul_1">
+            <li>Hive 2 ANSI SQL has more reserved words than HiveQL</li>
+        </ul>
+        <ul class="ul_2">
+            <li>These must be found and quoted with backticks.</li>
+        </ul>
+        <ul class="ul_1">
+            <li>Hive 2 is stricter about the use of “AS” with column names and aliases in SELECT statements.&#160; </li>
+            <li>There are slight differences in the handling of numeric types in general, and there are changes to how certain numeric types is passed to the TD storage layer. </li>
+        </ul>
+        <ul class="ul_2">
+            <li>Some values must be CAST explicitly to ensure the same behavior in Hive 2 as was provided in Hive 0.13. </li>
+        </ul>
+        <p>&#160;</p>
+        <p>The differences are minor. And queries rewritten to follow the strict syntax rules of Hive 2 are also compatible with Hive 0.13. </p>
+        <p>&#160;</p>
+        <p>We make these suggestions for migration: </p>
+        <ul class="ul_1">
+            <li>Modify your existing queries according to the new, stricter rules</li>
+            <li>Test the modified query both in Hive 2 and in Hive 0.13 to make sure they provide consistent results and comparable performance. </li>
+            <li>Go back to running the modified query in Hive 0.13 in production until Hive 2 is GA </li>
+        </ul>
+        <p>&#160;</p>
+        <p>Once you have identified and updated most of your queries with compatibility issues, you can contact TD about running your production workloads in Hive 2 early if you do not want to wait for GA. </p>
+        <p>&#160;</p>
+    </body>
+</html>

@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" xml:lang="en-us">
+    <head><title></title>
+        <link href="../Resources/Stylesheets/hive2.css" rel="stylesheet" />
+    </head>
+    <body>
+        <h2 class="Heading2">9. Functions Backported to TD Hive 0.13 from Newer Hive Versions</h2>
+        <p class="p_2">Meg – perhaps these should be in the same table layout as the rest of the functions. Or they could just be mixed in with the others. I assume Hive 2 supports these all; check with Johan.</p>
+        <h3 class="Heading3_1">4.1. nullif</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">nullif( a, b )</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">T</span>
+            </li>
+            <li class="li_4">Description: Returns NULL if a=b; otherwise returns a. Shorthand for: CASE WHEN a = b then NULL else a.</li>
+        </ul>
+        <p class="NormalWeb_2">Example:</p>
+        <p class="class_1">SELECT</p>
+        <p class="HTMLPreformatted_1"><span class="span_4">nullif( </span><span class="integer_1">0</span><span class="span_4">, </span><span class="integer_1">0</span><span class="span_4">),</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">nullif( </span><span class="integer_1">1</span><span class="span_4">, </span><span class="integer_1">0</span><span class="span_4">)</span>
+        </p>
+        <p class="HTMLPreformatted_2">==&gt;</p>
+        <p class="predefined-constant_1">NULL</p>
+        <p class="integer_1">1</p>
+        <h3 class="Heading3_1">4.2. character_length</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">character_length(string str)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">int</span>
+            </li>
+            <li class="li_4">Description: Returns the number of UTF-8 characters contained in str. The function char_length is shorthand for this function.</li>
+        </ul>
+        <p class="NormalWeb_2">Example:</p>
+        <p class="class_1">SELECT</p>
+        <p class="HTMLPreformatted_1"><span class="span_4">character_length(</span><span class="delimiter_1">'</span><span class="delimiter_1">abc</span><span class="delimiter_1">'</span><span class="span_4">),</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">character_length(</span><span class="delimiter_1">'</span><span class="delimiter_1">あいう</span><span class="delimiter_1">'</span><span class="span_4">)</span>
+        </p>
+        <p class="HTMLPreformatted_2">==&gt;</p>
+        <p class="integer_1">3</p>
+        <p class="integer_1">3</p>
+        <h3 class="Heading3_1">4.3. regr_avgx</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">regr_avgx(independent, dependent)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">double</span>
+            </li>
+            <li class="li_4">Description: Equivalent to avg(dependent).</li>
+        </ul>
+        <h3 class="Heading3_1">4.4. regr_avgy</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">regr_avgy(independent, dependent)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">double</span>
+            </li>
+            <li class="li_4">Description: Equivalent to avg(independent).</li>
+        </ul>
+        <h3 class="Heading3_1">4.5. regr_count</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">regr_count(independent, dependent)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">double</span>
+            </li>
+            <li class="li_4">Description: Returns the number of non-null pairs used to fit the linear regression line.</li>
+        </ul>
+        <h3 class="Heading3_1">4.6. regr_intercept</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">regr_intercept(independent, dependent)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">double</span>
+            </li>
+            <li class="li_4">Description: Returns the y-intercept of the linear regression line, i.e. the value of b in the equation dependent = a * independent + b.</li>
+        </ul>
+        <h3 class="Heading3_1">4.7. regr_r2</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">regr_r2(independent, dependent)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">double</span>
+            </li>
+            <li class="li_4">Description: Returns the coefficient of determination for the regression.</li>
+        </ul>
+        <h3 class="Heading3_1">4.8. regr_slope</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">regr_slope(independent, dependent)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">double</span>
+            </li>
+            <li class="li_4">Description: Returns the slope of the linear regression line, i.e. the value of a in the equation dependent = a * independent + b.</li>
+        </ul>
+        <h3 class="Heading3_1">4.9. regr_sxx</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">regr_sxx(independent, dependent)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">double</span>
+            </li>
+            <li class="li_4">Description: Equivalent to regr_count(independent, dependent) * var_pop(dependent).</li>
+        </ul>
+        <h3 class="Heading3_1">4.10. regr_sxy</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">regr_sxy(independent, dependent)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">double</span>
+            </li>
+            <li class="li_4">Description: Equivalent to regr_count(independent, dependent) * covar_pop(independent, dependent).</li>
+        </ul>
+        <h3 class="Heading3_1">4.11. regr_syy</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">regr_syy(independent, dependent)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">double</span>
+            </li>
+            <li class="li_4">Description: Equivalent to regr_count(independent, dependent) * var_pop(independent).</li>
+        </ul>
+        <p class="NormalWeb_5">&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+    </body>
+</html>

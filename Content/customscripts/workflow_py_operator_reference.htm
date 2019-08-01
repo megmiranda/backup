@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head>
+    </head>
+    <body>
+        <h1>Workflow py Operator Syntax Reference</h1>
+        <p>TD Workflow supports the Python operator to run custom scripts, which
+are triggered by other command operators in TD&#160;Workflow.</p>
+        <p>&#160;</p>
+        <p>
+The
+py&gt; operator runs a Python script using Python command.</p>
+        <p>&#160;</p>
+        <p>
+See Python API documents for details including variable mappings to keyword arguments.
+</p>
+        <p>&#160;</p><pre>+step1:
+py&gt;: my_step1_method
++step2:
+py&gt;: tasks.MyWorkflow.step2
+</pre>
+        <p>&#160;</p>
+        <h1>Syntax</h1>
+        <p>py&gt; : [tasks.][PACKAGE.CLASS.]METHOD
+</p>
+        <p>&#160;</p>
+        <h2>where</h2>
+        <ul>
+            <li>[tasks.] - </li>
+            <li>[PACKAGE.CLASS] - Optional class name of your Python object. </li>
+            <li>METHOD - Name of the task defined within your Python object class that defines the action that you want performed during this stage of the TD&#160;Workflow. </li>
+        </ul>
+        <p>&#160;</p>
+        <p> Examples:
+</p><pre>py &gt; : tasks . MyWorkflow . my_task
+</pre>
+        <p>&#160;</p>
+        <p>python : PATH STRING or COMMAND ARGUMENTS LIST</p>
+        <p>The python defaults to python . If an alternate python and options are desired, use the
+python option.
+Examples:
+</p>
+        <p>&#160;</p><pre>python: / opt / conda / bin / python
+python: [ "python" , "v"
+]
+</pre>
+        <p>&#160;</p>
+        <p>It is also possible to configure this in an export section.</p>
+        <p>
+Examples:
+</p><pre>_export:
+py:
+python: /opt/conda/bin/python</pre>
+    </body>
+</html>

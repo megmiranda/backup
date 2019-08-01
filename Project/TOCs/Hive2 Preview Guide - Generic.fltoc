@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CatapultToc
+  Version="1">
+  <TocEntry
+    Title="Hive 2 Preview Guide"
+    Link="/Content/Hive2 Preview Guide - Generic/Hive 2 Preview Guide.htm" />
+  <TocEntry
+    Title="Overview"
+    Link="/Content/Hive2 Preview Guide - Generic/Overview.htm" />
+  <TocEntry
+    Title="Phased Introduction of Hive 2 in your environment"
+    Link="/Content/Hive2 Preview Guide - Generic/Phased Introduction of Hive.htm" />
+  <TocEntry
+    Title="How to use Hive 2"
+    Link="/Content/Hive2 Preview Guide - Generic/How to use Hive 2.htm" />
+  <TocEntry
+    Title="TD Hive 0.13 Syntax to Update for Hive 2"
+    Link="/Content/Hive2 Preview Guide - Generic/TD Hive 0 13 Syntax to Update.htm" />
+  <TocEntry
+    Title=" List of Hive Reserved Words"
+    Link="/Content/Hive2 Preview Guide - Generic/Appendix A List of Hive Reserved.htm" />
+</CatapultToc>

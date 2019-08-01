@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head>
+    </head>
+    <body>
+        <h1>MapReduce Functions</h1>
+        <h3>ROWID</h3>
+        <h5>Signature</h5>
+        <p>string rowid()</p>
+        <h5>Description</h5>
+        <p><span class="span_5">ROWID</span><span class="span_4">&#160;returns a generated row id of a form {TASK_ID}–{SEQUENCE_NUMBER}</span>
+        </p>
+        <h5>Example</h5>
+        <p>SELECT rowid() as rowid, col1, col2 FROM input</p>
+        <h3>ROWNUM</h3>
+        <h5>Signature</h5>
+        <p>long rownum()</p>
+        <h5>Description</h5>
+        <p><span class="span_5">ROWNUM returns</span><span class="span_4">&#160;a generated row number&#160;</span><span class="span_4">sprintf(</span><span class="span_4">%d%04d</span><span class="span_4">,sequence,taskId)</span><span class="span_4">&#160;in long</span>
+        </p>
+        <h5>Example</h5>
+        <p>SELECT rownum() as rowid, col1, col2 FROM input</p>
+        <h2>&#160;</h2>
+    </body>
+</html>

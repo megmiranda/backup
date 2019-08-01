@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HtmlImport
+  KeepSourceLinks="false"
+  ProjectName="cleanxhtml"
+  ProjectFolder="C:\Users\megmir01\Documents\My Projects\cleanxhtml\"
+  AutoSync="false"
+  SourceFolders=""
+  ImportResources="false"
+  ImportResourcesLocation="NoImport"
+  ImportTopics="content"
+  ImportLinkedHtmlFiles="false"
+  LastImport="2019-06-03T12:41:46.9797359-07:00"
+  ImportTopicsLocation="Content/">
+  <Files>
+    <Url
+      Source="../../../../transfer/PrestoDeleteStatmentReference.html"
+      AbsoluteSource="file:///C:/Users/megmir01/Documents/transfer/PrestoDeleteStatmentReference.html" />
+  </Files>
+  <ExcludedFiles />
+  <CollectedSourceFiles />
+  <SkippedSourceFiles />
+  <GeneratedFiles>
+    <Url
+      Source="../../Content/PrestoDeleteStatmentReference.html"
+      TimeStamp="6/3/2019 12:41:40 PM" />
+    <Url
+      Source="../TOCs/PrestoDeleteStatmentReference.fltoc"
+      TimeStamp="6/3/2019 12:41:46 PM" />
+  </GeneratedFiles>
+</HtmlImport>

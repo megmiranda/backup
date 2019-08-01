@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head>
+    </head>
+    <body>
+        <h1>Limitations on Custom Hive and MapReduce Code Support</h1>
+        <p>There are limitations on DDL in TD Hive, as there are in TD Presto because of our flexible schema.</p>
+        <p>&#160;</p>
+        <p>Treasure Data limits the use of custom code in our Hadoop and Hive environment because we do not provide dedicated Hive clusters for individual customers.&#160;The following limitations are a result of that:</p>
+        <ul>
+            <li>Custom Hive UDFs cannot be added, because these UDFs would be exposed for use by all customers.
+            </li>
+            <li><a href="../../../../transfer/hive2.docx#Tutorial-Custommap%2Freducescripts">Custom MapReduce scripts</a>&#160;cannot be added due to security and system stability considerations.
+            </li>
+        </ul>
+        <p>Alternatives for running custom code within Arm TD include:
+        </p>
+        <ul>
+            <li>running custom code in Docker containers, see <a href="https://support.treasuredata.com/hc/en-us/articles/360023763634">Custom Scripts</a>.</li>
+            <li>running Spark workloads using our TD-Spark capability to access data in the data lake, see <a href="https://support.treasuredata.com/hc/en-us/articles/360020894774">Launcing TD-Spark.</a></li>
+        </ul>
+    </body>
+</html>

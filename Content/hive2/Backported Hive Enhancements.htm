@@ -1,0 +1,644 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" xml:lang="en-us">
+    <head><title></title>
+        <link href="../Resources/Stylesheets/hive2.css" rel="stylesheet" />
+    </head>
+    
+        <h1>Backported Hive Enhancements in TD Hive 0.13</h1>
+        <p class="NormalWeb_3">Meg – not sure whether it makes sense to call out the backported functionality vs. the other, maybe just Mix them in. And I’m virtually certain that these will all work in both Hive 0.13 and Hive 2. </p>
+        <p class="NormalWeb_2">Arm Treasure Data’s TD Hive 0.13 is based on the open source Hive 0.13 release. However, TD Hive 0.13 includes numerous extensions, such as useful functions, backported from the Hive 1.x and 2.x releases, as shown:</p>
+        <h2 class="Heading2_1">1. Backported from Hive v1.1.0</h2>
+        <h3 class="Heading3_1">1.1. greatest</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">greatest(T v1, T v2, ...)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">T</span>
+            </li>
+            <li class="li_4">Description: Returns the greatest value of the list of values. If null is contained, the result is always null.</li>
+        </ul>
+        <p class="NormalWeb_2">Example:</p>
+        <p class="HTMLPreformatted_1"><span class="class_1">SELECT</span><span class="span_4"> greatest(</span><span class="integer_1">1</span><span class="span_4">, </span><span class="integer_1">2</span><span class="span_4">, </span><span class="integer_1">3</span><span class="span_4">, </span><span class="integer_1">3</span><span class="span_4">)</span>
+        </p>
+        <p class="HTMLPreformatted_2">==&gt;</p>
+        <p class="integer_1">3</p>
+        <h3 class="Heading3_1">1.2. least</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">least(T v1, T v2, ...)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">T</span>
+            </li>
+            <li class="li_4">Description: Returns the least value of the list of values. If null is contained, the result is always null.</li>
+        </ul>
+        <p class="NormalWeb_2">Example:</p>
+        <p class="class_1">SELECT</p>
+        <p class="HTMLPreformatted_1"><span class="span_4">least(</span><span class="integer_1">1</span><span class="span_4">, </span><span class="integer_1">2</span><span class="span_4">, </span><span class="integer_1">3</span><span class="span_4">, </span><span class="integer_1">3</span><span class="span_4">)</span>
+        </p>
+        <p class="HTMLPreformatted_2">==&gt;</p>
+        <p class="integer_1">1</p>
+        <h3 class="Heading3_1">1.3. add_months</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">add_months(string start_date, int num_months)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">string</span>
+            </li>
+            <li class="li_4">Description: Returns the date that is num_months after start_date.</li>
+        </ul>
+        <p class="NormalWeb_2">Example:</p>
+        <p class="class_1">SELECT</p>
+        <p class="HTMLPreformatted_1"><span class="span_4">&#160; add_months(</span><span class="delimiter_1">'</span><span class="delimiter_1">2017-06-03</span><span class="delimiter_1">'</span><span class="span_4">,</span><span class="integer_1">6</span><span class="span_4">) </span><span class="keyword_1">as</span><span class="span_4"> add1,</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">&#160; add_months(</span><span class="delimiter_1">'</span><span class="delimiter_1">2017-06-03 00:00:00</span><span class="delimiter_1">'</span><span class="span_4">,</span><span class="integer_1">7</span><span class="span_4">),</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">&#160; add_months(</span><span class="delimiter_1">'</span><span class="delimiter_1">2017-06-03 00:00:00</span><span class="delimiter_1">'</span><span class="span_4">,</span><span class="integer_1">-1</span><span class="span_4">)</span>
+        </p>
+        <p class="HTMLPreformatted_2">==&gt;</p>
+        <p class="integer_1">2017-12-03</p>
+        <p class="integer_1">2018-01-03</p>
+        <p class="integer_1">2017-05-03</p>
+        <h3 class="Heading3_1">1.4. last_day</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">last_day(string date)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">string</span>
+            </li>
+            <li class="li_4">Description: Returns the last day of the month which the date belongs to. date is a string in the format ‘yyyy-MM-dd HH:mm:ss’ or ‘yyyy-MM-dd’.</li>
+        </ul>
+        <p class="NormalWeb_2">Example:</p>
+        <p class="class_1">SELECT</p>
+        <p class="HTMLPreformatted_1"><span class="span_4">&#160; last_day(</span><span class="delimiter_1">'</span><span class="delimiter_1">2017-06-03</span><span class="delimiter_1">'</span><span class="span_4">),</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">&#160; last_day(</span><span class="delimiter_1">'</span><span class="delimiter_1">2017-06-03 00:00:00</span><span class="delimiter_1">'</span><span class="span_4">)</span>
+        </p>
+        <p class="HTMLPreformatted_2">==&gt;</p>
+        <p class="integer_1">2017-06-30</p>
+        <p class="integer_1">2017-06-30</p>
+        <h3 class="Heading3_1">1.5. initcap</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">initcap(string A)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">string</span>
+            </li>
+            <li class="li_4">Description: Returns string, with the first letter of each word in uppercase, all other letters in lowercase. Words are delimited by whitespace</li>
+        </ul>
+        <p class="NormalWeb_2">Example:</p>
+        <p class="class_1">SELECT</p>
+        <p class="HTMLPreformatted_1"><span class="span_4"> initcap(</span><span class="delimiter_1">'</span><span class="delimiter_1">ａｂｃ</span><span class="delimiter_1">'</span><span class="span_4">),</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4"> initcap(</span><span class="delimiter_1">'</span><span class="delimiter_1">ＡＢＣ</span><span class="delimiter_1">'</span><span class="span_4">),</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4"> initcap(</span><span class="delimiter_1">'</span><span class="delimiter_1">abc</span><span class="delimiter_1">'</span><span class="span_4">),</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4"> initcap(</span><span class="delimiter_1">'</span><span class="delimiter_1">ABC</span><span class="delimiter_1">'</span><span class="span_4">)</span>
+        </p>
+        <p class="HTMLPreformatted_2">==&gt;</p>
+        <p class="error_1">Ａｂｃ</p>
+        <p class="error_1">Ａｂｃ</p>
+        <p class="HTMLPreformatted_2">Abc</p>
+        <p class="HTMLPreformatted_2">Abc</p>
+        <h2 class="Heading2_1">2. Backported from Hive v1.2.0</h2>
+        <h3 class="Heading3_1">2.1. factorial</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">factorial(INT a)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">BIGINT</span>
+            </li>
+            <li class="li_4">Description: Returns the factorial of a. Valid a is [0..20].</li>
+        </ul>
+        <h3 class="Heading3_1">2.2. cbrt</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">cbrt(DOUBLE a)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">DOUBLE</span>
+            </li>
+            <li class="li_4">Description: Returns the cube root of a double value.</li>
+        </ul>
+        <h3 class="Heading3_1">2.3. shiftleft</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">shiftleft(TINYINT|SMALLINT|INT a, INT b)</span><span class="span_1">&#160;/&#160;</span><span class="span_4">shiftleft(BIGINT a, INT b)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">INT</span><span class="span_1">&#160;/&#160;</span><span class="span_4">BIGINT</span>
+            </li>
+            <li class="li_4">Description: Bitwise left shift. Shifts a b positions to the left. / Returns int for tinyint, smallint and int a. Returns bigint for bigint a.</li>
+        </ul>
+        <h3 class="Heading3_1">2.4. shiftright</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">shiftright(TINYINT|SMALLINT|INT a, INT b)</span><span class="span_1">&#160;/&#160;</span><span class="span_4">shiftright(BIGINT a, INT b)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">INT</span><span class="span_1">&#160;/&#160;</span><span class="span_4">BIGINT</span>
+            </li>
+            <li class="li_4">Description: Bitwise right shift. Shifts a b positions to the right. / Returns int for tinyint, smallint and int a. Returns bigint for bigint a.</li>
+        </ul>
+        <h3 class="Heading3_1">2.5. shiftrightunsigned</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">shiftrightunsigned(TINYINT|SMALLINT|INT a, INT b)</span><span class="span_1">&#160;/&#160;</span><span class="span_4">shiftrightunsigned(BIGINT a, INT b)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">INT</span><span class="span_1">&#160;/&#160;</span><span class="span_4">BIGINT</span>
+            </li>
+            <li class="li_4">Description: Bitwise unsigned right shift. Shifts a b positions to the right. / Returns int for tinyint, smallint and int a. Returns bigint for bigint a.</li>
+        </ul>
+        <h3 class="Heading3_1">2.6. current_date</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">current_date()</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">date</span>
+            </li>
+            <li class="li_4">Description: Returns the current date at the start of query evaluation. All calls of current_date within the same query return the same value. (TD_SCHEDULED_TIME() is recommended on TreasureData.)</li>
+        </ul>
+        <p class="p_21">&#160;</p>
+        <p class="p_13">&#160;</p>
+        <table class="table_2">
+            <col style="width: 596pt;" />
+            <tr class="tr_2">
+                <td class="td_5">
+                    <p class="p_22">On TreasureData, date type in Hive is not supported. Convert the value to String or Timestamp type within SQL.</p>
+                </td>
+            </tr>
+        </table>
+        <h3 class="Heading3_1">2.7. current_timestamp</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">current_timestamp()</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">timestamp</span>
+            </li>
+            <li class="li_4">Description: Returns the current timestamp at the start of query evaluation. All calls of current_timestamp within the same query return the same value. (TD_SCHEDULED_TIME is recommended in TreasureData.)</li>
+        </ul>
+        <p class="NormalWeb_2">Example:</p>
+        <p class="HTMLPreformatted_1"><span class="class_1">SELECT</span><span class="span_4"> current_timestamp()</span>
+        </p>
+        <p class="HTMLPreformatted_2">==&gt;</p>
+        <p class="HTMLPreformatted_1"><span class="integer_1">2017-06-04</span> <span class="octal_1">01</span><span class="span_4">:</span><span class="integer_1">52</span><span class="span_4">:</span><span class="span_4">17.292</span></p>
+        <h3 class="Heading3_1">2.8. next_day</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">next_day(string start_date, string day_of_week)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">string</span>
+            </li>
+            <li class="li_4">Description: Returns the first date which is later than start_date and named as day_of_week. start_date is a string/date/timestamp. day_of_week is 2 letters, 3 letters or full name of the day of the week (e.g. Mo, tue, FRIDAY). The time part of start_date is ignored.</li>
+        </ul>
+        <p class="NormalWeb_2">Example:</p>
+        <p class="class_1">SELECT</p>
+        <p class="HTMLPreformatted_1"><span class="span_4">next_day(</span><span class="delimiter_1">'</span><span class="delimiter_1">2017-06-10</span><span class="delimiter_1">'</span><span class="span_4">, </span><span class="delimiter_1">'</span><span class="delimiter_1">MON</span><span class="delimiter_1">'</span><span class="span_4">),</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">next_day(</span><span class="delimiter_1">'</span><span class="delimiter_1">2017-06-10</span><span class="delimiter_1">'</span><span class="span_4">, </span><span class="delimiter_1">'</span><span class="delimiter_1">TUE</span><span class="delimiter_1">'</span><span class="span_4">),</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">next_day(</span><span class="delimiter_1">'</span><span class="delimiter_1">2017-06-10</span><span class="delimiter_1">'</span><span class="span_4">, </span><span class="delimiter_1">'</span><span class="delimiter_1">WED</span><span class="delimiter_1">'</span><span class="span_4">),</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">next_day(</span><span class="delimiter_1">'</span><span class="delimiter_1">2017-06-10</span><span class="delimiter_1">'</span><span class="span_4">, </span><span class="delimiter_1">'</span><span class="delimiter_1">THU</span><span class="delimiter_1">'</span><span class="span_4">),</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">next_day(</span><span class="delimiter_1">'</span><span class="delimiter_1">2017-06-10</span><span class="delimiter_1">'</span><span class="span_4">, </span><span class="delimiter_1">'</span><span class="delimiter_1">FRI</span><span class="delimiter_1">'</span><span class="span_4">),</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">next_day(</span><span class="delimiter_1">'</span><span class="delimiter_1">2017-06-10</span><span class="delimiter_1">'</span><span class="span_4">, </span><span class="delimiter_1">'</span><span class="delimiter_1">SAT</span><span class="delimiter_1">'</span><span class="span_4">),</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">next_day(</span><span class="delimiter_1">'</span><span class="delimiter_1">2017-06-10</span><span class="delimiter_1">'</span><span class="span_4">, </span><span class="delimiter_1">'</span><span class="delimiter_1">SUN</span><span class="delimiter_1">'</span><span class="span_4">)</span>
+        </p>
+        <p class="HTMLPreformatted_2">==&gt;</p>
+        <p class="integer_1">2017-06-12</p>
+        <p class="integer_1">2017-06-13</p>
+        <p class="integer_1">2017-06-14</p>
+        <p class="integer_1">2017-06-15</p>
+        <p class="integer_1">2017-06-16</p>
+        <p class="integer_1">2017-06-17</p>
+        <p class="integer_1">2017-06-11</p>
+        <h3 class="Heading3_1">2.9. trunc</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">trunc(string date, string format)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">string</span>
+            </li>
+            <li class="li_4">Description: Returns date truncated to the unit specified by the format. Supported formats: MONTH/MON/MM, YEAR/YYYY/YY. If NOT supported format is used, the result is NULL.</li>
+        </ul>
+        <p class="NormalWeb_2">Example:</p>
+        <p class="class_1">SELECT</p>
+        <p class="HTMLPreformatted_1"><span class="span_4">&#160; trunc(</span><span class="delimiter_1">'</span><span class="delimiter_1">2017-08-05</span><span class="delimiter_1">'</span><span class="span_4">, </span><span class="delimiter_1">'</span><span class="delimiter_1">MONTH</span><span class="delimiter_1">'</span><span class="span_4">),</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">&#160; trunc(</span><span class="delimiter_1">'</span><span class="delimiter_1">2017-08-05 03:00:00</span><span class="delimiter_1">'</span><span class="span_4">, </span><span class="delimiter_1">'</span><span class="delimiter_1">YEAR</span><span class="delimiter_1">'</span><span class="span_4">),</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">&#160; trunc(</span><span class="delimiter_1">'</span><span class="delimiter_1">2016-03-01 03:00:00</span><span class="delimiter_1">'</span><span class="span_4">, </span><span class="delimiter_1">'</span><span class="delimiter_1">DAY</span><span class="delimiter_1">'</span><span class="span_4">)</span>
+        </p>
+        <p class="HTMLPreformatted_2">==&gt;</p>
+        <p class="integer_1">2017-08-01</p>
+        <p class="integer_1">2017-01-01</p>
+        <p class="predefined-constant_1">NULL</p>
+        <h3 class="Heading3_1">2.10. months_between</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">months_between(date1, date2)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">double</span>
+            </li>
+            <li class="li_4">Description: Returns number of months between dates date1 and date2. If date1 is later than date2, then the result is positive. If date1 is earlier than date2, then the result is negative. If date1 and date2 are either the same days of the month or both last days of months, then the result is always an integer. Otherwise the UDF calculates the fractional portion of the result based on a 31-day month and considers the difference in time components date1 and date2. date1 and date2 type can be date, timestamp or string in the format ‘yyyy-MM-dd’ or ‘yyyy-MM-dd HH:mm:ss’. The result is rounded to 8 decimal places.</li>
+        </ul>
+        <p class="NormalWeb_2">Example:</p>
+        <p class="class_1">SELECT</p>
+        <p class="HTMLPreformatted_1"><span class="span_4">months_between(</span><span class="delimiter_1">'</span><span class="delimiter_1">2017-08-01</span><span class="delimiter_1">'</span><span class="span_4">, </span><span class="delimiter_1">'</span><span class="delimiter_1">2017-01-01</span><span class="delimiter_1">'</span><span class="span_4">),</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">months_between(</span><span class="delimiter_1">'</span><span class="delimiter_1">2017-01-01</span><span class="delimiter_1">'</span><span class="span_4">, </span><span class="delimiter_1">'</span><span class="delimiter_1">2017-08-05</span><span class="delimiter_1">'</span><span class="span_4">),</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">months_between(</span><span class="delimiter_1">'</span><span class="delimiter_1">2017-08-05</span><span class="delimiter_1">'</span><span class="span_4">, </span><span class="delimiter_1">'</span><span class="delimiter_1">2017-01-01</span><span class="delimiter_1">'</span><span class="span_4">),</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">months_between(</span><span class="delimiter_1">'</span><span class="delimiter_1">2017-01-01 00:00:00</span><span class="delimiter_1">'</span><span class="span_4">, </span><span class="delimiter_1">'</span><span class="delimiter_1">2016-01-01 03:00:00</span><span class="delimiter_1">'</span><span class="span_4">)</span>
+        </p>
+        <p class="HTMLPreformatted_2">==&gt;</p>
+        <p class="float_1">7.0</p>
+        <p class="float_1">-7.12903226</p>
+        <p class="float_1">7.12903226</p>
+        <p class="float_1">12.0</p>
+        <h3 class="Heading3_1">2.11. date_format</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">date_format(date/timestamp/string ts, string fmt)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">string</span>
+            </li>
+            <li class="li_4">Description: Converts a date/timestamp/string to a value of string in the format specified by the date format fmt. Supported formats are Java SimpleDateFormat formats – https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html. The second argument fmt should be constant.</li>
+        </ul>
+        <p class="NormalWeb_2">Example:</p>
+        <p class="class_1">SELECT</p>
+        <p class="HTMLPreformatted_1"><span class="span_4">&#160; date_format(</span><span class="delimiter_1">'</span><span class="delimiter_1">2015-04-08</span><span class="delimiter_1">'</span><span class="span_4">, </span><span class="delimiter_1">'</span><span class="delimiter_1">y</span><span class="delimiter_1">'</span><span class="span_4">),</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">&#160; date_format(</span><span class="delimiter_1">'</span><span class="delimiter_1">2015-04-08</span><span class="delimiter_1">'</span><span class="span_4">, </span><span class="delimiter_1">'</span><span class="delimiter_1">d</span><span class="delimiter_1">'</span><span class="span_4">),</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">&#160; date_format(</span><span class="delimiter_1">'</span><span class="delimiter_1">2015-04-08</span><span class="delimiter_1">'</span><span class="span_4">, </span><span class="delimiter_1">'</span><span class="delimiter_1">s</span><span class="delimiter_1">'</span><span class="span_4">)</span>
+        </p>
+        <p class="HTMLPreformatted_2">==&gt;</p>
+        <p class="integer_1">2015</p>
+        <p class="integer_1">8</p>
+        <p class="integer_1">0</p>
+        <h3 class="Heading3_1">2.12. levenshtein</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">levenshtein(string A, string B)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">int</span>
+            </li>
+            <li class="li_4">Description: Returns the Levenshtein distance between two strings.</li>
+        </ul>
+        <p class="NormalWeb_2">Example:</p>
+        <p class="HTMLPreformatted_1"><span class="class_1">SELECT</span><span class="span_4"> levenshtein(</span><span class="delimiter_1">'</span><span class="delimiter_1">xxx</span><span class="delimiter_1">'</span><span class="span_4">, </span><span class="delimiter_1">'</span><span class="delimiter_1">xyx</span><span class="delimiter_1">'</span><span class="span_4">)</span>
+        </p>
+        <p class="HTMLPreformatted_2">==&gt;</p>
+        <p class="integer_1">1</p>
+        <h3 class="Heading3_1">2.13. soundex</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">soundex(string A)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">string</span>
+            </li>
+            <li class="li_4">Description: Returns soundex code of the string. (Ref: https://en.wikipedia.org/wiki/Soundex)</li>
+        </ul>
+        <p class="NormalWeb_2">Example:</p>
+        <p class="class_1">SELECT</p>
+        <p class="HTMLPreformatted_1"><span class="span_4">soundex(</span><span class="delimiter_1">'</span><span class="delimiter_1">TreasureData</span><span class="delimiter_1">'</span><span class="span_4">)</span>
+        </p>
+        <p class="HTMLPreformatted_2">==&gt;</p>
+        <p class="HTMLPreformatted_2">T626</p>
+        <h3 class="Heading3_1">2.14. quarter</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">quarter(date/timestamp/string)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">int</span>
+            </li>
+            <li class="li_4">Description: Returns the quarter of the year for a date, timestamp, or string in the range 1 to 4.</li>
+        </ul>
+        <p class="NormalWeb_2">Example:</p>
+        <p class="class_1">SELECT</p>
+        <p class="HTMLPreformatted_1"><span class="span_4">quarter(</span><span class="delimiter_1">'</span><span class="delimiter_1">2017-06-01</span><span class="delimiter_1">'</span><span class="span_4">)</span>
+        </p>
+        <p class="HTMLPreformatted_2">==&gt;</p>
+        <p class="integer_1">2</p>
+        <h3 class="Heading3_1">2.15. chr</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">chr(bigint|double A)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">string</span>
+            </li>
+            <li class="li_4">Description: Returns the ASCII character having the binary equivalent to A. If A is larger than 256 the result is equivalent to chr(A % 256). https://msdn.microsoft.com/en-us/library/4z4t9ed1(v=vs.80).aspx</li>
+        </ul>
+        <p class="NormalWeb_2">Example:</p>
+        <p class="HTMLPreformatted_1"><span class="class_1">SELECT</span><span class="span_4"> chr(</span><span class="integer_1">48</span><span class="span_4">)</span>
+        </p>
+        <p class="HTMLPreformatted_2">==&gt;</p>
+        <p class="integer_1">0</p>
+        <h3 class="Heading3_1">2.16. replace</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">replace(string A, string OLD, string NEW)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">string</span>
+            </li>
+            <li class="li_4">Description: Returns the string A with all non-overlapping occurrences of OLD replaced with NEW.</li>
+        </ul>
+        <p class="NormalWeb_2">Example:</p>
+        <p class="class_1">SELECT</p>
+        <p class="HTMLPreformatted_1"><span class="class_1">replace</span><span class="span_4">(</span><span class="delimiter_1">"</span><span class="delimiter_1">ababab</span><span class="delimiter_1">"</span><span class="span_4">, </span><span class="delimiter_1">"</span><span class="delimiter_1">abab</span><span class="delimiter_1">"</span><span class="span_4">, </span><span class="delimiter_1">"</span><span class="delimiter_1">Z</span><span class="delimiter_1">"</span><span class="span_4">)</span>
+        </p>
+        <p class="HTMLPreformatted_2">==&gt;</p>
+        <p class="HTMLPreformatted_2">Zab</p>
+        <h3 class="Heading3_1">2.17. substring_index</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">substring_index(string A, string delim, int count)</span>
+            </li>
+            <li class="li_4">Return Type: string</li>
+            <li class="li_4">Description: Returns the substring from string A before count occurrences of the delimiter delim. If count is positive, everything to the left of the final delimiter (counting from the left) is returned. If count is negative, everything to the right of the final delimiter (counting from the right) is returned. Substring_index performs a case-sensitive match when searching for delim.</li>
+        </ul>
+        <p class="NormalWeb_2">Example:</p>
+        <p class="class_1">SELECT</p>
+        <p class="HTMLPreformatted_1"><span class="span_4">substring_index(</span><span class="delimiter_1">'</span><span class="delimiter_1">www.apache.org</span><span class="delimiter_1">'</span><span class="span_4">, </span><span class="delimiter_1">'</span><span class="delimiter_1">.</span><span class="delimiter_1">'</span><span class="span_4">, </span><span class="integer_1">2</span><span class="span_4">)</span>
+        </p>
+        <p class="HTMLPreformatted_2">==&gt;</p>
+        <p class="HTMLPreformatted_2">www.apache</p>
+        <h3 class="Heading3_1">2.18. md5</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">md5(string/binary)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">string</span>
+            </li>
+            <li class="li_4">Description: Calculates an MD5 128-bit checksum for the string or binary (as of Hive 1.3.0). The value is returned as a string of 32 hex digits, or NULL if the argument was NULL. This is same function as TD_MD5.</li>
+        </ul>
+        <p class="NormalWeb_2">Example:</p>
+        <p class="class_1">SELECT</p>
+        <p class="HTMLPreformatted_1"><span class="span_4">MD5(</span><span class="delimiter_1">'</span><span class="delimiter_1">abc</span><span class="delimiter_1">'</span><span class="span_4">),</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">TD_MD5(</span><span class="delimiter_1">'</span><span class="delimiter_1">abc</span><span class="delimiter_1">'</span><span class="span_4">)</span>
+        </p>
+        <p class="HTMLPreformatted_2">==&gt;</p>
+        <p class="HTMLPreformatted_1"><span class="integer_1">900150983</span><span class="span_4">cd24fb0d6963f7d28e17f72</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="integer_1">900150983</span><span class="span_4">cd24fb0d6963f7d28e17f72</span>
+        </p>
+        <h3 class="Heading3_1">2.19. sha1</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">sha1(string/binary)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">string</span>
+            </li>
+            <li class="li_4">Description: Calculates the SHA-1 digest for string or binary and returns the value as a hex string.</li>
+        </ul>
+        <h3 class="Heading3_1">2.20. crc32</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">crc32(string/binary)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">bigint</span>
+            </li>
+            <li class="li_4">Description: Computes a cyclic redundancy check value for string or binary argument and returns bigint value.</li>
+        </ul>
+        <h3 class="Heading3_1">2.21. sha2</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">sha2(string/binary, int)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">string</span>
+            </li>
+            <li class="li_4">Description: Calculates the SHA-2 family of hash functions (SHA-224, SHA-256, SHA-384, and SHA-512). The first argument is the string or binary to be hashed. The second argument indicates the desired bit length of the result, which must have a value of 224, 256, 384, 512, or 0 (which is equivalent to 256). SHA-224 is supported starting from Java 8. If either argument is NULL or the hash length is not one of the permitted values, the return value is NULL.</li>
+            <li class="li_1"><span class="span_1">Example:&#160;</span><span class="span_4">sha2('ABC', 256) = 'b5d4045c3f466fa91fe2cc6abe79232a1a57cdf104f7a26e716e0a1e2789df78'</span>
+            </li>
+        </ul>
+        <h3 class="Heading3_1">2.22. aes_encrypt</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">aes_encrypt(input string/binary, key string/binary)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">binary</span>
+            </li>
+            <li class="li_4">Description: Encrypt input using AES. Key lengths of 128, 192 or 256 bits can be used. 192 and 256 bits keys can be used if Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files are installed. If either argument is NULL or the key length is not one of the permitted values, the return value is NULL.</li>
+        </ul>
+        <p class="NormalWeb_2">Example:</p>
+        <p class="class_1">SELECT</p>
+        <p class="HTMLPreformatted_1"><span class="span_4">base64(aes_encrypt(</span><span class="delimiter_1">'</span><span class="delimiter_1">ABC</span><span class="delimiter_1">'</span><span class="span_4">,</span><span class="delimiter_1">'</span><span class="delimiter_1">1234567890123456</span><span class="delimiter_1">'</span><span class="span_4">))</span>
+        </p>
+        <p class="HTMLPreformatted_2">==&gt;</p>
+        <p class="HTMLPreformatted_2">y6Ss+zCYObpCbgfWfyNWTw==</p>
+        <h3 class="Heading3_1">2.23. aes_decrypt</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">aes_decrypt(input binary, key string/binary)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">binary</span>
+            </li>
+            <li class="li_4">Description: Decrypt input using AES. Key lengths of 128, 192 or 256 bits can be used. 192 and 256 bits keys can be used if Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files are installed. If either argument is NULL or the key length is not one of the permitted values, the return value is NULL.</li>
+        </ul>
+        <p class="NormalWeb_2">Example:</p>
+        <p class="class_1">SELECT</p>
+        <p class="HTMLPreformatted_1"><span class="span_4">decode(aes_decrypt(unbase64(</span><span class="delimiter_1">'</span><span class="delimiter_1">y6Ss+zCYObpCbgfWfyNWTw==</span><span class="delimiter_1">'</span><span class="span_4">), </span><span class="delimiter_1">'</span><span class="delimiter_1">1234567890123456</span><span class="delimiter_1">'</span><span class="span_4">), </span><span class="delimiter_1">'</span><span class="delimiter_1">UTF-8</span><span class="delimiter_1">'</span><span class="span_4">)</span>
+        </p>
+        <p class="HTMLPreformatted_2">==&gt;</p>
+        <p class="HTMLPreformatted_2">ABC</p>
+        <h2 class="Heading2_1">3. Backported from Hive v2.1.0</h2>
+        <h3 class="Heading3_1">3.1. mask</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">mask(string str[, string upper[, string lower[, string number]]])</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">string</span>
+            </li>
+            <li class="li_4">Description: Returns a masked version of str. By default, upper case letters are converted to “X”, lower case letters are converted to “x” and numbers are converted to “n”. For example mask(“abcd-EFGH-8765-4321”) results in xxxx-XXXX-nnnn-nnnn. You can override the characters used in the mask by supplying additional arguments: the second argument controls the mask character for upper case letters, the third argument for lower case letters and the fourth argument for numbers. Limitation: Only alphabet and number are masked.</li>
+        </ul>
+        <p class="NormalWeb_2">Example:</p>
+        <p class="class_1">SELECT</p>
+        <p class="HTMLPreformatted_1"><span class="span_4">mask(</span><span class="delimiter_1">'</span><span class="delimiter_1">Testing000@gmail.com</span><span class="delimiter_1">'</span><span class="span_4">),</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">mask(</span><span class="delimiter_1">'</span><span class="delimiter_1">Testing000@gmail.com</span><span class="delimiter_1">'</span><span class="span_4">,</span><span class="delimiter_1">'</span><span class="delimiter_1">x</span><span class="delimiter_1">'</span><span class="span_4">),</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">mask(</span><span class="delimiter_1">'</span><span class="delimiter_1">Testing000@gmail.com</span><span class="delimiter_1">'</span><span class="span_4">,</span><span class="delimiter_1">'</span><span class="delimiter_1">x</span><span class="delimiter_1">'</span><span class="span_4">,</span><span class="delimiter_1">'</span><span class="delimiter_1">y</span><span class="delimiter_1">'</span><span class="span_4">),</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">mask(</span><span class="delimiter_1">'</span><span class="delimiter_1">Testing000@gmail.com</span><span class="delimiter_1">'</span><span class="span_4">,</span><span class="delimiter_1">'</span><span class="delimiter_1">x</span><span class="delimiter_1">'</span><span class="span_4">,</span><span class="delimiter_1">'</span><span class="delimiter_1">y</span><span class="delimiter_1">'</span><span class="span_4">,</span><span class="delimiter_1">'</span><span class="delimiter_1">z</span><span class="delimiter_1">'</span><span class="span_4">)</span>
+        </p>
+        <p class="HTMLPreformatted_2">==&gt;</p>
+        <p class="HTMLPreformatted_1"><span class="span_4">Xxxxxxxnnn</span><span class="variable_1">@xxxxx</span><span class="span_4">.xxx</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">xxxxxxxnnn</span><span class="variable_1">@xxxxx</span><span class="span_4">.xxx</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">xyyyyyynnn</span><span class="variable_1">@yyyyy</span><span class="span_4">.yyy</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">xyyyyyyzzz</span><span class="variable_1">@yyyyy</span><span class="span_4">.yyy</span>
+        </p>
+        <h3 class="Heading3_1">3.2. mask_first_n</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">mask_first_n(string str[, int n])</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">string</span>
+            </li>
+            <li class="li_4">Description: Returns a masked version of str with the first n values masked. Upper case letters are converted to “X”, lower case letters are converted to “x” and numbers are converted to “n”. Default “n” is 4.</li>
+        </ul>
+        <p class="NormalWeb_2">Example:</p>
+        <p class="class_1">SELECT</p>
+        <p class="HTMLPreformatted_1"><span class="span_4">mask_first_n(</span><span class="delimiter_1">'</span><span class="delimiter_1">Testing000@gmail.com</span><span class="delimiter_1">'</span><span class="span_4">),</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">mask_first_n(</span><span class="delimiter_1">'</span><span class="delimiter_1">Testing000@gmail.com</span><span class="delimiter_1">'</span><span class="span_4">,</span><span class="integer_1">7</span><span class="span_4">)</span>
+        </p>
+        <p class="HTMLPreformatted_2">==&gt;</p>
+        <p class="HTMLPreformatted_1"><span class="span_4">Xxxxing000</span><span class="variable_1">@gmail</span><span class="span_4">.com</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">Xxxxxxx000</span><span class="variable_1">@gmail</span><span class="span_4">.com</span>
+        </p>
+        <h3 class="Heading3_1">3.3. mask_last_n</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">mask_last_n(string str[, int n])</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">string</span>
+            </li>
+            <li class="li_4">Description: Returns a masked version of str with the last n values masked. Upper case letters are converted to “X”, lower case letters are converted to “x” and numbers are converted to “n”. Default “n” is 4.</li>
+        </ul>
+        <p class="NormalWeb_2">Example:</p>
+        <p class="class_1">SELECT</p>
+        <p class="HTMLPreformatted_1"><span class="span_4">mask_last_n(</span><span class="delimiter_1">'</span><span class="delimiter_1">Testing000@gmail.com</span><span class="delimiter_1">'</span><span class="span_4">),</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">mask_last_n(</span><span class="delimiter_1">'</span><span class="delimiter_1">Testing000@gmail.com</span><span class="delimiter_1">'</span><span class="span_4">,</span><span class="integer_1">7</span><span class="span_4">)</span>
+        </p>
+        <p class="HTMLPreformatted_2">==&gt;</p>
+        <p class="HTMLPreformatted_1"><span class="span_4">Testing000</span><span class="variable_1">@gmail</span><span class="span_4">.xxx</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">Testing000</span><span class="variable_1">@gmxxx</span><span class="span_4">.xxx</span>
+        </p>
+        <h3 class="Heading3_1">3.4. mask_show_first_n</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">mask_show_first_n(string str[, int n])</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">string</span>
+            </li>
+            <li class="li_4">Description: Returns a masked version of str, showing the first n characters unmasked). Upper case letters are converted to “X”, lower case letters are converted to “x” and numbers are converted to “n”. Default “n” is 4.</li>
+        </ul>
+        <p class="NormalWeb_2">Example:</p>
+        <p class="class_1">SELECT</p>
+        <p class="HTMLPreformatted_1"><span class="span_4">mask_show_first_n(</span><span class="delimiter_1">'</span><span class="delimiter_1">Testing000@gmail.com</span><span class="delimiter_1">'</span><span class="span_4">),</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">mask_show_first_n(</span><span class="delimiter_1">'</span><span class="delimiter_1">Testing000@gmail.com</span><span class="delimiter_1">'</span><span class="span_4">,</span><span class="integer_1">7</span><span class="span_4">)</span>
+        </p>
+        <p class="HTMLPreformatted_2">==&gt;</p>
+        <p class="HTMLPreformatted_1"><span class="span_4">Testxxxnnn</span><span class="variable_1">@xxxxx</span><span class="span_4">.xxx Testingnnn</span><span class="variable_1">@xxxxx</span><span class="span_4">.xxx</span>
+        </p>
+        <h3 class="Heading3_1">3.5. mask_show_last_n</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">mask_show_last_n(string str[, int n])</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">string</span>
+            </li>
+            <li class="li_4">Description: Returns a masked version of str, showing the last n characters unmasked. Upper case letters are converted to “X”, lower case letters are converted to “x” and numbers are converted to “n”. Default “n” is 4.</li>
+        </ul>
+        <p class="NormalWeb_2">Example:</p>
+        <p class="class_1">SELECT</p>
+        <p class="HTMLPreformatted_1"><span class="span_4">mask_show_last_n(</span><span class="delimiter_1">'</span><span class="delimiter_1">Testing000@gmail.com</span><span class="delimiter_1">'</span><span class="span_4">),</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">mask_show_last_n(</span><span class="delimiter_1">'</span><span class="delimiter_1">Testing000@gmail.com</span><span class="delimiter_1">'</span><span class="span_4">,</span><span class="integer_1">7</span><span class="span_4">)</span>
+        </p>
+        <p class="HTMLPreformatted_2">==&gt;</p>
+        <p class="HTMLPreformatted_1"><span class="span_4">Xxxxxxxnnn</span><span class="variable_1">@xxxxx</span><span class="span_4">.com</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">Xxxxxxxnnn</span><span class="variable_1">@xxail</span><span class="span_4">.com</span>
+        </p>
+        <h3 class="Heading3_1">3.6. mask_hash</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">mask_hash(string|char|varchar str)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">string</span>
+            </li>
+            <li class="li_4">Description: Returns a hashed value based on str. The hash is consistent and can be used to join masked values together across tables. This function returns null for non-string types.</li>
+        </ul>
+        <p class="NormalWeb_2">Example:</p>
+        <p class="class_1">SELECT</p>
+        <p class="HTMLPreformatted_1"><span class="span_4">mask_hash(</span><span class="delimiter_1">'</span><span class="delimiter_1">Testing000@gmail.com</span><span class="delimiter_1">'</span><span class="span_4">)</span>
+        </p>
+        <p class="HTMLPreformatted_2">==&gt;</p>
+        <p class="HTMLPreformatted_2">e979e1ca866a125460db6fb26995df2b</p>
+        <h2 class="Heading2_1">4. Backported from Hive v2.2.0</h2>
+        <h3 class="Heading3_1">4.1. nullif</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">nullif( a, b )</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">T</span>
+            </li>
+            <li class="li_4">Description: Returns NULL if a=b; otherwise returns a. Shorthand for: CASE WHEN a = b then NULL else a.</li>
+        </ul>
+        <p class="NormalWeb_2">Example:</p>
+        <p class="class_1">SELECT</p>
+        <p class="HTMLPreformatted_1"><span class="span_4">nullif( </span><span class="integer_1">0</span><span class="span_4">, </span><span class="integer_1">0</span><span class="span_4">),</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">nullif( </span><span class="integer_1">1</span><span class="span_4">, </span><span class="integer_1">0</span><span class="span_4">)</span>
+        </p>
+        <p class="HTMLPreformatted_2">==&gt;</p>
+        <p class="predefined-constant_1">NULL</p>
+        <p class="integer_1">1</p>
+        <h3 class="Heading3_1">4.2. character_length</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">character_length(string str)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">int</span>
+            </li>
+            <li class="li_4">Description: Returns the number of UTF-8 characters contained in str. The function char_length is shorthand for this function.</li>
+        </ul>
+        <p class="NormalWeb_2">Example:</p>
+        <p class="class_1">SELECT</p>
+        <p class="HTMLPreformatted_1"><span class="span_4">character_length(</span><span class="delimiter_1">'</span><span class="delimiter_1">abc</span><span class="delimiter_1">'</span><span class="span_4">),</span>
+        </p>
+        <p class="HTMLPreformatted_1"><span class="span_4">character_length(</span><span class="delimiter_1">'</span><span class="delimiter_1">あいう</span><span class="delimiter_1">'</span><span class="span_4">)</span>
+        </p>
+        <p class="HTMLPreformatted_2">==&gt;</p>
+        <p class="integer_1">3</p>
+        <p class="integer_1">3</p>
+        <h3 class="Heading3_1">4.3. regr_avgx</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">regr_avgx(independent, dependent)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">double</span>
+            </li>
+            <li class="li_4">Description: Equivalent to avg(dependent).</li>
+        </ul>
+        <h3 class="Heading3_1">4.4. regr_avgy</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">regr_avgy(independent, dependent)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">double</span>
+            </li>
+            <li class="li_4">Description: Equivalent to avg(independent).</li>
+        </ul>
+        <h3 class="Heading3_1">4.5. regr_count</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">regr_count(independent, dependent)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">double</span>
+            </li>
+            <li class="li_4">Description: Returns the number of non-null pairs used to fit the linear regression line.</li>
+        </ul>
+        <h3 class="Heading3_1">4.6. regr_intercept</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">regr_intercept(independent, dependent)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">double</span>
+            </li>
+            <li class="li_4">Description: Returns the y-intercept of the linear regression line, i.e. the value of b in the equation dependent = a * independent + b.</li>
+        </ul>
+        <h3 class="Heading3_1">4.7. regr_r2</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">regr_r2(independent, dependent)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">double</span>
+            </li>
+            <li class="li_4">Description: Returns the coefficient of determination for the regression.</li>
+        </ul>
+        <h3 class="Heading3_1">4.8. regr_slope</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">regr_slope(independent, dependent)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">double</span>
+            </li>
+            <li class="li_4">Description: Returns the slope of the linear regression line, i.e. the value of a in the equation dependent = a * independent + b.</li>
+        </ul>
+        <h3 class="Heading3_1">4.9. regr_sxx</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">regr_sxx(independent, dependent)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">double</span>
+            </li>
+            <li class="li_4">Description: Equivalent to regr_count(independent, dependent) * var_pop(dependent).</li>
+        </ul>
+        <h3 class="Heading3_1">4.10. regr_sxy</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">regr_sxy(independent, dependent)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">double</span>
+            </li>
+            <li class="li_4">Description: Equivalent to regr_count(independent, dependent) * covar_pop(independent, dependent).</li>
+        </ul>
+        <h3 class="Heading3_1">4.11. regr_syy</h3>
+        <ul class="ul_1">
+            <li class="li_1"><span class="span_1">Name:&#160;</span><span class="span_4">regr_syy(independent, dependent)</span>
+            </li>
+            <li class="li_1"><span class="span_1">Return Type:&#160;</span><span class="span_4">double</span>
+            </li>
+            <li class="li_4">Description: Equivalent to regr_count(independent, dependent) * var_pop(independent).</li>
+        </ul>
+        <p>&#160;</p>
+    
+</html>

@@ -1,0 +1,400 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" xml:lang="en-us">
+    <head><title></title>
+        <link href="../Resources/Stylesheets/Hive2aggregateFunctions.css" rel="stylesheet" />
+    </head>
+    <body>
+        <p class="p_1">Built-in Aggregate Functions (UDAF)</p>
+        <p class="p_2">The following built-in aggregate functions are supported in Hive:</p>
+        <table class="table_1">
+            <col style="width: 87pt;" />
+            <col style="width: 158pt;" />
+            <col style="width: 222pt;" />
+            <thead>
+                <tr class="tr_1">
+                    <th class="th_1">
+                        <p class="p_3">Return Type</p>
+                    </th>
+                    <th class="th_1">
+                        <p class="p_4"><span class="span_1">Name(</span><span class="span_1">Signature)</span>
+                        </p>
+                    </th>
+                    <th class="th_1">
+                        <p class="p_3">Description</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="tr_1">
+                    <td class="td_1">
+                        <p class="p_5">BIGINT</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">count(</span><span class="span_2">*), count(expr), count(DISTINCT expr[, expr...])</span>
+                        </p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">count(</span><span class="span_2">*) - Returns the total number of retrieved rows, including rows containing NULL values.</span>
+                        </p>
+                        <p class="p_7">count(expr) - Returns the number of rows for which the supplied expression is non-NULL.</p>
+                        <p class="p_8"><span class="span_2">count(</span><span class="span_2">DISTINCT expr[, expr]) - Returns the number of rows for which the supplied expression(s) are unique and non-NULL. Execution of this can be optimized with&#160;</span><a href="file:///C:/Users/megmir01/Desktop/Hive2aggregateFunctions.docx#ConfigurationProperties-hive.optimize.distinct.rewrite">hive.optimize.distinct.rewrite</a><span class="span_2">.</span>
+                        </p>
+                    </td>
+                </tr>
+                <tr class="tr_1">
+                    <td class="td_1">
+                        <p class="p_5">DOUBLE</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">sum(col), </span><span class="span_2">sum(</span><span class="span_2">DISTINCT col)</span>
+                        </p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_5">Returns the sum of the elements in the group or the sum of the distinct values of the column in the group.</p>
+                    </td>
+                </tr>
+                <tr class="tr_1">
+                    <td class="td_1">
+                        <p class="p_5">DOUBLE</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">avg(col), </span><span class="span_2">avg(</span><span class="span_2">DISTINCT col)</span>
+                        </p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_5">Returns the average of the elements in the group or the average of the distinct values of the column in the group.</p>
+                    </td>
+                </tr>
+                <tr class="tr_1">
+                    <td class="td_1">
+                        <p class="p_5">DOUBLE</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_5">min(col)</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_5">Returns the minimum of the column in the group.</p>
+                    </td>
+                </tr>
+                <tr class="tr_1">
+                    <td class="td_1">
+                        <p class="p_5">DOUBLE</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_5">max(col)</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_5">Returns the maximum value of the column in the group.</p>
+                    </td>
+                </tr>
+                <tr class="tr_1">
+                    <td class="td_1">
+                        <p class="p_5">DOUBLE</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">variance(col), </span><span class="span_2">var_pop</span><span class="span_2">(col)</span>
+                        </p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_5">Returns the variance of a numeric column in the group.</p>
+                    </td>
+                </tr>
+                <tr class="tr_1">
+                    <td class="td_1">
+                        <p class="p_5">DOUBLE</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">var_samp</span><span class="span_2">(col)</span>
+                        </p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_5">Returns the unbiased sample variance of a numeric column in the group.</p>
+                    </td>
+                </tr>
+                <tr class="tr_1">
+                    <td class="td_1">
+                        <p class="p_5">DOUBLE</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">stddev_pop</span><span class="span_2">(col)</span>
+                        </p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_5">Returns the standard deviation of a numeric column in the group.</p>
+                    </td>
+                </tr>
+                <tr class="tr_1">
+                    <td class="td_1">
+                        <p class="p_5">DOUBLE</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">stddev_samp</span><span class="span_2">(col)</span>
+                        </p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_5">Returns the unbiased sample standard deviation of a numeric column in the group.</p>
+                    </td>
+                </tr>
+                <tr class="tr_1">
+                    <td class="td_1">
+                        <p class="p_5">DOUBLE</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">covar_</span><span class="span_2">pop</span><span class="span_2">(</span><span class="span_2">col1, col2)</span>
+                        </p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_5">Returns the population covariance of a pair of numeric columns in the group.</p>
+                    </td>
+                </tr>
+                <tr class="tr_1">
+                    <td class="td_1">
+                        <p class="p_5">DOUBLE</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">covar_</span><span class="span_2">samp</span><span class="span_2">(</span><span class="span_2">col1, col2)</span>
+                        </p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">Returns the sample covariance of a pair of a </span><span class="span_2">numeric columns</span><span class="span_2"> in the group.</span>
+                        </p>
+                    </td>
+                </tr>
+                <tr class="tr_1">
+                    <td class="td_1">
+                        <p class="p_5">DOUBLE</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">corr</span><span class="span_2">(</span><span class="span_2">col1, col2)</span>
+                        </p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_5">Returns the Pearson coefficient of correlation of a pair of a numeric columns in the group.</p>
+                    </td>
+                </tr>
+                <tr class="tr_1">
+                    <td class="td_1">
+                        <p class="p_5">DOUBLE</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">percentile(</span><span class="span_2">BIGINT col, p)</span>
+                        </p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">Returns the exact </span><span class="span_2">p</span><sup class="sup_1">th</sup><span class="span_2">&#160;percentile of a column in the group (does not work with floating point types). p must be between 0 and 1. NOTE: A true percentile can only be computed for integer values. Use PERCENTILE_APPROX if your input is non-integral.</span>
+                        </p>
+                    </td>
+                </tr>
+                <tr class="tr_1">
+                    <td class="td_1">
+                        <p class="p_5">array&lt;double&gt;</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">percentile(</span><span class="span_2">BIGINT col, array(p</span><sub class="sub_1">1</sub><span class="span_2">&#160;[, p</span><sub class="sub_1">2</sub><span class="span_2">]...))</span>
+                        </p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">Returns the exact percentiles p</span><sub class="sub_1">1</sub><span class="span_2">, p</span><sub class="sub_1">2</sub><span class="span_2">, ... of a column in the group (does not work with floating point types). p</span><sub class="sub_1">i</sub><span class="span_2">&#160;must be between 0 and 1. NOTE: A true percentile can only be computed for integer values. Use PERCENTILE_APPROX if your input is non-integral.</span>
+                        </p>
+                    </td>
+                </tr>
+                <tr class="tr_1">
+                    <td class="td_1">
+                        <p class="p_5">DOUBLE</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">percentile_</span><span class="span_2">approx</span><span class="span_2">(</span><span class="span_2">DOUBLE col, p [, B])</span>
+                        </p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">Returns an approximate </span><span class="span_2">p</span><sup class="sup_1">th</sup><span class="span_2">&#160;percentile of a numeric column (including floating point types) in the group. The B parameter controls approximation accuracy at the cost of memory. Higher values yield better approximations, and the default is 10,000. When the number of distinct values in col is smaller than B, this gives an exact percentile value.</span>
+                        </p>
+                    </td>
+                </tr>
+                <tr class="tr_1">
+                    <td class="td_1">
+                        <p class="p_5">array&lt;double&gt;</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">percentile_</span><span class="span_2">approx</span><span class="span_2">(</span><span class="span_2">DOUBLE col, array(p</span><sub class="sub_1">1</sub><span class="span_2">&#160;[, p</span><sub class="sub_1">2</sub><span class="span_2">]...) [, B])</span>
+                        </p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">Same as </span><span class="span_2">above, but</span><span class="span_2"> accepts and returns an array of percentile values instead of a single one.</span>
+                        </p>
+                    </td>
+                </tr>
+                <tr class="tr_1">
+                    <td class="td_1">
+                        <p class="p_5">double</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">regr_</span><span class="span_2">avgx</span><span class="span_2">(</span><span class="span_2">independent, dependent)</span>
+                        </p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">Equivalent to avg(dependent). As of&#160;</span><a href="https://issues.apache.org/jira/browse/HIVE-15978">Hive 2.2.0</a><span class="span_2">.</span>
+                        </p>
+                    </td>
+                </tr>
+                <tr class="tr_1">
+                    <td class="td_1">
+                        <p class="p_5">double</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">regr_</span><span class="span_2">avgy</span><span class="span_2">(</span><span class="span_2">independent, dependent)</span>
+                        </p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">Equivalent to avg(independent). As of&#160;</span><a href="https://issues.apache.org/jira/browse/HIVE-15978">Hive 2.2.0</a><span class="span_2">.</span>
+                        </p>
+                    </td>
+                </tr>
+                <tr class="tr_1">
+                    <td class="td_1">
+                        <p class="p_5">double</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">regr_</span><span class="span_2">count</span><span class="span_2">(</span><span class="span_2">independent, dependent)</span>
+                        </p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">Returns the number of non-null pairs used to fit the linear regression line. As of&#160;</span><a href="https://issues.apache.org/jira/browse/HIVE-15978">Hive 2.2.0</a><span class="span_2">.</span>
+                        </p>
+                    </td>
+                </tr>
+                <tr class="tr_1">
+                    <td class="td_1">
+                        <p class="p_5">double</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">regr_</span><span class="span_2">intercept</span><span class="span_2">(</span><span class="span_2">independent, dependent)</span>
+                        </p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">Returns the y-intercept of the&#160;</span><a href="https://en.wikipedia.org/wiki/Linear_regression">linear regression line</a><span class="span_2">, i.e. the value of b in the equation dependent = a * independent + b. As of&#160;</span><a href="https://issues.apache.org/jira/browse/HIVE-15978">Hive 2.2.0</a><span class="span_2">.</span>
+                        </p>
+                    </td>
+                </tr>
+                <tr class="tr_1">
+                    <td class="td_1">
+                        <p class="p_5">double</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_5">regr_r2(independent, dependent)</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">Returns the&#160;</span><a href="https://en.wikipedia.org/wiki/Coefficient_of_determination">coefficient of determination</a><span class="span_2">&#160;for the regression. As of&#160;</span><a href="https://issues.apache.org/jira/browse/HIVE-15978">Hive 2.2.0</a><span class="span_2">.</span>
+                        </p>
+                    </td>
+                </tr>
+                <tr class="tr_1">
+                    <td class="td_1">
+                        <p class="p_5">double</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">regr_</span><span class="span_2">slope</span><span class="span_2">(</span><span class="span_2">independent, dependent)</span>
+                        </p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">Returns the slope of the&#160;</span><a href="https://en.wikipedia.org/wiki/Linear_regression">linear regression line</a><span class="span_2">, i.e. the value of a in the equation dependent = a * independent + b. As of&#160;</span><a href="https://issues.apache.org/jira/browse/HIVE-15978">Hive 2.2.0</a><span class="span_2">.</span>
+                        </p>
+                    </td>
+                </tr>
+                <tr class="tr_1">
+                    <td class="td_1">
+                        <p class="p_5">double</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">regr_</span><span class="span_2">sxx</span><span class="span_2">(</span><span class="span_2">independent, dependent)</span>
+                        </p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">Equivalent to </span><span class="span_2">regr_</span><span class="span_2">count</span><span class="span_2">(</span><span class="span_2">independent, dependent) * </span><span class="span_2">var_pop</span><span class="span_2">(dependent). As of&#160;</span><a href="https://issues.apache.org/jira/browse/HIVE-15978">Hive 2.2.0</a><span class="span_2">.</span>
+                        </p>
+                    </td>
+                </tr>
+                <tr class="tr_1">
+                    <td class="td_1">
+                        <p class="p_5">double</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">regr_</span><span class="span_2">sxy</span><span class="span_2">(</span><span class="span_2">independent, dependent)</span>
+                        </p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">Equivalent to </span><span class="span_2">regr_</span><span class="span_2">count</span><span class="span_2">(</span><span class="span_2">independent, dependent) * </span><span class="span_2">covar_pop</span><span class="span_2">(independent, dependent). As of&#160;</span><a href="https://issues.apache.org/jira/browse/HIVE-15978">Hive 2.2.0</a><span class="span_2">.</span>
+                        </p>
+                    </td>
+                </tr>
+                <tr class="tr_1">
+                    <td class="td_1">
+                        <p class="p_5">double</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">regr_</span><span class="span_2">syy</span><span class="span_2">(</span><span class="span_2">independent, dependent)</span>
+                        </p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">Equivalent to </span><span class="span_2">regr_</span><span class="span_2">count</span><span class="span_2">(</span><span class="span_2">independent, dependent) * </span><span class="span_2">var_pop</span><span class="span_2">(independent). As of&#160;</span><a href="https://issues.apache.org/jira/browse/HIVE-15978">Hive 2.2.0</a><span class="span_2">.</span>
+                        </p>
+                    </td>
+                </tr>
+                <tr class="tr_1">
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">array&lt;struct {</span><span class="span_3">'</span><span class="span_3">x','y</span><span class="span_3">'</span><span class="span_2">}&gt;</span>
+                        </p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">histogram_</span><span class="span_2">numeric</span><span class="span_2">(</span><span class="span_2">col, b)</span>
+                        </p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">Computes a histogram of a numeric column in the group using b non-uniformly spaced bins. The output is an array of size b of double-valued (</span><span class="span_2">x,y</span><span class="span_2">) coordinates that represent the bin centers and heights</span>
+                        </p>
+                    </td>
+                </tr>
+                <tr class="tr_1">
+                    <td class="td_1">
+                        <p class="p_5">array</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">collect_set</span><span class="span_2">(col)</span>
+                        </p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_5">Returns a set of objects with duplicate elements eliminated.</p>
+                    </td>
+                </tr>
+                <tr class="tr_1">
+                    <td class="td_1">
+                        <p class="p_5">array</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">collect_list</span><span class="span_2">(col)</span>
+                        </p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">Returns a list of objects with duplicates. (As of Hive&#160;</span><a href="https://issues.apache.org/jira/browse/HIVE-5294">0.13.0</a><span class="span_2">.)</span>
+                        </p>
+                    </td>
+                </tr>
+                <tr class="tr_1">
+                    <td class="td_1">
+                        <p class="p_5">INTEGER</p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">ntile</span><span class="span_2">(</span><span class="span_2">INTEGER x)</span>
+                        </p>
+                    </td>
+                    <td class="td_1">
+                        <p class="p_6"><span class="span_2">Divides an ordered partition into&#160;</span><span class="span_3">x</span><span class="span_2">&#160;groups called buckets and assigns a bucket number to each row in the partition. </span><span class="span_2">This&#160;allows easy calculation of </span><span class="span_2">tertiles</span><span class="span_2">, quartiles, deciles, percentiles and other&#160;common summary statistics. (As of Hive&#160;</span><a href="https://issues.apache.org/jira/browse/HIVE-896">0.11.0</a><span class="span_2">.)</span>
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>
+        </p>
+    </body>
+</html>

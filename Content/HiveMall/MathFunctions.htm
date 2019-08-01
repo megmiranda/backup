@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head>
+    </head>
+    <body>
+        <h1>Math Functions</h1>
+        <h3> INFINITY</h3>
+        <h5>Signature</h5>
+        <p>double infinity()</p>
+        <h5>Description</h5>
+        <p><span class="span_5">INFINITY</span><span class="span_4">&#160;returns the constant representing positive infinity.</span>
+        </p>
+        <h3> IS_FINITE</h3>
+        <h5>Signature</h5>
+        <p>boolean is_finite(number x)</p>
+        <h5>Description</h5>
+        <p><span class="span_5">IS_FINITE</span><span class="span_4">&#160;determines if x is finite.</span>
+        </p>
+        <h5>Example</h5>
+        <p><span class="span_4">SELECT is_finite(333), is_finite(infinity());</span><span class="span_4"><br></br>&gt; true false</span>
+        </p>
+        <h3> IS_INFINITE</h3>
+        <h5>Signature</h5>
+        <p>boolean is_infinite(number x)</p>
+        <h5>Description</h5>
+        <p><span class="span_5">IS_INFINITE</span><span class="span_4">&#160;determines if x is infinite.</span>
+        </p>
+        <h5>Example</h5>
+        <p><span class="span_4">SELECT is_infinite(333), is_infinite(infinity());</span><span class="span_4"><br></br>&gt; false true </span>
+        </p>
+        <h3> IS_NAN</h3>
+        <h5>Signature</h5>
+        <p>boolean is_nan(number x)</p>
+        <h5>Description</h5>
+        <p><span class="span_5">IS_NAN</span><span class="span_4">&#160;determines if x is not-a-number.</span>
+        </p>
+        <h5>Example</h5>
+        <p><span class="span_4">SELECT is_nan(333), is_nan(nan());</span><span class="span_4"><br></br>&gt; false true</span>
+        </p>
+        <h3> L2_NORM</h3>
+        <h5>Signature</h5>
+        <p>double l2_norm(number x)</p>
+        <h5>Description</h5>
+        <p><span class="span_5">L2_NORM return an&#160;</span><a href="http://mathworld.wolfram.com/L2-Norm.html">L2 norm</a><span class="span_5">&#160;of the given input x.</span>
+        </p>
+        <h5>Example</h5>
+        <p><span class="span_4">WITH input as (</span><span class="span_4"><br></br> select generate_series(1,3) as v</span><span class="span_4"><br></br>)</span><span class="span_4"><br></br>select l2_norm(v) as l2norm</span><span class="span_4"><br></br>from input;</span><span class="span_4"><br></br></span><span class="span_4"><br></br>&gt; 19.621416870348583 = sqrt(1^2+2^2+3^2))</span>
+        </p>
+        <h3>NAN</h3>
+        <h5>Signature</h5>
+        <p>double nan()</p>
+        <h5>Description</h5>
+        <p><span class="span_5">NAN</span><span class="span_4">&#160;returns the constant representing not-a-number.</span>
+        </p>
+        <h5>Example</h5>
+        <p><span class="span_4">SELECT nan(), is_nan(nan());</span><span class="span_4"><br></br>&gt; NaN true</span>
+        </p>
+        <h3> SIGMOID</h3>
+        <h5>Signature</h5>
+        <p>sigmoid(x)</p>
+        <h5>Description</h5>
+        <p><span class="span_5">SIGMOID</span><span class="span_4">&#160;returns 1.0 / (1.0 + exp(-x))</span>
+        </p>
+        <h5>Example</h5>
+        <p><span class="span_4">WITH input as (</span><span class="span_4"><br></br> SELECT 3.0 as x</span><span class="span_4"><br></br> UNION ALL</span><span class="span_4"><br></br> SELECT -3.0 as x</span><span class="span_4"><br></br>)</span><span class="span_4"><br></br>select </span><span class="span_4"><br></br> 1.0 / (1.0 + exp(-x)),</span><span class="span_4"><br></br> sigmoid(x)</span><span class="span_4"><br></br>from</span><span class="span_4"><br></br> input;</span><span class="span_4"><br></br></span><span class="span_4"><br></br>&gt; 0.04742587317756678 0.04742587357759476</span><span class="span_4"><br></br>&gt; 0.9525741268224334 0.9525741338729858</span>
+        </p>
+        <h2>
+        </h2>
+    </body>
+</html>

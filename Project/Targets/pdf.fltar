@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CatapultTarget
+  Version="2"
+  Comment="New Target"
+  Type="PDF"
+  Destinations=""
+  ShowMadCapBacklink="true"
+  MasterToc="/Project/TOCs/Master.fltoc">
+  <PrintedOutput
+    CollapseMargins="true"
+    GenerateTOCProxy="true"
+    GenerateIndexProxy="true"
+    GenerateGlossaryProxy="true" />
+  <Glossaries />
+  <DocumentProperties
+    Title="Custom Scripts articles" />
+  <PDF
+    DownsampleImages="true" />
+</CatapultTarget>

@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head>
+    </head>
+    <body>
+        <h1>Hive SELECT Statement in Treasure Data</h1>
+        <p>The Hive SELECT&#160;statement for Hive 2 conforms to the ANSI&#160;SQL&#160;standards.</p>
+        <p> </p>
+        <ul>
+            <li>Table names and column names are case insensitive</li>
+            <li>SELECT&#160;scans the table specified by the&#160;FROM&#160;clause</li>
+            <li>WHERE&#160;gives the condition of what to filter</li>
+            <li>GROUP BY&#160;gives a list of columns, which specify how to aggregate the records</li>
+            <li>CLUSTER BY,&#160;DISTRIBUTE BY,&#160;SORT BY&#160;specify the sort order and algorithm</li>
+            <li>LIMIT&#160;specifies how many records to retrieve</li>
+        </ul>
+        <h1>Syntax</h1><pre>SELECT [ALL | DISTINCT] select_expr, select_expr, ...FROM table_reference
+    [WHERE where_condition]
+    [GROUP BY col_list]
+    [HAVING having_condition]
+    [CLUSTER BY col_list | [DISTRIBUTE BY col_list] [SORT BY col_list]]
+   [LIMIT number]
+   ;</pre>
+        <h2>WHERE Clauses</h2>
+        <p>A&#160;WHERE&#160;clause is used to filter the result set. Functions can also be used to compute the condition.</p>
+        <ul>
+            <li><a href="../../../../transfer/hive2.docx#Predicate%20Operators">List of Predicate Operators</a>
+            </li>
+            <li><a href="../../../../transfer/hive2.docx#Logical%20Operators">List of Logical Operators</a>
+            </li>
+            <li><a href="https://support.treasuredata.com/hc/en-us/articles/360001450748-Hive-Built-in-Functions">List of Functions</a>
+            </li>
+        </ul>
+        <p>The following is an example query that uses a WHERE clause:</p>
+        <pre>SELECT name FROM products WHERE name = 'stone of jordan';
+        </pre>
+        <h2>Use of time column, TD_TIME_RANGE, TD_INTERVAL and other Time Expressions in WHERE clauses</h2>
+        <p>Efficient query processing in Treasure Data generally depends on using the partitioning characteristics of your underlying tables. </p>
+        <p>Time-based partitioning is fundamental to Treasure Data, with the time column in every table always being used as a partitioning key.&#160; To optimize TD performance use TD_TIME_RANGE,&#160; TD_INTERVAL or other related functions to limit data accessed for each query.&#160; </p>
+        <p>The `time` column is a special column that is always present in every table. </p>
+        <p><a href="../../../../transfer/hive2.docx#tdtimerange">TD_TIME_RANGE UDF</a>&#160;is simple and efficient to use. See&#160;<a href="https://support.treasuredata.com/hc/en-us/sections/360000274268-SQL-and-Performance-Tuning-Tips">Performance Tuning</a>.</p>
+        <p>&#160;</p>
+        <h2>GROUP BY Clauses</h2>
+        <p>A&#160;GROUP BY&#160;clause is frequently used with&#160;aggregate functions, to group the result set by columns and apply aggregate functions over each group. Functions can also be used to compute the grouping key.</p>
+        <ul>
+            <li><a href="https://support.treasuredata.com/hc/en-us/articles/360001457367-Hive-Built-in-Aggregate-Functions">List of Aggregate Functions</a>
+            </li>
+            <li><a href="https://support.treasuredata.com/hc/en-us/articles/360001450748-Hive-Built-in-Functions">List of Functions</a>
+            </li>
+        </ul>
+        <p>Here’s an example query that groups and counts by category.</p>
+        <pre><ins>SELECT category, count(1) FROM products GROUPBY category;</ins></pre>
+        <h2>HAVING Clauses</h2>
+        <p>A&#160;HAVING&#160;clause lets you filter the groups produced by&#160;GROUP BY, by applying&#160;predicate operators&#160;to each groups.</p>
+        <ul>
+            <li><a href="Hive Built in Operators.htm#predicate-operators">List of Predicate Operators</a>
+            </li>
+        </ul>
+        <p>Here’s an example query that groups and counts by category, and then retrieves only counts &gt; 10;</p><pre><ins>SELECT category, count(1) AS cnt FROM products GROUPBY category HAVING cnt &gt; 10;</ins></pre>
+        <h1>Example SELECT statements in TD Hive</h1>
+        <p>Here are some basic examples. The underlying table consists of three fields:&#160;ip,&#160;url, and&#160;time.</p>
+        <p>&#160;</p>
+        <p>Number of Records</p><pre>SELECTCOUNT(1) FROM www_access;</pre>
+        <p>&#160;</p>
+        <p>Number of Unique IPs</p><pre>SELECTCOUNT(1) FROM ( 
+		&#160; SELECTDISTINCT ip FROM www_access 
+		) t;</pre>
+        <p>&#160;</p>
+        <p>Number of Unique IPs that Accessed the Top Page</p><pre>SELECTCOUNT(distinct ip) FROM www_access 
+		&#160; WHERE url='/';</pre>
+        <p>&#160;</p>
+        <p>Number of Accesses per Unique IP</p><pre>SELECT ip, COUNT(1) FROM www_access 
+		&#160; GROUPBY ip LIMIT 30;</pre>
+        <p>&#160;</p>
+        <p>Unique IPs Sorted by Number of Accesses</p><pre>SELECT ip, COUNT(1) AS cnt FROM www_access 
+		&#160; GROUPBY ip
+		&#160; ORDERBY cnt DESC LIMIT 30;</pre>
+        <p>&#160;</p>
+        <p>Number of Accesses After a Certain Time</p><pre>SELECTCOUNT(1) FROM www_access 
+		&#160; WHERE TD_TIME_RANGE(time, "2011-08-19", NULL, "PDT")</pre>
+        <p>&#160;</p>
+        <p>Number of Accesses Each Day</p><pre>SELECT TD_TIME_FORMAT(time, "yyyy-MM-dd", "PDT") AS day, 
+		&#160; COUNT(1) AS cnt 
+			FROM www_access 
+		GROUPBY TD_TIME_FORMAT(time, "yyyy-MM-dd", "PDT")</pre>
+        <p>These examples assume that the scheduled_time (or query start time) is 2018-08-14 01:23:45 (Tue, UTC):
+
+</p>
+        <p>The last 7 days [2018-08-07 00:00:00, 2018-08-14 00:00:00)</p><pre>SELECT  ... WHERE TD_INTERVAL(time, '-7d')</pre>
+        <p>The last week. Monday is the beginning of the week (ISO standard) [2018-08-05 00:00:00, 2018-08-13 00:00:00)</p><pre>SELECT  ... WHERE TD_INTERVAL(time, '-1w')</pre>
+        <p>Today [2018-08-14 00:00:00, 2018-08-15 00:00:00)</p><pre>SELECT  ... WHERE TD_INTERVAL(time, '1d')</pre>
+        <p>The last month [2018-07-01 00:00:00, 2018-08-01 00:00:00)</p><pre>SELECT  ... WHERE TD_INTERVAL(time, '-1M')</pre>
+        <p>This month [2018-08-01 00:00:00, 2018-09-01 00:00:00)</p><pre>SELECT  ... WHERE TD_INTERVAL(time, '1M')</pre>
+        <p>This year [2018-01-01 00:00:00, 2019-01-01 00:00:00)</p><pre>SELECT  ... WHERE TD_INTERVAL(time, '1y')</pre>
+        <p>The last 15 minutes [2018-08-14 00:08:00, 2018-08-14 01:23:00)</p><pre>SELECT  ... WHERE TD_INTERVAL(time, '-15m')</pre>
+        <p>The last 30 seconds [2018-08-14 01:23:15, 2018-08-14 01:23:45)</p><pre>SELECT  ... WHERE TD_INTERVAL(time, '-30s')</pre>
+        <p>The last hour [2018-08-14 00:00:00, 2018-08-14 01:00:00)</p><pre>SELECT  ... WHERE TD_INTERVAL(time, '-1h')</pre>
+        <p>From the last hour to now [2018-08-14 00:00:00, 2018-08-14 01:23:45)</p><pre>SELECT  ... WHERE TD_INTERVAL(time, '-1h/now')</pre>
+        <p>The last hour since the beginning of today [2018-08-13 23:00:00, 2018-08-14 00:00:00)</p><pre>SELECT  ... WHERE TD_INTERVAL(time, '-1h/0d')</pre>
+        <p>The last 7 days since 2015-12-25 [2015-12-18 00:00:00, 2015-12-25 00:00:00)</p><pre>SELECT  ... WHERE TD_INTERVAL(time, '-7d/2015-12-25')</pre>
+        <p>The last 10 days since the beginning of the last month [2018-06-21 00:00:00, 2018-07-01 00:00:00)</p><pre>SELECT  ... WHERE TD_INTERVAL(time, '-10d/-1M')</pre>
+    </body>
+</html>

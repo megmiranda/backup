@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head>
+    </head>
+    <body>
+        <h1>Vector Matrix Functions</h1>
+        <h3> TRANSPOSE_AND_DOT</h3>
+        <h5>Signature</h5>
+        <p class="HTMLCode_1">transpose_and_dot(array&lt;number&gt; X, array&lt;number&gt; Y)</p>
+        <h5>Description</h5>
+        <p><span class="span_5">TRANSPOSE_AND_DOT</span><span class="span_4">&#160;returns dot(X.T, Y) as array&lt;array&lt;double&gt;&gt;, shape = (X.#cols, Y.#cols)</span>
+        </p>
+        <h5>Example</h5>
+        <p><span class="span_4">WITH input as (</span><span class="span_4"><br /> select array(1.0, 2.0, 3.0, 4.0) as x, array(1, 2) as y</span><span class="span_4"><br /> UNION ALL</span><span class="span_4"><br /> select array(2.0, 3.0, 4.0, 5.0) as x, array(1, 2) as y</span><span class="span_4"><br />)</span><span class="span_4"><br />select</span><span class="span_4"><br /> transpose_and_dot(x, y) as xy,</span><span class="span_4"><br /> transpose_and_dot(y, x) as yx</span><span class="span_4"><br />from </span><span class="span_4"><br /> input;</span><span class="span_4"><br /></span><span class="span_4"><br />&gt; [["3.0","6.0"],["5.0","10.0"],["7.0","14.0"],["9.0","18.0"]] [["3.0","5.0","7.0","9.0"],["6.0","10.0","14.0","18.0"]]</span>
+        </p>
+        <h3>VECTOR_ADD</h3>
+        <h5>Signature</h5>
+        <p class="HTMLCode_1">vector_add(array&lt;NUMBER&gt; x, array&lt;NUMBER&gt; y)</p>
+        <h5>Description</h5>
+        <p><span class="span_5">VECTOR_ADD</span><span class="span_4">&#160;perform vector ADD operation.</span>
+        </p>
+        <h5>Example</h5>
+        <p class="HTMLPreformatted_5"><span class="span_4">SELECT</span><span class="span_4"> vector_add(</span><span class="span_4">array</span><span class="span_4">(</span><span class="span_4">1.0</span><span class="span_4">,</span><span class="span_4">2.0</span><span class="span_4">,</span><span class="span_4">3.0</span><span class="span_4">), </span><span class="span_4">array</span><span class="span_4">(</span><span class="span_4">2</span><span class="span_4">, </span><span class="span_4">3</span><span class="span_4">, </span><span class="span_4">4</span><span class="span_4">));</span>
+        </p>
+        <p class="HTMLTypewriter_2">&gt; [3.0,5.0,7.0]</p>
+        <h3>VECTOR_DOT</h3>
+        <h5>Signature</h5>
+        <p class="HTMLCode_1">vector_dot(array&lt;NUMBER&gt; x, array&lt;NUMBER&gt; y)</p>
+        <h5>Description</h5>
+        <p><span class="span_5">VECTOR_DOT</span><span class="span_4">&#160;perform vector dot product.</span>
+        </p>
+        <h5>Example</h5>
+        <p class="HTMLPreformatted_5"><span class="span_4">SELECT vector_dot(array(1.0,2.0,3.0),array(2.0,3.0,4.0));</span><span class="span_4"><br /></span><span class="span_4">&gt; 20</span><span class="span_4"><br /></span><span class="span_4"><br /></span><span class="span_4">SELECT vector_dot(array(1.0,2.0,3.0),2);</span><span class="span_4"><br /></span><span class="span_4">&gt; [2.0,4.0,6.0]</span>
+        </p>
+    </body>
+</html>

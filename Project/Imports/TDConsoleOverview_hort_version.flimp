@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MsWordImport
+  PreserveSourceStyles="true"
+  KeepSourceLinks="false"
+  ConvertInlineFormatting="true"
+  AddContinuedLinks="false"
+  AddContinuedFromLinks="false"
+  ContinuedLinkFormat="(continued in {title})"
+  ContinuedFromLinkFormat="(continued from {title})"
+  UseMaxCharLimit="false"
+  UseMinCharLimit="true"
+  MaxCharLimit="10000"
+  MinCharLimit="50"
+  FilenameLength="24"
+  GeneratePageLayouts="false"
+  UseFirstHeadingAsTopicTitle="true"
+  ConvertEquations="true"
+  LastCollectTime="2019-06-14T16:13:26.2379069-07:00"
+  ProjectName="cleanxhtml"
+  ProjectFolder="C:\Users\megmir01\Documents\My Projects\cleanxhtml\"
+  AutoSync="false"
+  AutoFitTables="false"
+  UseHeaderRows="false"
+  LastImport="2019-06-14T16:13:43.9538371-07:00">
+  <Files>
+    <Url
+      Source="../../../../../Downloads/TDConsoleOverview_hort_version.doc"
+      AbsoluteSource="file:///C:/Users/megmir01/Downloads/TDConsoleOverview_hort_version.doc" />
+  </Files>
+  <ExcludedFiles />
+  <CollectedSourceFiles />
+  <SkippedSourceFiles />
+  <GeneratedFiles>
+    <Url
+      Source="../../Content/Resources/Images/TDConsoleOverview_hort_version/Map of the TD Console.png"
+      TimeStamp="6/14/2019 4:13:40 PM" />
+    <Url
+      Source="../../Content/Resources/Images/TDConsoleOverview_hort_version/Map of the TD Console_1.png"
+      TimeStamp="6/14/2019 4:13:40 PM" />
+    <Url
+      Source="../../Content/TDConsoleOverview_hort_version/Map of the TD Console.htm"
+      TimeStamp="6/14/2019 4:13:41 PM" />
+    <Url
+      Source="../TOCs/TDConsoleOverview_hort_version.fltoc"
+      TimeStamp="6/14/2019 4:13:40 PM" />
+    <Url
+      Source="../../Content/Resources/Stylesheets/TDConsoleOverview_hort_version.css"
+      TimeStamp="6/14/2019 4:13:40 PM" />
+  </GeneratedFiles>
+  <ParagraphStyles />
+  <CharacterStyles>
+    <Map
+      From="Hyperlink"
+      To="a.(MS Word Style)" />
+  </CharacterStyles>
+  <NewTopicStyles />
+  <UsedParagraphStyles />
+  <UsedCharacterStyles />
+</MsWordImport>

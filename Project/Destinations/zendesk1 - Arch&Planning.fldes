@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CatapultDestination
+  Version="1"
+  Comment="This is my publish destination"
+  Host="treasuredata.zendesk.com"
+  User="MyAccountId"
+  Password=""
+  Directory="oauth/authorizations/new"
+  Port=""
+  ViewUrl="http://www.madcapsoftware.com/"
+  Type="zendesk"
+  ClickUrl="https://treasuredata.zendesk.com"
+  TocDefinitionType="sections"
+  DefaultSection="360000272247"
+  ChangedOnly="false"
+  RemoveStale="true"
+  TocDefinesCatsAndSecs="false"
+  PublishAfterUpload="true"
+  KeywordsForLabels="true"
+  DefaultCategory="203860267"></CatapultDestination>

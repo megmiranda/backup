@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MsWordImport
+  PreserveSourceStyles="true"
+  KeepSourceLinks="false"
+  ConvertInlineFormatting="true"
+  AddContinuedLinks="false"
+  AddContinuedFromLinks="false"
+  ContinuedLinkFormat="(continued in {title})"
+  ContinuedFromLinkFormat="(continued from {title})"
+  UseMaxCharLimit="false"
+  UseMinCharLimit="true"
+  MaxCharLimit="10000"
+  MinCharLimit="50"
+  FilenameLength="24"
+  GeneratePageLayouts="false"
+  UseFirstHeadingAsTopicTitle="true"
+  ConvertEquations="true"
+  LastCollectTime="2019-06-18T09:33:28.3663425-07:00"
+  ProjectName="cleanxhtml"
+  ProjectFolder="C:\Users\megmir01\Documents\My Projects\cleanxhtml\"
+  AutoSync="false"
+  AutoFitTables="false"
+  UseHeaderRows="false"
+  LastImport="2019-06-18T09:35:51.0945712-07:00">
+  <Files>
+    <Url
+      Source="../../../../../Downloads/What_CDP.docx"
+      AbsoluteSource="file:///C:/Users/megmir01/Downloads/What_CDP.docx" />
+  </Files>
+  <ExcludedFiles />
+  <CollectedSourceFiles />
+  <SkippedSourceFiles />
+  <GeneratedFiles>
+    <Url
+      Source="../../Content/Resources/Images/What_CDP/What is a Customer Data Platform.png"
+      TimeStamp="6/18/2019 9:33:52 AM" />
+    <Url
+      Source="../../Content/Resources/Images/What_CDP/What is a Customer Data Platform_1.png"
+      TimeStamp="6/18/2019 9:33:53 AM" />
+    <Url
+      Source="../../Content/What_CDP/What is a Customer Data Platform.htm"
+      TimeStamp="6/18/2019 9:33:53 AM" />
+    <Url
+      Source="../TOCs/What_CDP.fltoc"
+      TimeStamp="6/18/2019 9:33:53 AM" />
+    <Url
+      Source="../../Content/Resources/Stylesheets/What_CDP.css"
+      TimeStamp="6/18/2019 9:33:53 AM" />
+  </GeneratedFiles>
+  <ParagraphStyles />
+  <CharacterStyles>
+    <Map
+      From="Hyperlink"
+      To="a.(MS Word Style)" />
+  </CharacterStyles>
+  <NewTopicStyles />
+  <UsedParagraphStyles />
+  <UsedCharacterStyles />
+</MsWordImport>

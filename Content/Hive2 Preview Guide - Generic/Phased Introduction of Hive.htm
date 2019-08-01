@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" xml:lang="en-us">
+    <head><title></title>
+        <link href="../Resources/Stylesheets/Hive2 Preview Guide - Generic.css" rel="stylesheet" />
+    </head>
+    <body>
+        <h1 class="Heading1"><a name="_gwsb3jnyzw6y"></a>Phased Introduction of Hive 2 in your environment</h1>
+        <p class="p_7">The following outline summarizes a possible Hive 2 rollout plan. The goals in this are:</p>
+        <ul class="ul_1">
+            <li class="li_1">Minimizing disruption to workloads currently running successfully in Hive 0.13. </li>
+            <li><span class="span_3">Maximizing the benefits from Hive 2.x in timeframes appropriate to the </span><span class="span_3">business.</span>
+            </li>
+        </ul>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 101pt;" />
+            <col style="width: 368pt;" />
+            <tbody>
+                <tr>
+                    <td class="td_1">
+                        <p class="p_8">Date</p>
+                    </td>
+                    <td class="td_2">
+                        <p class="p_8">Major steps</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td_3">
+                        <p class="p_9">Preview stage</p>
+                    </td>
+                    <td class="td_4">
+                        <p class="p_9">TD enables&#160; Hive 2 preview release for the customer’s account. Once enabled, both Hive 2 and Hive 0.13 will be available through TD Toolbelt CLI, and REST API, but not the console yet (we will update this doc when that becomes available). </p>
+                        <p class="p_9"> &#160;</p>
+                        <p class="p_10"><span class="span_3">Until GA, Hive</span><span class="span_3"> 2 is not recommended for use in production workloads, but it should be generally representative of production features, performance, and quality.</span>
+                        </p>
+                        <p class="p_10">&#160;</p>
+                        <p class="p_10"><span class="span_3">The option provided to run queries with hive2 is most appropriate to use in testing, while modifying existin</span><span class="span_3">g queries to remove hive2 incompatible syntax and make queries runnable in both Hive 0.13 and Hive 2.</span>
+                        </p>
+                        <p class="p_10">&#160;</p>
+                        <p class="p_9">Work with technical account management or support on testing new and existing workloads for use with Hive 2, based on this document.</p>
+                        <p class="p_10">&#160;</p>
+                        <p class="p_10"><span class="span_3">A good goal is to r</span><span class="span_3">ewrite many/most queries to use the stricter Hive 2-compatible syntax and run the modified queries in Hive 0.13 until GA, at which time you can fully switch your workload to Hive 2. </span>
+                        </p>
+                        <p class="p_10">&#160;</p>
+                        <p class="p_10"><span class="span_3">When creating new queries, avoid the incompatible syntax forms from Hive</span><span class="span_3"> 0.13 described in “Known Backward Incompatibilities” section of this document. </span>
+                        </p>
+                        <p class="p_10">&#160;</p>
+                        <p class="p_10"><span class="span_3">At the time of writing this doc, an engineer can run a query with Hive 0.13 using normal methods such as&#160; ‘td query -t hive’&#160; and run a query with Hive 2 using&#160; ‘td query -t </span><span class="span_3">hive --engine-version=experimental’&#160; option. </span>
+                        </p>
+                        <p class="p_10">&#160;</p>
+                        <p class="p_10"><span class="span_3">During the beta period, we expect you to use Hive2 with staging databases and/or environments. While we have confidence in the current quality of the Hive2 release, and will work with you on beta activities an</span><span class="span_3">d any experiments you wish to do in staging, we do not recommend or support the use of this experimental option for production workloads.&#160; </span>
+                        </p>
+                        <p class="p_10">&#160;</p>
+                        <p class="p_9">If you finish your preview activities before Hive2 is GA (available for production workloads for all customers) then based on our mutual level of confidence in the software, we can discuss supporting production use before the official GA date.</p>
+                        <p class="p_10">&#160;</p>
+                        <p class="p_10">&#160;</p>
+                        <p class="p_10">&#160;</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td_3">
+                        <p class="p_8">2019-06</p>
+                    </td>
+                    <td class="td_4">
+                        <p class="p_8">Hive 2 released to production. </p>
+                        <ul class="ul_1">
+                            <li class="li_2">Customers can use Hive 2 for production workloads. </li>
+                            <li class="li_2">By default, queries will still run in Hive 0.13 if no version is specified.</li>
+                            <li class="li_2">TD recommends the use of Hive 2 for new ad-hoc and batch workloads </li>
+                            <li class="li_2">Review and upgrade of existing workloads continues.</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td_3">
+                        <p class="p_8">Switch Default Date</p>
+                    </td>
+                    <td class="td_4">
+                        <p class="p_11"><span class="span_3">At a date of the customer’s choosing, </span><span class="span_3">Hive 2 becomes the default Hive release for the customer’s account. </span>
+                        </p>
+                        <p class="p_11">&#160;</p>
+                        <p class="p_9">Users will still have the option of running queries with&#160; Hive 0.13&#160; from the TD Console, API, and CLI, but the default will change to hive2.</p>
+                        <p class="p_11">&#160;</p>
+                        <p class="p_11"><span class="span_3">The TD Console will show Hive 2 as the defa</span><span class="span_3">ult Hive version. In CLI and API, if no version is specified, then Hive 2 will be used. </span>
+                        </p>
+                        <p class="p_11">&#160;</p>
+                        <p class="p_9">After this date, Hive queries that show unexpected compatibility issues can still run in Hive 0.13. </p>
+                        <p class="p_11">&#160;</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>&#160;</p>
+    </body>
+</html>

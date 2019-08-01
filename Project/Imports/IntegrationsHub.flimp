@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MsWordImport
+  PreserveSourceStyles="true"
+  KeepSourceLinks="false"
+  ConvertInlineFormatting="true"
+  AddContinuedLinks="false"
+  AddContinuedFromLinks="false"
+  ContinuedLinkFormat="(continued in {title})"
+  ContinuedFromLinkFormat="(continued from {title})"
+  UseMaxCharLimit="false"
+  UseMinCharLimit="true"
+  MaxCharLimit="10000"
+  MinCharLimit="50"
+  FilenameLength="24"
+  GeneratePageLayouts="false"
+  UseFirstHeadingAsTopicTitle="true"
+  ConvertEquations="true"
+  LastCollectTime="2019-06-19T14:11:59.5426236-07:00"
+  ProjectName="cleanxhtml"
+  ProjectFolder="C:\Users\megmir01\Documents\My Projects\cleanxhtml\"
+  AutoSync="false"
+  AutoFitTables="false"
+  UseHeaderRows="false"
+  LastImport="2019-06-19T14:13:29.5574912-07:00">
+  <Files>
+    <Url
+      Source="../../../../../Downloads/IntegrationsHub.docx"
+      AbsoluteSource="file:///C:/Users/megmir01/Downloads/IntegrationsHub.docx" />
+  </Files>
+  <ExcludedFiles />
+  <CollectedSourceFiles />
+  <SkippedSourceFiles />
+  <GeneratedFiles>
+    <Url
+      Source="../../Content/Resources/Images/IntegrationsHub/What is the Integrations Hub.png"
+      TimeStamp="6/19/2019 2:12:52 PM" />
+    <Url
+      Source="../../Content/Resources/Images/IntegrationsHub/What is the Integrations Hub_1.png"
+      TimeStamp="6/19/2019 2:12:52 PM" />
+    <Url
+      Source="../../Content/Resources/Images/IntegrationsHub/What is the Integrations Hub_2.png"
+      TimeStamp="6/19/2019 2:12:52 PM" />
+    <Url
+      Source="../../Content/IntegrationsHub/What is the Integrations Hub.htm"
+      TimeStamp="6/19/2019 2:12:52 PM" />
+    <Url
+      Source="../TOCs/IntegrationsHub.fltoc"
+      TimeStamp="6/19/2019 2:12:52 PM" />
+    <Url
+      Source="../../Content/Resources/Stylesheets/IntegrationsHub.css"
+      TimeStamp="6/19/2019 2:12:52 PM" />
+  </GeneratedFiles>
+  <ParagraphStyles />
+  <CharacterStyles>
+    <Map
+      From="Hyperlink"
+      To="a.(MS Word Style)" />
+  </CharacterStyles>
+  <NewTopicStyles />
+  <UsedParagraphStyles />
+  <UsedCharacterStyles />
+</MsWordImport>

@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head>
+    </head>
+    <body>
+        <h1>Python Custom Scripting Tutorial</h1>
+        <p>Python scripts can be run from TD Workflow or Digdag, using the Python operator py&gt;. You can create your workflows for TD using the TD Console or from the command line. </p>
+        <p>&#160;</p>
+        <p>For the workflow to run the Python script, you must specify a Docker image. When the workflow task starts, a new Docker container is created based on the specified Docker image. Docker allows the Python script to execute in the container in an isolated environment.</p>
+        <p>&#160;</p>
+        <p>Running this tutorial takes about 30 minutes and does not require that you have prior experience with Python or Docker images. </p>
+        <h1>Prerequisites</h1>
+        <ul>
+            <li>Make sure this feature is enabled for your TD&#160;account.</li>
+            <li>Download and install the TD Toolbelt and the TD&#160;Toolbelt Workflow module. For more information, see <a href="https://support.treasuredata.com/hc/en-us/articles/360001262207">TD Workflow Quickstart.</a></li>
+            <li>Python 3.6.8 with Anaconda 5.3.0 is supported. Your Python code must be compatible with those versions.</li>
+            <li>Python 3.7 with Anaconda 2019.03 is supported. Your Python code must be compatible with those versions.</li>
+            <li>Set up <a href="https://docs.docker.com/get-started/">Docker on you local machine.</a></li>
+            <li>Basic Knowledge of Treasure Workflow's syntax</li>
+        </ul>
+        <h1>3rd-Party Python Libraries</h1>
+        <p>3rd-party Python libraries can be installed from your Python script using the pip install command.</p>
+        <h2>For Docker images compatible with Python 3.6.8 and Anaconda 5.3.0:</h2>
+        <ol>
+            <li>To add more libraries from within your Python script use:
+        
+        <pre xml:space="preserve">pip install --user &lt;package&gt;</pre></li>
+            <li>Append the PATH environment variable using sys.path.append so that the installed packages can be found. </li>
+        </ol>
+        <h2>For Docker images compatible with Python 3.7 and Anaconda 2019.03:</h2>
+        <ol>
+            <li>To add more libraries from within your Python script use:
+        
+        <pre xml:space="preserve">pip install &lt;package&gt;</pre></li>
+        </ol>
+        <h1> Python Examples </h1>
+        <p>See  <a href="https://github.com/treasure-data/workflow-examples/tree/master/td/python-scripting/simple">examples</a>, for basics such as:</p>
+        <ul>
+            <li>How to call functions</li>
+            <li>How to pass parameters to functions</li>
+            <li>How to use environment variables</li>
+            <li>How to import functions</li>
+        </ul>
+        <h1>Reading and Writing Data from Treasure Data</h1>
+        <p>The examples show how to read data in Treasure Data into a Dataframe, manipulate data, and write it back to Treasure Data as a table.</p>
+        <p>&#160;</p>
+        <ol>
+            <li>You can copy  or clone the entire <a href="https://github.com/treasure-data/workflow-examples">repository</a>.</li>
+            <li>Navigate to:<code>workflow-examples/td/python-scripting/simple/</code></li>
+            <li>From the command line, type<code> ls</code> to verify that you are in the correct directory. You should see the following:<br /><code>README.md	other_scripts	scripts		simple.dig</code></li>
+            <li>Push the simple examples to your TD environment by typing the following:<br /><pre>td wf push simple-example</pre><br />This runs the simple.dig workflow and uploads the simple-example to TD.</li>
+        </ol>
+        <p>&#160;</p>
+        <h2>To verify that the sample was added to TD:</h2>
+        <ol>
+            <li>Open TD&#160;Console.</li>
+            <li>Navigate to Workflows.</li>
+            <li>Search for simple.</li>
+            <li>Double click the simple workflow to open up the editor. For example:<br /><img src="../Resources/Images/simpleworkflow_customscript.png" style="height: auto;width: 600px;" /></li>
+        </ol>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <h2>To run the Workflow</h2>
+        <ol>
+            <li>Click New Run.</li>
+        </ol>
+        <p>
+            <img src="../Resources/Images/newrun.png" />
+        </p>
+        <p>&#160;</p>
+        <h2>Or to run the sample from the command line</h2>
+        <ol>
+            <li>Type <br /><code>td wf start simple-example simple --session now</code></li>
+        </ol>
+        <p>
+            <br />
+            <img src="../Resources/Images/cmdLineSimpleexample.png" style="height: auto;width: 800px;" />
+        </p>
+        <p>&#160;</p>
+        <h2>To validate the workflow job run</h2>
+        <p>&#160;</p>
+        <ol>
+            <li>From the TD&#160;Console, navigate to the workflow editor.</li>
+            <li>Select Run History.<br /><![CDATA[
+				 ]]><img src="../Resources/Images/runhistory_simple.png" /></li>
+            <li>If there are multiple instances of the job, select one to open the job history. From here you can view at what time the job ran, audit logs, and other helpful diagnostic information about the job.</li>
+        </ol>
+        <p>&#160;</p>
+        <p>
+            <img src="../Resources/Images/execution history_simple.png" style="width: 800px;" />
+        </p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+    </body>
+</html>

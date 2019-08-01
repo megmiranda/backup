@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" xml:lang="en-us">
+    <head><title></title>
+        <link href="../Resources/Stylesheets/PrestoDeleteStatmentReference.css" rel="stylesheet" />
+    </head>
+    <body>
+        <h1>Presto DELETE Statement Syntax</h1>
+        <p class="NormalWeb">A DELETE statement is used to delete one or more rows in a table, depending on how many rows satisfy the search condition that you specify in the WHERE clause. The WHERE clause also helps reduce unintentional DELETE commands. </p>
+        <p class="NormalWeb">DELETE statements are helpful for:</p>
+        <ul>
+            <li>Cleaning up error records</li>
+            <li>Removing duplicate records</li>
+            <li>Removing unnecessary or unexpected results from result tables </li>
+        </ul>
+        <p class="NormalWeb">A Presto DELETE of individual records from tables offers more flexibility than the&#160;<a href="https://support.treasuredata.com/hc/en-us/articles/360001262027-Partial-Deletion">td_partial_delete &#160;</a>command. </p>
+        <h2>Syntax</h2><pre><span class="class">DELETE</span><span class="keyword">FROM</span> &lt;table_name&gt; [ <span class="keyword">WHERE</span> &lt;condition&gt; ]</pre>
+        <p>&#160;Where:</p>
+        <ul class="ul_1">
+            <li class="icon_1">&lt;table_name&gt; is the name of the table for deletion</li>
+            <li class="icon_1">&lt;condition&gt; is the&#160;<span class="cmd">clause to specify a search condition</span></li>
+        </ul>
+        <h2>Examples</h2>
+        <p class="NormalWeb">Delete all line items shipped by air:</p><pre><span class="class">DELETE</span><span class="keyword">FROM</span> lineitem <span class="keyword">WHERE</span> shipmode = <span class="delimiter">'</span><span class="content">AIR</span><span class="delimiter">'</span></pre>
+        <p class="NormalWeb">Delete all event logs from a July 1st, 2017 UTC:</p><pre><span class="class">DELETE</span><span class="keyword">FROM</span> lineitem <span class="keyword">WHERE</span> TD_TIME_RANGE(<span class="predefined-type">time</span>, <span class="delimiter">'</span><span class="content">2017-07-01</span><span class="delimiter">'</span>,<span class="delimiter">'</span><span class="content">2017-07-02</span><span class="delimiter">'</span>)</pre>
+    </body>
+</html>

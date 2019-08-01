@@ -1,0 +1,337 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" xml:lang="en-us">
+    <head><title></title>
+        <link href="../Resources/Stylesheets/Wishhive2.css" rel="stylesheet" />
+    </head>
+    <body>
+        <h1 class="Heading1_1">Specific Query Examples of Syntax Changes and Fixes</h1>
+        <p>The following guidelines describe changes in queries that will need to be made. Examples of each issue we’ve found so far in sample scripts or queries and how to fix them:</p>
+        <h2 class="Heading2">v column handling</h2>
+        <p>Queries that contain v[‘&lt;column_name&gt;’] syntax need to be rewritten to use regular column name syntax or escaped column name syntax.</p>
+        <p class="p_14">Make sure that the queries don’t use v[] syntax because the Hive 2 compiler will give an error when using v[] syntax. For example:</p>
+        <p class="p_15">‘Invalid table alias or column reference 'v'</p>
+        <p class="p_14">To fix the query to remove v[] syntax:</p>
+        <p class="p_14">Example: ment_report.py<br />Current state of ment_py:</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_2">
+                    <p>SELECT v['user_id'], v['a_type'], v['time_to_view'], v['action'],time  
+					FROM m_ments 
+					WHERE time  1546156800 </p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p class="p_17">Needs to be rewritten as follows:</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_1">
+                    <p class="p_6">SELECT cast(`user_id` as STRING), cast(`a_type` as BIGINT), cast(`time_to_view` as DOUBLE),cast(`action` as BIGINT)<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; time<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; FROM m_ments<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; WHERE time &gt; 1546156800</p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p class="p_9">If you know that the underlying data type should be a numeric, rather than a STRING, you can:</p>
+        <ul class="ul_1">
+            <li class="li_1">set the schema for the column to be a numeric rather than a STRING </li>
+            <li class="li_1">and then CAST the data type to the correct numeric type rather than a STRING </li>
+        </ul>
+        <p class="p_9">to match the newly changed data type for the column.</p>
+        <p>&#160;</p>
+        <h3 class="Heading3">Columns selected through vcolumn, where names start with an underscore need to be escaped with back quotes</h3>
+        <p>queries that use v syntax and start with a leading underscore such as v[‘_&lt;column_name&gt;’]. 
+        </p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p class="p_17">
+            <br />Example: sweeper: update_mobile_audience.py</p>
+        <p class="p_17">Currently the script is:</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_1">
+                    <p>SELECT email, fb_uid,  app_type FROM (<br />&#160; SELECT v['user_id'] as uid FROM apps WHERE v['action'] = 'associate_ping' AND v['user_id'] IS NOT NULL AND time &gt; 1548748800) r<br />JOIN (<br />&#160; SELECT v['_id'] as uid, email, fb_uid, app_type FROM user_20190130172521 WHERE time &gt; 1548748800 AND (v['likely_bot'] = 'false' OR v['likely_bot'] IS NULL)) u<br />ON r.uid = u.uid</p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p class="p_17"> Needs to be rewritten as:</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_1">
+                    <p class="p_6">SELECT email, fb_uid, app_type FROM (<br />&#160; SELECT cast('user_id' as STING) as uid FROM apps WHERE cast('action' as STRING) = 'associate_ping' AND cast('user_id' as STRING) IS NOT NULL AND time &gt; 1548748800) r <br />JOIN (<br />SELECT cast(`_id` as STRING) as uid, email, fb_uid, app_type FROM user_20190130172521 WHERE time &gt; 1548748800 AND (cast('likely_bot' as STRING) = 'false' OR cast('likely_bot' as STRING) IS NULL)) u <br />ON r.uid = u.uid</p>
+                </td>
+            </tr>
+        </table>
+        <h2 class="Heading2">Expanded list of reserved words in Hive 2</h2>
+        <p class="p_9">&#160;</p>
+        <p>Review a list of Hive 2 reserved words. UDF reference documentation is available at this <a href="https://support.treasuredata.com/hc/en-us/articles/360016256653-Treasure-Data-Specific-UDF-Reference">TD Documentation link</a>. Hivemall adds more UDFs, which are listed at this <a href="https://hivemall.incubator.apache.org/userguide/misc/funcs.html">HiveMall documentation link</a>.
+        </p>
+        <p>&#160;</p>
+        <p class="p_9">&#160;</p>
+        <p class="p_9">Run your queries using&#160; EXPLAIN keyword to see if they would compile in with Hive 2.&#160; Identify your queries with ‘parse error’ issues. Parse error issues indicate that you need to find the keyword in the script and put backticks around it.</p>
+        <p class="p_9">&#160;</p>
+        <p class="p_10">Example parse errors given by Hive 2: </p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_2">
+                    <p class="p_3">cannot recognize input near 'date' '&gt;=' '1548403200' in expression specification<br /><br />cannot recognize input near 'AS' 'date' ',' in selection target
+                    </p>
+                    <p class="p_3">&#160;</p>
+                    <p class="p_18">cannot recognize input near 'timestamp' '=' '1548835200' in expression specification</p>
+                    <p class="p_3">
+                        <br />cannot recognize input near '(' 'SELECT' 'DISTINCT' in joinSource <br /></p>
+                </td>
+            </tr>
+        </table>
+        <p class="p_9">&#160;</p>
+        <p class="p_3">For example, to fix this for Error: cannot recognize input near 'date' '&gt;=' '1548403200' in expression specification. Given the current query syntax of:
+        </p>
+        <p class="p_3">&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_2">
+                    <p class="p_3">SELECT&#160; queue_id<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; , cs_id<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; , SUM(refunds) AS refunds_qtd<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; , SUM(disputed_incorrect_refunds) AS disputed_incorrect_refunds_qtd<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; , SUM(cs_detected_incorrect_refunds) AS cs_detected_incorrect_refunds_qtd<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; , SUM(detected_incorrect_refunds) AS detected_incorrect_refunds_qtd<br />FROM&#160;&#160;&#160; daily_cs_stats<br />WHERE&#160;&#160; date &gt;= 1546329600 AND date &lt; 1547884800&#160; <br />AND role in ('26','25')<br />GROUP BY 1,2<br />&#160; </p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p>You need to rewrite the query syntax as:</p>
+        <p class="p_3">&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_2">
+                    <p class="p_3">SELECT&#160; queue_id<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; , cs_id<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; , SUM(refunds) AS refunds_qtd<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; , SUM(disputed_incorrect_refunds) AS disputed_incorrect_refunds_qtd<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; , SUM(cs_detected_incorrect_refunds) AS cs_detected_incorrect_refunds_qtd<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; , SUM(detected_incorrect_refunds) AS detected_incorrect_refunds_qtd<br />FROM&#160;&#160;&#160; daily_cs_stats<br />WHERE&#160;&#160; `date` &gt;= 1546329600 AND `date` &lt; 1547884800&#160; <br />AND role in ('26','25')<br />GROUP BY 1,2&#160;&#160;&#160; </p>
+                </td>
+            </tr>
+        </table>
+        <p class="p_16">&#160;</p>
+        <p class="p_9">&#160;</p>
+        <p class="p_9">&#160;</p>
+        <h2 class="Heading2">Numeric literals must be CAST to a number data type</h2>
+        <p class="p_10">Numeric literals that are not integers, default to decimal. However, TD storage only supports DOUBLE. You must CAST any numeric value to DOUBLE before storing in a table. </p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_2">
+                    <p class="p_3">51.51202 -&gt; CAST(51.51202 AS DOUBLE)
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>Here is an example that works with Hive 013, but fails with Hive 2 if not type casted. 
+        </p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_2">
+                    <p class="p_3">WITH input as (</p>
+                    <p class="p_3"> select 51.5202 as col1dc</p>
+                    <p class="p_3"> )</p>
+                    <p class="p_3"> insert into table new_table_with_no_columns&#160; select col1dc from&#160; input
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p>new_table_with_no_columns&#160; has no columns defined in the schema. It will work in Hive 013 and fail in Hive 2 with this error: </p>
+        <p>&#160;</p>
+        <p>FAILED: SemanticException java.lang.IllegalArgumentException: Failed to cast hive type : decimal(6,4) (field : col1dc) to TD type, only following hive types can be casted to TD type : tinyint, smallint, int, bigint, float, double, string, binary, array, map, struct, uniontype</p>
+        <p>&#160;</p>
+        <p class="p_10">To fix it, cast the literal to a DOUBLE. For example:</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_2">
+                    <p class="p_3">WITH input as (</p>
+                    <p class="p_3"> select cast(51.5202 as double) as col1dc
+                    </p>
+                    <p class="p_3"> )</p>
+                    <p class="p_3"> insert into table new_table_with_no_columns&#160; select col1dc from&#160; input
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>All numeric literals in an array must be CAST to a consistent data type.&#160; For storage into a table CAST to a DOUBLE data type, but, for other purposes such as computation, CAST them to data types recognized within Hive. For example,&#160; DECIMAL.
+        </p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_2">
+                    <p class="p_3">Array(0, 0.0, 1.0)<br />-&gt;<br />Array(0, cast(0.0 as decimal(19,0)), cast(1.0 as decimal(19,0)))
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p class="p_19">&#160;</p>
+        <p class="p_19">&#160;</p>
+        <p>Here is an example that works with Hive 013 and gives an error with Hive 2. </p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_2">
+                    <p class="p_6">SELECT</p>
+                    <p class="p_6">CAST(tuple[0] AS BIGINT) as offset,
+                    </p>
+                    <p class="p_6">tuple[1] as increase_weight,
+                    </p>
+                    <p class="p_6">tuple[2] as decrease_weight
+                    </p>
+                    <p class="p_6">FROM</p>
+                    <p class="p_6">(</p>
+                    <p class="p_6">SELECT</p>
+                    <p class="p_6">Array(</p>
+                    <p class="p_6">Array(0, 0.0, 1.0),
+                    </p>
+                    <p class="p_6">Array(1, 0.019675926, 0.980324074),
+                    </p>
+                    <p class="p_6">Array(2, 0.074074074, 0.925925926),
+                    </p>
+                    <p class="p_6">Array(3, 0.15625, 0.84375),
+                    </p>
+                    <p class="p_6">Array(4, 0.259259259, 0.740740741),
+                    </p>
+                    <p class="p_6">Array(5, 0.376157407, 0.623842593),
+                    </p>
+                    <p class="p_6">Array(6, 0.5, 0.5),
+                    </p>
+                    <p class="p_6">Array(7, 0.623842593, 0.376157407),
+                    </p>
+                    <p class="p_6">Array(8, 0.740740741, 0.259259259),
+                    </p>
+                    <p class="p_6">Array(9, 0.84375, 0.15625),
+                    </p>
+                    <p class="p_6">Array(10, 0.925925926, 0.074074074),
+                    </p>
+                    <p class="p_6">Array(11, 0.980324074, 0.019675926)
+                    </p>
+                    <p class="p_6">) as tuples</p>
+                    <p class="p_6">) t</p>
+                    <p class="p_6">LATERAL VIEW explode(tuples) exploded AS tuple
+                    </p>
+                    <p class="p_6">&#160;</p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>The error given for Hive 2 is:</p>
+        <p>&#160;</p>
+        <p> FAILED: SemanticException [Error 10016]: Line 10:0 Argument type mismatch '0.980324074': Argument type "array&lt;decimal(19,9)&gt;" is different from preceding arguments. Previous type was "array&lt;decimal(10,0)&gt;"
+        </p>
+        <p>&#160;</p>
+        <p>To fix the SQL, cast it to&#160; decimal(19,9)&#160; (19 digits with 9 digits after the decimal). 
+        </p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_2">
+                    <p class="p_6">SELECT</p>
+                    <p class="p_6">&#160;&#160;&#160; CAST(tuple[0] AS BIGINT) as offset,
+                    </p>
+                    <p class="p_6">&#160;&#160;&#160; tuple[1] as increase_weight,
+                    </p>
+                    <p class="p_6">&#160;&#160;&#160; tuple[2] as decrease_weight
+                    </p>
+                    <p class="p_6">&#160; FROM</p>
+                    <p class="p_6">&#160;&#160;&#160; (</p>
+                    <p class="p_6">&#160;&#160;&#160;&#160;&#160; SELECT</p>
+                    <p class="p_6">&#160;&#160;&#160;&#160;&#160;&#160;&#160; Array(
+                    </p>
+                    <p class="p_6">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; Array(0, cast(0.0 as decimal(19,9)), cast(1.0 as decimal(19,9))),
+                    </p>
+                    <p class="p_6">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; Array(1, cast(0.019675926 as decimal(19,9)), cast(0.980324074 as decimal(19,9))),
+                    </p>
+                    <p class="p_6">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; Array(2, cast(0.074074074 as decimal(19,9)), cast(0.925925926 as decimal(19,9))),
+                    </p>
+                    <p class="p_6">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; Array(3, cast(0.15625 as decimal(19,9)), cast(0.84375 as decimal(19,9))),
+                    </p>
+                    <p class="p_6">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; Array(4, cast(0.259259259 as decimal(19,9)), cast(0.740740741 as decimal(19,9))),
+                    </p>
+                    <p class="p_6">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; Array(5, cast(0.376157407 as decimal(19,9)), cast(0.623842593 as decimal(19,9))),
+                    </p>
+                    <p class="p_6">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; Array(6, cast(0.5 as decimal(19,9)), cast(0.5 as decimal(19,9))),
+                    </p>
+                    <p class="p_6">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; Array(7, cast(0.623842593 as decimal(19,9)), cast(0.376157407 as decimal(19,9))),
+                    </p>
+                    <p class="p_6">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; Array(8, cast(0.740740741 as decimal(19,9)), cast(0.259259259 as decimal(19,9))),
+                    </p>
+                    <p class="p_6">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; Array(9, cast(0.84375 as decimal(19,9)), cast(0.15625 as decimal(19,9))),
+                    </p>
+                    <p class="p_6">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; Array(10, cast(0.925925926 as decimal(19,9)), cast(0.074074074 as decimal(19,9))),
+                    </p>
+                    <p class="p_6">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; Array(11, cast(0.980324074 as decimal(19,9)), cast(0.019675926 as decimal(19,9)))
+                    </p>
+                    <p class="p_6">&#160;&#160;&#160;&#160;&#160;&#160;&#160; ) as tuples</p>
+                    <p class="p_6">&#160;&#160;&#160; ) t</p>
+                    <p class="p_6">&#160;&#160;&#160;&#160;&#160; LATERAL VIEW explode(tuples) exploded AS tuple
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <h2 class="Heading2">CROSS JOIN requires a query hint </h2>
+        <p>&#160;</p>
+        <p>Example of an explicit CROSS JOIN in a queries.&#160; </p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_2">
+                    <p class="p_6">WITH swaps_by_user AS (<br />...<br />)<br />INSERT OVERWRITE TABLE search.self_inv_product_metrics<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; SELECT ... ) e<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; ON s.cid = e.cid<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; CROSS JOIN (<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; SELECT MIN(bid) AS min_bid<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; FROM product_boost.active_product_boost_campaign_products a<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; WHERE<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; time &gt;= 1548835200 - 86400<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; AND a.daystamp IN (<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; SELECT MAX(daystamp)<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; FROM product_boost.active_product_boost_campaign_products<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; WHERE time &gt;= 1548835200 - 86400<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; )<br />&#160;&#160;&#160; ) pb</p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p class="p_20">It needs to be rewritten as follows:</p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_1">
+                    <p class="p_3">-- @TD enable_cartesian_product: true
+                    </p>
+                    <p class="p_3">WITH swaps_by_user AS (<br />...<br />)<br />-- @TD enable_cartesian_product: true</p>
+                    <p class="p_3">INSERT OVERWRITE TABLE search.self_inv_product_metrics<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; SELECT ... ) e<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; ON s.cid = e.cid<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; CROSS JOIN (<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; SELECT MIN(bid) AS min_bid<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; FROM product_boost.active_product_boost_campaign_products a<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; WHERE<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; time &gt;= 1548835200 - 86400<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; AND a.daystamp IN (<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; SELECT MAX(daystamp)<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; FROM product_boost.active_product_boost_campaign_products<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; WHERE time &gt;= 1548835200 - 86400<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; )<br />&#160;&#160;&#160; ) pb</p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p>It is possible that some queries have implicit cross-joins, where tables are joined without key columns being specified. The most effective way to identify these cases across your workload is by testing the queries. If an attempt to run a query with an implicit CROSS JOIN and no special “-- @TD enable_cartesian_product: true” hint is included, an error similar to the following is given:</p>
+        <p>
+            <br />
+        </p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_2">
+                    <p class="p_3">FAILED: SemanticException Cartesian products are disabled for safety reasons. If you know what you are doing, please set hive.strict.checks.cartesian.product to false and that hive.mapred.mode is not set to 'strict' to proceed. Note that if you may get errors or incorrect results if you make a mistake while using some of the unsafe features.</p>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

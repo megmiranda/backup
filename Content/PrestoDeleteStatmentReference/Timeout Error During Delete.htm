@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" xml:lang="en-us">
+    <head><title></title>
+        <link href="../Resources/Stylesheets/PrestoDeleteStatmentReference.css" rel="stylesheet" />
+    </head>
+    <body>
+        <h1>Timeout Error During Delete Operations</h1>
+        <p>Depending on the number of partitions that contain rows to be deleted, a DELETE operation can take several hours. An operation can time out and the job fail if too many partitions are affected. &#160;If the job fails and the output contains the following message: </p><pre>org.plazmadb.metadb.MetadataSQLException: ERROR: canceling statement due to statement timeout</pre>
+        <p>Then you should rewrite the DELETE statement to affect fewer rows or fewer partitions. The most effective way to do this is to include a WHERE clause that limits the time range for the DELETE with TD_TIME_RANGE or TD_INTERVAL. For example, if you have a year's worth of game history data, instead of </p><pre>DELETE FROM game_history WHERE player_id=1000;</pre>
+        <p class="NormalWeb">try</p><pre>DELETE FROM game_history WHERE player_id=1000 AND TD_TIME_RANGE(time, '2018-01-01', '2018-02-01','PDT')</pre>
+        <p>and then delete more time ranges until all rows are deleted. TD support can provide a workflow that simplifies automating this process. </p>
+    </body>
+</html>

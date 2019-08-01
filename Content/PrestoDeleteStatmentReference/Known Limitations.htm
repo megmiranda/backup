@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" xml:lang="en-us">
+    <head><title></title>
+        <link href="../Resources/Stylesheets/PrestoDeleteStatmentReference.css" rel="stylesheet" />
+    </head>
+    <body>
+        <h1>Presto DELETE Statement Known Limitations</h1>
+        <p>The Presto DELETE&#160;statement has several known limitations. </p>
+        <h2>No DELETE for Recently&#160;Collected&#160;Streaming Data</h2>
+        <p class="NormalWeb"> Data that is recently collected (typically last 2-4 hours) through streaming ingestion method <span class="Emphasis">can not</span> be deleted using the DELETE statement because streaming data is temporarily stored in the TD “real-time” data storage. </p>
+        <p class="NormalWeb">If you try to delete data in real-time storage, the query will fail to run. </p>
+        <p class="NormalWeb">&#160;</p>
+        <h3>To workaround this issue, you can choose one of the following: </h3>
+        <ul>
+            <li>Select a range of data that does not include data within real-time storage. </li>
+            <li>Wait for data in real-time storage to be propagated to archive storage, then delete it. This typically occurs within 2-6 hours after arrival, though it can be longer. </li>
+            <li>You can add the following magic comment within the SQL statement,&#160; to force the query to run. <br />-- set session force_delete = 'true'<br />The query will NOT DELETE data in real-time storage, but the query is considered to have run successfully. <br />To ensure the deletion of records in a table, including those in real-time storage, use the following steps: </li>
+        </ul>
+        <ol>
+            <li>Use DELETE with the magic comment to delete the records in archive storage.</li>
+            <li>Use a SELECT(COUNT(1)) ... LIMIT 1 with the same predicates as the DELETE to determine whether there are any matching records remaining. These will be in real-time storage, or they might have been propagated to archive storage after the initial DELETE statement. </li>
+            <li>Repeat the preceding steps periodically, until SELECT(COUNT(1))... LIMIT 1 returns a zero result. </li>
+        </ol>
+        <p class="NormalWeb">Depending on propagation time from real-time storage to archive storage, it may take a while before all matching records are deleted. </p>
+        <p>For example</p>
+        <p class="NormalWeb">Delete your records:</p><pre>-- set session force_delete = <span class="code-quote">'</span><span class="code-keyword">true</span><span class="code-quote">'</span></pre><pre>DELETE FROM lineitem where ship=<span class="code-quote">'AIR'</span>;</pre>
+        <p class="NormalWeb">Then check whether there are remaining records in the table not covered by the delete: </p><pre>SELECT COUNT(1)&#160; as REMAINING_ROWS FROM lineitem where ship=<span class="code-quote">'AIR'</span> LIMIT 1;</pre>
+        <p class="NormalWeb">After this SELECT statement returns 0 for REMAINING_ROWS, you know there are no rows left in realtime storage or archive storage. </p>
+        <h2 class="Heading2">DELETE against DataTank</h2>
+        <p class="NormalWeb">DELETE statements cannot be issued against data stored in Data Tank. Connect directly to the PostgreSQL Data Tank to issue DELETE statements on data stored there. See <a href="https://support.treasuredata.com/hc/en-us/articles/360001450868-Query-Data-Tanks-from-Presto">querying Data Tank from Presto</a> for more details. </p>
+        <h2 class="Heading2">Multiple DELETE jobs on the same table are NOT allowed when there is overwrap on a partition file </h2>
+        <p class="NormalWeb">Multiple DELETE jobs on the same table are allowed only when there’s no overwrap on a partition file. If the table is partitioned by 1-hour, it can be deleted with different time-range. But there could be large time range data files so it’s not always guaranteed to be executed. More precisely, multiple jobs cannot remove the same partition file at the same time. </p>
+        <p class="NormalWeb">Also when a DELETE job is running and internal optimization process for partitioning merges (deletes small files and creates large ones) the data which DELETE involves, an error occurs:&#160;<span class="HTMLCode">Metadata transaction conflicted with others</span>. </p>
+        <p class="NormalWeb">In this case, retry the DELETE job manually.</p>
+        <h2 class="Heading2">Undoing Delete Statements&#160;</h2>
+        <p class="NormalWeb">If you want to rollback an executed delete statement and recover deleted data, you must contact Arm Treasure Data technical support and provide the jobID of the job that contained the executed Presto DELETE statement. In many cases, you can undo a delete statement. However, certain situations prevent the rollback of Presto DELETE statements. </p>
+        <p class="NormalWeb">Situations that prevent rollback include:</p>
+        <ul>
+            <li>When new partitions have been deleted by another DELETE statement. </li>
+            <li>When original partitions have been discarded, which can happen after a retention period. </li>
+            <li>When a table is dropped and a new table with the same name is created. </li>
+            <li>When new partitions have been further modified or replaced, which can happen as a result of internal storage maintenance processes. </li>
+        </ul>
+    </body>
+</html>

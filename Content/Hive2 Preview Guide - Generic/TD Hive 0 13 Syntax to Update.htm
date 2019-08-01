@@ -1,0 +1,403 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" xml:lang="en-us">
+    <head><title></title>
+        <link href="../Resources/Stylesheets/Hive2 Preview Guide - Generic.css" rel="stylesheet" />
+    </head>
+    <body>
+        <h1 class="Heading1"><a name="_y2u86x9ayfwv"></a><span class="span_7">TD Hive 0.1</span><span class="span_7">3 Syntax to Update for Hive 2</span>
+        </h1>
+        <p class="p_7">Here is a summary of the Hive 0.13 constructs that must be modified for ANSI SQL compatibility to be ready for Hive 2.&#160; Examples have been provided for most required changes. </p>
+        <p>&#160;</p>
+        <h2 class="Heading2"><a name="_oawrnjysar6c"></a>Stricter Syntax: Additional Reserved Words and Function/UDF Names Require Escapes</h2>
+        <p>&#160;</p>
+        <p class="p_16">Reserved words and UDF names used as column names must be escaped with backticks. </p>
+        <p>&#160;</p>
+        <p class="p_16">The most common case of this is `date`. For example:</p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_6">
+                    <p class="p_17">date -&gt; `date`</p>
+                </td>
+            </tr>
+        </table>
+        <p class="p_11">&#160;</p>
+        <p>&#160;</p>
+        <p class="p_18">Reserved words will manifest as parse errors in Hive 2. Parse error issues indicate that you need to find the keyword in the script and put backticks around it.</p>
+        <p>&#160;</p>
+        <p class="p_16">Example parse errors given by Hive2: </p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_6">
+                    <p class="p_11"><span class="span_15">cannot recognize input near 'date' '&gt;=' '1548403200' in expression specification</span><span class="span_15"><br /></span><span class="span_15"><br />cannot recognize input near 'timestamp' '=' '1548835200' in expression specification</span><span class="span_15"><br /></span><span class="span_15"><br />cannot recognize input near 'AS' 'date' ',' in selection target</span>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p class="p_19">&#160;</p>
+        <p class="p_10"><span class="span_16">To fix this, </span><span class="span_17"> given t</span><span class="span_17">he current query syntax of:</span>
+        </p>
+        <p class="p_10">&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_6">
+                    <p class="p_10"><span class="span_18">SELECT</span><span class="span_19">&#160; queue_id</span><span class="span_19"><br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; , cs_id</span><span class="span_19"><br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; , </span><span class="span_18">SUM</span><span class="span_19">(refunds) </span><span class="span_18">AS</span><span class="span_19"> refunds_qtd</span><span class="span_19"><br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; , </span><span class="span_18">SUM</span><span class="span_19">(x_refunds) </span><span class="span_18">AS</span><span class="span_19"> x_refunds_qtd</span><span class="span_19"><br /></span><span class="span_19"><br /></span><span class="span_18">FROM</span><span class="span_19">&#160;&#160;&#160; daily_cs_stats</span><span class="span_19"><br /></span><span class="span_18">WHERE</span><span class="span_19">&#160;&#160; </span><span class="span_20">date</span><span class="span_21"> &gt;= </span><span class="span_22">1546329600</span> <span class="span_23">AND</span> <span class="span_20">date</span><span class="span_21"> &lt; </span><span class="span_22">1547884800</span><span class="span_19">&#160; </span><span class="span_19"><br /></span><span class="span_19"><br />&#160; </span></p>
+                </td>
+            </tr>
+        </table>
+        <p class="p_20"><span class="span_19">&#160; </span><span class="span_19"><br /></span>
+        </p>
+        <p>You need to rewrite the query as:</p>
+        <p class="p_10">&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_6">
+                    <p class="p_10"><span class="span_18">SELECT</span><span class="span_19">&#160; queue_id</span><span class="span_19"><br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; , cs_id</span><span class="span_19"><br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; , </span><span class="span_18">SUM</span><span class="span_19">(refunds) </span><span class="span_18">AS</span><span class="span_19"> refunds_qtd</span><span class="span_19"><br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; , </span><span class="span_18">SUM</span><span class="span_19">(x_refunds) </span><span class="span_18">AS</span><span class="span_19"> x_refunds_qtd</span><span class="span_19"><br /></span><span class="span_19"><br /></span><span class="span_18">FROM</span><span class="span_19">&#160;&#160;&#160; daily_cs_stats</span><span class="span_19"><br /></span><span class="span_18">WHERE</span><span class="span_19">&#160;&#160; </span><span class="span_24">`date`</span><span class="span_21"> &gt;= </span><span class="span_22">1546329600</span> <span class="span_23">AND</span> <span class="span_24">`date`</span><span class="span_21"> &lt; </span><span class="span_22">1547884800</span><span class="span_19">&#160; </span><span class="span_19"><br /> </span></p>
+                </td>
+            </tr>
+        </table>
+        <p class="p_10">&#160;</p>
+        <p><span class="span_25">A list of Hive 2 reserved words is available in Appendix A</span><span class="span_26">. </span>
+        </p>
+        <p><span class="span_25">TD Hive UDF reference documentation is available at this </span><a href="https://support.treasuredata.com/hc/en-us/articles/360016256653-Treasure-Data-Specific-UDF-Reference"><span class="span_4">TD Documentation l</span><span class="span_4">ink</span></a><span class="span_25">. </span>
+        </p>
+        <p><span class="span_25">Hivemall adds more UDFs, which are listed at this </span><a href="https://hivemall.incubator.apache.org/userguide/misc/funcs.html"><span class="span_4">HiveMall documentation link</span></a><span class="span_25">.</span>
+        </p>
+        <h2 class="Heading2"><a name="_tezy5o8qa6ep"></a>Stricter Syntax: In SELECT, Use “AS” with Aliases </h2>
+        <p>In testing some SELECT statements you may encounter a semantic error such as:</p>
+        <p>&#160;</p>
+        <p>FAILED: SemanticException Line 0:-1 Invalid table alias or column reference 'sq_1': (possible column names are…</p>
+        <p>&#160;</p>
+        <p>This can happen when Hive 2 is unable to unambiguously determine whether an identifier is a column alias or the name of a real column. For example, the following query (a fragment from an actual customer query) produced an error:</p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_5">
+                    <p class="p_11"><span class="span_27">SELECT</span> <span class="span_27">time</span><span class="span_28">,</span><span class="span_28"><br />&#160;&#160;&#160;&#160;&#160;&#160; </span><span class="span_27">replace</span><span class="span_28">(</span><span class="span_27">replace</span><span class="span_28">(k_uuid,</span><span class="span_29">'%2B'</span><span class="span_28">,</span><span class="span_29">'+'</span><span class="span_28">),</span><span class="span_29">'%2F'</span><span class="span_28">,</span><span class="span_29">'/'</span><span class="span_28">) k_uuid, category_id,ao_category_id </span><span class="span_27">FROM</span><span class="span_28"> X </span><span class="span_27">WHERE</span> <span class="span_27">EXISTS</span><span class="span_28">(</span><span class="span_27">SELECT</span><span class="span_28"> * </span><span class="span_27">FROM</span><span class="span_28"> A </span><span class="span_27">WHERE</span><span class="span_28"> A.mtime = X.time </span><span class="span_27">AND</span><span class="span_28"> A.x_uuid = X.x_uuid) </span><span class="span_27">GROUP</span> <span class="span_27">BY</span> <span class="span_30">1</span><span class="span_28">,</span><span class="span_30">2</span><span class="span_28">,</span><span class="span_30">3</span><span class="span_28">,</span><span class="span_30">4</span></p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p>The error was:</p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_5">
+                    <p class="p_11"><span class="span_28">FAILED: SemanticException Line 0:-1 Invalid table alias or column reference 'sq_1': (possible column</span><span class="span_28"> names are: _table_or_col a) x_uuid) sq_corr_1)), (. (tok_table_or_col sq_1) sq_corr_1))</span>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>The problem here is that x_uuid is the name of a source column in the source table X, as well as the desired column alias in the SELECT. </p>
+        <p>The fix is to use an AS&#160; to make it unambiguous that the identifier is an alias:</p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_5">
+                    <p class="p_11"><span class="span_27">SELECT</span> <span class="span_27">time</span><span class="span_28">,</span><span class="span_28"><br />&#160;&#160;&#160;&#160;&#160;&#160; </span><span class="span_27">replace</span><span class="span_28">(</span><span class="span_27">replace</span><span class="span_28">(</span><span class="span_28">x_uuid,</span><span class="span_29">'%2B'</span><span class="span_28">,</span><span class="span_29">'+'</span><span class="span_28">),</span><span class="span_29">'%2F'</span><span class="span_28">,</span><span class="span_29">'/'</span><span class="span_28">) </span><span class="span_27">AS</span><span class="span_28"> x_uuid, category_id,ao_category_id </span><span class="span_27">FROM</span><span class="span_28"> X </span><span class="span_27">WHERE</span> <span class="span_27">EXISTS</span><span class="span_28">(</span><span class="span_27">SELECT</span><span class="span_28"> * </span><span class="span_27">FROM</span><span class="span_28"> A </span><span class="span_27">WHERE</span><span class="span_28"> A.mtime = X.time </span><span class="span_27">AND</span><span class="span_28"> A.x_uuid = X.x_uuid) </span><span class="span_27">GROUP</span> <span class="span_27">BY</span> <span class="span_30">1</span><span class="span_28">,</span><span class="span_30">2</span><span class="span_28">,</span><span class="span_30">3</span><span class="span_28">,</span><span class="span_30">4</span></p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p>&#160; </p>
+        <p>Alternatively, you can avoid using the name of an existing column as an alias:</p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_5">
+                    <p class="p_11"><span class="span_27">SELECT</span> <span class="span_27">time</span><span class="span_28">,</span><span class="span_28"><br />&#160;&#160;&#160;&#160;&#160;&#160; </span><span class="span_27">replace</span><span class="span_28">(</span><span class="span_27">replace</span><span class="span_28">(x_uuid,</span><span class="span_29">'%2B'</span><span class="span_28">,</span><span class="span_29">'+'</span><span class="span_28">),</span><span class="span_29">'%2F'</span><span class="span_28">,</span><span class="span_29">'/'</span><span class="span_28">) x_uuid_out, category_id,ao_category_id </span><span class="span_27">FROM</span><span class="span_28"> X </span><span class="span_27">WHERE</span> <span class="span_27">EXISTS</span><span class="span_28">(</span><span class="span_27">SELECT</span><span class="span_28"> * </span><span class="span_27">FROM</span><span class="span_28"> A </span><span class="span_27">WHERE</span><span class="span_28"> A.mtime = X.time </span><span class="span_27">AND</span><span class="span_28"> A.x_uuid = X.x_uuid) </span><span class="span_27">GROUP</span> <span class="span_27">BY</span> <span class="span_30">1</span><span class="span_28">,</span><span class="span_30">2</span><span class="span_28">,</span><span class="span_30">3</span><span class="span_28">,</span><span class="span_30">4</span></p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <h2 class="Heading2"><a name="_iyay3h1o2f2s"></a>Stricter Types: All numeric literals in an Array must be CAST to the same data type</h2>
+        <p>&#160;</p>
+        <p class="p_16">All numeric literals in an array must be CAST to a consistent data type.&#160; </p>
+        <p>&#160;</p>
+        <p><span class="span_3">Here is an example (from an actua</span><span class="span_3">l customer workload) that works with Hive013 and gives an error with Hive2. </span>
+        </p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_6">
+                    <p class="p_21">SELECT</p>
+                    <p class="p_21">CAST(tuple[0] AS BIGINT) as offset,</p>
+                    <p class="p_21">tuple[1] as increase_weight,</p>
+                    <p class="p_21">tuple[2] as decrease_weight</p>
+                    <p class="p_21">FROM</p>
+                    <p class="p_21">(</p>
+                    <p class="p_21">SELECT</p>
+                    <p class="p_21">Array(</p>
+                    <p class="p_21">Array(0, 0.0, 1.0),</p>
+                    <p class="p_21">Array(1, 0.019675926, 0.9803323),</p>
+                    <p class="p_21">Array(2, 0.074074074, 0.925925926),</p>
+                    <p class="p_21">Array(3, 0.15625, 0.84375),</p>
+                    <p class="p_21">Array(4, 0.259259259, 0.740740741),</p>
+                    <p class="p_21">Array(5, 0.376157407, 0.623842593),</p>
+                    <p class="p_21">Array(6, 0.5, 0.5)</p>
+                    <p class="p_21">) as tuples</p>
+                    <p class="p_21">) t</p>
+                    <p class="p_21">LATERAL VIEW explode(tuples) exploded AS tuple</p>
+                    <p class="p_10">&#160;</p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p class="p_22">The error you will see may be similar to this: </p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_7">
+                    <p class="p_22">FAILED: SemanticException [Error 10016]: Line 10:0 Argument type mismatch '0.9022: Argument type "array&lt;decimal(10,4)&gt;" is different from preceding arguments. Previous type was "array&lt;decimal(10,0)&gt;"</p>
+                </td>
+            </tr>
+        </table>
+        <h2 class="Heading2">
+        </h2>
+        <p><span class="span_3">To fix the error, in this case you can cast all values</span><span class="span_3"> to&#160; decimal(19,9)&#160; (19 digits with 9 digits after the decimal). </span>
+        </p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_6">
+                    <p class="p_21">SELECT</p>
+                    <p class="p_21">&#160;&#160;&#160; CAST(tuple[0] AS BIGINT) as offset,</p>
+                    <p class="p_21">&#160;&#160;&#160; tuple[1] as increase_weight,</p>
+                    <p class="p_21">&#160;&#160;&#160; tuple[2] as decrease_weight</p>
+                    <p class="p_21">&#160; FROM</p>
+                    <p class="p_21">&#160;&#160;&#160; (</p>
+                    <p class="p_21">&#160;&#160;&#160;&#160;&#160; SELECT</p>
+                    <p class="p_21">&#160;&#160;&#160;&#160;&#160;&#160;&#160; Array(</p>
+                    <p class="p_21">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; Array(0, cast(0.0 as decimal(19,9)), cast(1.0 as decimal(19,9))),</p>
+                    <p class="p_21">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; Array(1, cast(0.019675926 as decimal(19,9)), </p>
+                    <p class="p_21">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; cast(0.9803323 as decimal(19,9))),</p>
+                    <p class="p_21">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; Array(2, cast(0.074074074 as decimal(19,9)), </p>
+                    <p class="p_21">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; cast(0.925925926 as decimal(19,9))),</p>
+                    <p class="p_21">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; Array(3, cast(0.15625 as decimal(19,9)), </p>
+                    <p class="p_21">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; cast(0.84375 as decimal(19,9))),</p>
+                    <p class="p_10"><span class="span_10">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; Array(4, cast(0.259259</span><span class="span_10">259 as decimal(19,9)), </span>
+                    </p>
+                    <p class="p_21">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; cast(0.740740741 as decimal(19,9))),</p>
+                    <p class="p_21">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; Array(5, cast(0.376157407 as decimal(19,9)), </p>
+                    <p class="p_21">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; cast(0.623842593 as decimal(19,9))),</p>
+                    <p class="p_21">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; Array(6, cast(0.5 as decimal(19,9)), </p>
+                    <p class="p_10"><span class="span_10">&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span class="span_10">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; cast(0.5 as decimal(19,9)))&#160;&#160;&#160;&#160;&#160;&#160;&#160; ) </span>
+                    </p>
+                    <p class="p_21">&#160;&#160;&#160;&#160;&#160; as tuples</p>
+                    <p class="p_21">&#160;&#160;&#160; ) t</p>
+                    <p class="p_21">&#160;&#160;&#160;&#160;&#160; LATERAL VIEW explode(tuples) exploded AS tuple</p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <h2 class="Heading2"><a name="_6fnwasrvtg6e"></a>Stricter Types: CAST Non-Integer Numeric Literals to DOUBLE Before Storage in TD</h2>
+        <p>&#160;</p>
+        <p><span class="span_25">Numeric literals that are not integers, de</span><span class="span_25">fault to DECIMAL in Hive 2.x. However, TD storage only supports DOUBLE. Therefore you must CAST any numeric value to DOUBLE before storing in a table. </span>
+        </p>
+        <p>&#160;</p>
+        <table class="table_2">
+            <col style="width: 470pt;" />
+            <tr>
+                <td class="td_6">
+                    <p class="p_21">51.5211 -&gt; CAST(51.5211 AS DOUBLE)</p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p class="p_16">Without the casting, you may see an error similar to this:</p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_7">
+                    <p><span class="span_25">FAILED: SemanticException java.lang.IllegalArgumentException: Failed to cast hive type : decimal(6,4) (field : col1dc) to TD type, only following hive types can be casted to TD type : tinyint, sma</span><span class="span_25">llint, int, bigint, float, double, string, binary, array, map, struct, uniontype</span>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p class="p_16"> Here is an example that works with hive013, but fails with hive2 if not type cast. </p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_6">
+                    <p class="p_21">WITH sourceCTE as (</p>
+                    <p class="p_21"> select 51.5211 as col1decimal</p>
+                    <p class="p_21"> )</p>
+                    <p class="p_21"> insert into table new_table_with_no_columns&#160; </p>
+                    <p class="p_21">&#160;&#160;&#160; select col1decimal from&#160; sourceCTE</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="td_6">
+                    <p class="p_10">&#160;</p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p>Assume <span class="span_10">new_table_with_no_columns</span>&#160; does not exist when this statement is run. TD assigns <span class="span_10">new_table_with_no_columns</span> a schema based on the schema of <span class="span_10">sourceCTE</span>. The constant 51.5211&#160; has type DECIMAL(6,4), so <span class="span_10">sourceCTE.col1decimal</span> is of type DECIMAL(6,4).</p>
+        <p>&#160;</p>
+        <p>The INSERT tries to insert the DECIMAL(6,4) into the output table. In Hive 0.13, the value is automatically cast as needed to DOUBLE and written. In Hive 2, this cast is not automatic, so you get the error.</p>
+        <p>&#160;</p>
+        <p><span class="span_25">Note that this requirement only applies to </span><span class="span_31">literal</span><span class="span_25"> numeric values; if you attempt to store an INTEGER column, return value from a function, etc. into a TD table, TD Hive will cast the value appropriately. </span>
+        </p>
+        <h2 class="Heading2"><a name="_2cygma725wfk"></a>Safety Feature: CROSS JOIN requires Query Hint</h2>
+        <p class="p_7">As a precaution, TD Hive 2 restricts the use of CROSS JOINs because they are often coding errors and are expensive to execute. If you intend to perform a cross join, apply the following query hint to bypass this protection:</p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr style="height: 37pt;">
+                <td class="td_8">
+                    <p class="p_10"><span class="span_13">-- @TD enable_cartesian_product</span><span class="span_13">: true</span><span class="span_13"><br /></span>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p>(This is similar to setting hive.mapred.mode to nonstrict in a generic Hive environment.) </p>
+        <p>&#160;</p>
+        <p class="p_7">Explicit cross join example:</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_9">
+                    <p class="p_10"><span class="span_10">&#160;&#160;&#160; </span><span class="span_9">SELECT</span><span class="span_10"> * </span><span class="span_9">FROM</span><span class="span_10"> employee </span><span class="span_9">CROSS</span> <span class="span_9">JOIN</span><span class="span_10"> department</span></p>
+                </td>
+            </tr>
+        </table>
+        <p><span class="span_3"><br /></span><span class="span_3">Implicit cross join example (a JOIN without a WHERE clause):</span>
+        </p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_9">
+                    <p class="p_10"><span class="span_10">&#160;&#160;&#160; </span><span class="span_9">SELECT</span><span class="span_10"> * </span><span class="span_9">FROM</span><span class="span_10"> employee, department</span>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p><span class="span_3">If you run a query with an explicit or implicit CROSS JOIN without adding the query hint, you’ll see an error like this:</span><span class="span_3"><br /></span>
+        </p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_9">
+                    <p class="p_10"><span class="span_10">FAILED: SemanticException Cartesian products are disabled for safety reasons. If you know what you are doing, please </span><span class="span_9">set</span><span class="span_10"> hive.strict.c</span><span class="span_10">hecks.cartesian.product </span><span class="span_9">to</span> <span class="span_9">false</span> <span class="span_9">and</span><span class="span_10"> that hive.mapred.mode </span><span class="span_9">is</span> <span class="span_9">not</span> <span class="span_9">set</span> <span class="span_9">to</span> <span class="span_11">'strict'</span> <span class="span_9">to</span><span class="span_10"> proceed. Note that </span><span class="span_9">if</span><span class="span_10"> you may </span><span class="span_9">get</span> <span class="span_9">errors</span> <span class="span_9">or</span><span class="span_10"> incorrect results </span><span class="span_9">if</span><span class="span_10"> you make a mistake </span><span class="span_9">while</span> <span class="span_9">using</span> <span class="span_9">some</span> <span class="span_9">of</span><span class="span_10"> the </span><span class="span_9">unsafe</span><span class="span_10"> features.</span></p>
+                </td>
+            </tr>
+        </table>
+        <h2 class="Heading2"><a name="_2ol4ivvtsa3t"></a>TD Hive 0.13 Obsolete Feature: v-column Syntax Removed</h2>
+        <p class="p_19"><span class="span_32">v-column</span><span class="span_25"> syntax is an obsolete TD-specific method of referring to columns in TD tables. It was created in the early days of TD, and has been deprecated for years, but still appears in some very old cus</span><span class="span_25">tomer queries. It is not supported in Hive 2. </span>
+        </p>
+        <p class="p_19">&#160;</p>
+        <p class="p_19"><span class="span_32">NOTE: </span><span class="span_25">In some circumstances v-column syntax is still useful in certain TD debugging scenarios, examining ingested data before schema is assigned to it. In such scenarios we recommend the use of Hive 0.13 duri</span><span class="span_25">ng debugging. </span>
+        </p>
+        <p class="p_23">
+            <br />The following changes are required for any query using v column[] syntax:</p>
+        <p>&#160;</p>
+        <p><span class="span_25">1 - v column values are always returned as STRING type. In Hive 2, rather than use the v column syntax, just reference the actual column, but explicitly CAST it to S</span><span class="span_25">TRING, or whatever other type is needed. For example:</span>
+        </p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_9">
+                    <p class="p_10"><span class="span_10">v['country_code'] </span><span class="span_13">--&gt; cast(country_code as STRING)</span><span class="span_13"><br /></span><span class="span_10"><br />cast(v['age'] as int) + 1 </span><span class="span_13">--&gt; cast(age as int) + 1</span><span class="span_10"><br /></span><span class="span_13">-- if the table already has an explicit schema with column 'age' as numeric, you may not need this cast.</span>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p>If you use v column in Hive2, you’ll see the following error message:</p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_9">
+                    <p class="p_21">Invalid table alias or column reference 'v'</p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p><span class="span_25">2 - Columns selected through v </span><span class="span_25">column where names start with underscore need to be escaped with back quotes (`) when rewritten without v column. For example:</span>
+        </p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_9">
+                    <p class="p_10"><span class="span_10">v['_country_code'] -&gt; CAST(`_country_code` AS STRING)</span><span class="span_10"><br /></span><span class="span_13">-- note the use of CAST</span>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p class="p_24">Make sure that the queries don’t use v[] syntax because the Hive 2 compiler will give an error when using v[] syntax. For example:</p>
+        <p class="p_25">‘Invalid table alias or column reference 'v'</p>
+        <p class="p_24">If the original query looks like this: </p>
+        <p class="p_26">V column version:</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_9">
+                    <p class="p_11"><span class="span_27">SELECT</span><span class="span_28"> v[</span><span class="span_29">'user_id'</span><span class="span_28">], v[</span><span class="span_29">'a_type'</span><span class="span_28">], v[</span><span class="span_29">'time_to_view'</span><span class="span_28">], v[</span><span class="span_29">'action'</span><span class="span_28">],</span><span class="span_28"><br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span class="span_27">time</span><span class="span_28"><br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span class="span_27">FROM</span><span class="span_28"> m_announcements</span><span class="span_28"><br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span class="span_27">WHERE</span> <span class="span_27">time</span><span class="span_28"> &gt; </span><span class="span_30">1546156800</span><span class="span_28">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span></p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p class="p_23">Rewrite this as:</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_9">
+                    <p class="p_11"><span class="span_27">SELECT</span> <span class="span_27">cast</span><span class="span_28">(</span><span class="span_29">`user_id`</span> <span class="span_27">as</span> <span class="span_27">STRING</span><span class="span_28">), </span><span class="span_27">cast</span><span class="span_28">(</span><span class="span_29">`a_type`</span> <span class="span_27">as</span> <span class="span_27">BIGINT</span><span class="span_28">), </span></p>
+                    <p class="p_11"><span class="span_27">&#160;&#160;&#160;&#160; cast</span><span class="span_28">(</span><span class="span_29">`time_to_view`</span> <span class="span_27">as</span> <span class="span_27">DOUBLE</span><span class="span_28">),</span><span class="span_27">cast</span><span class="span_28">(</span><span class="span_29">`action`</span> <span class="span_27">as</span> <span class="span_27">BIGINT</span><span class="span_28">),</span><span class="span_28"><br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span class="span_27">time</span><span class="span_28"><br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span class="span_27">FROM</span><span class="span_28"> m_announcements</span><span class="span_28"><br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span class="span_27">WHERE</span> <span class="span_27">time</span><span class="span_28"> &gt; </span><span class="span_30">1546156800</span></p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p>
+            <br />Example: If a current query is:</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_9">
+                    <p class="p_11"><span class="span_27">SELECT</span><span class="span_28"> email, fx_id, pl_type </span><span class="span_27">FROM</span><span class="span_28"> (</span><span class="span_28"><br />&#160; </span><span class="span_27">SELECT</span><span class="span_28"> v[</span><span class="span_29">'user_id'</span><span class="span_28">] </span><span class="span_27">as</span><span class="span_28"> uid </span><span class="span_27">FROM</span><span class="span_28"> apps </span><span class="span_27">WHERE</span><span class="span_28"> v[</span><span class="span_29">'action'</span><span class="span_28">] = </span><span class="span_29">'x_ping'</span> <span class="span_27">AND</span><span class="span_28"> v[</span><span class="span_29">'user_id'</span><span class="span_28">] </span><span class="span_27">IS</span> <span class="span_27">NOT</span> <span class="span_30">NULL</span> <span class="span_27">AND</span> <span class="span_27">time</span><span class="span_28"> &gt; </span><span class="span_30">1548748800</span><span class="span_28">) r</span><span class="span_28"><br /></span><span class="span_27">JOIN</span><span class="span_28"> (</span><span class="span_28"><br />&#160; </span><span class="span_27">SELECT</span> <span class="span_33">v[</span><span class="span_34">'_id'</span><span class="span_33">] </span><span class="span_35">as</span><span class="span_33"> uid</span><span class="span_28">, email, fx_id, pl_type </span><span class="span_27">FROM</span><span class="span_28"> user_tbl </span><span class="span_27">WHERE</span> <span class="span_27">time</span><span class="span_28"> &gt; </span><span class="span_30">1548748800</span> <span class="span_27">AND</span><span class="span_28"> (v[</span><span class="span_29">'is_bot'</span><span class="span_28">] = </span><span class="span_29">'false'</span> <span class="span_27">OR</span><span class="span_28"> v[</span><span class="span_29">'is_bot'</span><span class="span_28">] </span><span class="span_27">IS</span> <span class="span_30">NULL</span><span class="span_28">)) u</span><span class="span_28"><br /></span><span class="span_27">ON</span><span class="span_28"> r.uid = u.uid</span></p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p class="p_23">Rewrite this as:</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_9">
+                    <p class="p_11"><span class="span_27">SELECT</span><span class="span_28"> email, fx_id, pl_type </span><span class="span_27">FROM</span><span class="span_28"> (</span><span class="span_28"><br />&#160; </span><span class="span_27">SELECT</span> <span class="span_27">cast</span><span class="span_28">(</span><span class="span_29">'user_id'</span> <span class="span_27">as</span><span class="span_28"> STING) </span><span class="span_27">as</span><span class="span_28"> uid </span><span class="span_27">FROM</span><span class="span_28"> apps </span><span class="span_27">WHERE</span> <span class="span_27">cast</span><span class="span_28">(</span><span class="span_29">'action'</span> <span class="span_27">as</span> <span class="span_27">STRING</span><span class="span_28">) = </span><span class="span_29">'x_ping'</span> <span class="span_27">AND</span> <span class="span_27">cast</span><span class="span_28">(</span><span class="span_29">'user_id'</span> <span class="span_27">as</span> <span class="span_27">STRING</span><span class="span_28">) </span><span class="span_27">IS</span> <span class="span_27">NOT</span> <span class="span_30">NULL</span> <span class="span_27">AND</span> <span class="span_27">time</span><span class="span_28"> &gt; </span><span class="span_30">1548748800</span><span class="span_28">) r </span><span class="span_28"><br /></span><span class="span_27">JOIN</span><span class="span_28"> (</span><span class="span_28"><br /></span><span class="span_27">SELECT</span> <span class="span_35">cast</span><span class="span_33">(</span><span class="span_34">`_id`</span> <span class="span_35">as</span> <span class="span_35">STRING</span><span class="span_33">) </span><span class="span_35">as</span><span class="span_33"> uid</span><span class="span_28">, email, fx_id, pl_type </span><span class="span_27">FROM</span><span class="span_28"> user_tbl </span><span class="span_27">WHERE</span> <span class="span_27">time</span><span class="span_28"> &gt; </span><span class="span_30">1548748800</span> <span class="span_27">AND</span><span class="span_28"> (</span><span class="span_27">cast</span><span class="span_28">(</span><span class="span_29">'is_bot'</span> <span class="span_27">as</span> <span class="span_27">STRING</span><span class="span_28">) = </span><span class="span_29">'false'</span> <span class="span_27">OR</span> <span class="span_27">cast</span><span class="span_28">(</span><span class="span_29">'is_bot'</span> <span class="span_27">as</span> <span class="span_27">STRING</span><span class="span_28">) </span><span class="span_27">IS</span> <span class="span_30">NULL</span><span class="span_28">)) u </span><span class="span_28"><br /></span><span class="span_27">ON</span><span class="span_28"> r.uid = u.uid</span></p>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

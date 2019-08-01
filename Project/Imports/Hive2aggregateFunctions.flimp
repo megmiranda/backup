@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MsWordImport
+  PreserveSourceStyles="true"
+  KeepSourceLinks="false"
+  ConvertInlineFormatting="true"
+  AddContinuedLinks="false"
+  AddContinuedFromLinks="false"
+  ContinuedLinkFormat="(continued in {title})"
+  ContinuedFromLinkFormat="(continued from {title})"
+  UseMaxCharLimit="false"
+  UseMinCharLimit="true"
+  MaxCharLimit="10000"
+  MinCharLimit="50"
+  FilenameLength="24"
+  GeneratePageLayouts="false"
+  UseFirstHeadingAsTopicTitle="true"
+  ConvertEquations="true"
+  LastCollectTime="2019-06-26T13:27:11.4481635-07:00"
+  ProjectName="cleanxhtml"
+  ProjectFolder="C:\Users\megmir01\Documents\My Projects\cleanxhtml\"
+  AutoSync="false"
+  AutoFitTables="false"
+  UseHeaderRows="false"
+  LastImport="2019-06-26T13:27:22.4437424-07:00">
+  <Files>
+    <Url
+      Source="../../../../../Desktop/Hive2aggregateFunctions.docx"
+      AbsoluteSource="file:///C:/Users/megmir01/Desktop/Hive2aggregateFunctions.docx" />
+  </Files>
+  <ExcludedFiles />
+  <CollectedSourceFiles />
+  <SkippedSourceFiles />
+  <GeneratedFiles>
+    <Url
+      Source="../../Content/Hive2aggregateFunctions/Built in Aggregate Functions.htm"
+      TimeStamp="6/26/2019 1:27:18 PM" />
+    <Url
+      Source="../TOCs/Hive2aggregateFunctions.fltoc"
+      TimeStamp="6/26/2019 1:27:18 PM" />
+    <Url
+      Source="../../Content/Resources/Stylesheets/Hive2aggregateFunctions.css"
+      TimeStamp="6/26/2019 1:27:18 PM" />
+  </GeneratedFiles>
+  <ParagraphStyles>
+    <Map
+      From="Heading 2"
+      To="h2.Heading 2" />
+  </ParagraphStyles>
+  <CharacterStyles>
+    <Map
+      From="Hyperlink"
+      To="a.(MS Word Style)" />
+  </CharacterStyles>
+  <NewTopicStyles />
+  <UsedParagraphStyles />
+  <UsedCharacterStyles />
+</MsWordImport>

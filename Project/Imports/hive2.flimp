@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MsWordImport
+  PreserveSourceStyles="true"
+  KeepSourceLinks="false"
+  ConvertInlineFormatting="true"
+  AddContinuedLinks="false"
+  AddContinuedFromLinks="false"
+  ContinuedLinkFormat="(continued in {title})"
+  ContinuedFromLinkFormat="(continued from {title})"
+  UseMaxCharLimit="false"
+  UseMinCharLimit="true"
+  MaxCharLimit="10000"
+  MinCharLimit="50"
+  FilenameLength="24"
+  GeneratePageLayouts="false"
+  UseFirstHeadingAsTopicTitle="true"
+  ConvertEquations="true"
+  LastCollectTime="2019-06-18T12:05:44.8815270-07:00"
+  ProjectName="cleanxhtml"
+  ProjectFolder="C:\Users\megmir01\Documents\My Projects\cleanxhtml\"
+  AutoSync="false"
+  AutoFitTables="false"
+  UseHeaderRows="false"
+  LastImport="2019-06-18T12:08:49.4688193-07:00">
+  <Files>
+    <Url
+      Source="../../../../transfer/hive2.docx"
+      AbsoluteSource="file:///C:/Users/megmir01/Documents/transfer/hive2.docx" />
+  </Files>
+  <ExcludedFiles />
+  <CollectedSourceFiles />
+  <SkippedSourceFiles />
+  <GeneratedFiles>
+    <Url
+      Source="../../Content/hive2/Using Hive in Treasure Data.htm"
+      TimeStamp="6/18/2019 12:06:31 PM" />
+    <Url
+      Source="../../Content/hive2/I m not sure what else to.htm"
+      TimeStamp="6/18/2019 12:06:31 PM" />
+    <Url
+      Source="../../Content/hive2/Hive Built in Operators.htm"
+      TimeStamp="6/18/2019 12:06:31 PM" />
+    <Url
+      Source="../../Content/hive2/Hive Built in Function Reference.htm"
+      TimeStamp="6/18/2019 12:06:31 PM" />
+    <Url
+      Source="../../Content/hive2/8 Aggregate Functions.htm"
+      TimeStamp="6/18/2019 12:06:31 PM" />
+    <Url
+      Source="../../Content/hive2/9 Functions Backported to.htm"
+      TimeStamp="6/18/2019 12:06:31 PM" />
+    <Url
+      Source="../../Content/hive2/Treasure Data Hive Function.htm"
+      TimeStamp="6/18/2019 12:06:31 PM" />
+    <Url
+      Source="../../Content/hive2/TD Hive SQL Cookbook Queries.htm"
+      TimeStamp="6/18/2019 12:06:31 PM" />
+    <Url
+      Source="../../Content/hive2/TD Hive Performance Tuning.htm"
+      TimeStamp="6/18/2019 12:06:31 PM" />
+    <Url
+      Source="../../Content/hive2/Appendix Preparing Existing.htm"
+      TimeStamp="6/18/2019 12:06:31 PM" />
+    <Url
+      Source="../../Content/hive2/Appendix Backported Hive Enhancements.htm"
+      TimeStamp="6/18/2019 12:06:31 PM" />
+    <Url
+      Source="../../Content/hive2/Hivemall Machine Learning.htm"
+      TimeStamp="6/18/2019 12:06:32 PM" />
+    <Url
+      Source="../../Content/hive2/hive2.htm"
+      TimeStamp="6/18/2019 12:06:32 PM" />
+    <Url
+      Source="../TOCs/hive2.fltoc"
+      TimeStamp="6/18/2019 12:06:31 PM" />
+    <Url
+      Source="../../Content/Resources/Stylesheets/hive2.css"
+      TimeStamp="6/18/2019 12:06:31 PM" />
+  </GeneratedFiles>
+  <ParagraphStyles>
+    <Map
+      From="Heading 1"
+      To="h1.Heading 1" />
+    <Map
+      From="Heading 2"
+      To="h2.Heading 2" />
+    <Map
+      From="Heading 3"
+      To="h3.Heading 3" />
+    <Map
+      From="Heading 4"
+      To="h4.Heading 4" />
+    <Map
+      From="Heading 5"
+      To="h5.Heading 5" />
+    <Map
+      From="Heading 6"
+      To="h6.Heading 6" />
+  </ParagraphStyles>
+  <CharacterStyles>
+    <Map
+      From="Hyperlink"
+      To="a.(MS Word Style)" />
+  </CharacterStyles>
+  <NewTopicStyles>
+    <StyleName
+      Name="Heading 1" />
+  </NewTopicStyles>
+  <UsedParagraphStyles>
+    <StyleName
+      Name="Heading 1" />
+    <StyleName
+      Name="Heading 2" />
+    <StyleName
+      Name="Heading 3" />
+    <StyleName
+      Name="Heading 4" />
+    <StyleName
+      Name="Heading 5" />
+    <StyleName
+      Name="HTML Preformatted" />
+    <StyleName
+      Name="List Paragraph" />
+    <StyleName
+      Name="Normal (Web)" />
+    <StyleName
+      Name="Title" />
+  </UsedParagraphStyles>
+  <UsedCharacterStyles>
+    <StyleName
+      Name="Hyperlink" />
+    <StyleName
+      Name="class" />
+    <StyleName
+      Name="integer" />
+    <StyleName
+      Name="predefined-constant" />
+    <StyleName
+      Name="delimiter" />
+    <StyleName
+      Name="content" />
+    <StyleName
+      Name="Emphasis" />
+    <StyleName
+      Name="keyword" />
+    <StyleName
+      Name="predefined-type" />
+    <StyleName
+      Name="Strong" />
+    <StyleName
+      Name="float" />
+    <StyleName
+      Name="type" />
+    <StyleName
+      Name="predefined" />
+    <StyleName
+      Name="comment" />
+    <StyleName
+      Name="directive" />
+    <StyleName
+      Name="error" />
+    <StyleName
+      Name="octal" />
+    <StyleName
+      Name="variable" />
+    <StyleName
+      Name="hljs-string" />
+    <StyleName
+      Name="hljs-keyword" />
+    <StyleName
+      Name="hljs-built_in" />
+    <StyleName
+      Name="hljs-number" />
+    <StyleName
+      Name="hljs-literal" />
+    <StyleName
+      Name="hljs-comment" />
+  </UsedCharacterStyles>
+</MsWordImport>

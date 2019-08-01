@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head>
+    </head>
+    <body>
+        <h1>Introduction to Custom Scripts</h1>
+        <p>&#160;</p>
+        <p>Custom Scripts enable the  running of containerized Python scripts from within a Treasure Data Workflow, providing for greater flexibility of custom logic. Typical uses include:</p>
+        <ul>
+            <li>Extend the capabilities of data connectors and other integrations.</li>
+            <li>Create efficient data manipulation and processing logic in Python and invoke it from workflows.</li>
+            <li>Productionize your data science work, by enabling Python models to be run as part of regularly scheduled Treasure Workflows.</li>
+            <li>Consolidate your data management into one environment. Use Treasure Workflow to connect multiple data environments.</li>
+        </ul>
+        <p>Also in this article:</p>
+        <ul>
+            <li>
+                <MadCap:xref href="#Supporte">Supported Docker Images</MadCap:xref>
+            </li>
+            <li>
+                <MadCap:xref href="#Example">Example Treasure Workflow Custom Script Syntax</MadCap:xref>
+            </li>
+            <li>
+                <MadCap:xref href="#Installi">Installing your own Python Libraries</MadCap:xref>
+            </li>
+            <li>
+                <MadCap:xref href="#Links">Links to Other Articles</MadCap:xref>
+            </li>
+        </ul>
+        <p>&#160;</p>
+        <h1><a name="Supporte"></a>Supported Docker Images</h1>
+        <ul>
+            <li>Digdag-anaconda3:5.3.0<ul><li>continuumio/anaconda3</li></ul></li>
+            <li>Digdag-python:3.6.8-stretch<ul><li>Python version 3.6.8</li></ul><p>Digdag-python:3.7.3-stretch</p><ul><li>Python 3.7.3</li><li>pytd version "0.3.0"</li></ul></li>
+            <li>Digdag-python:3.7<ul><li>Python 3.7.4</li><li>pytd version "0.5.0"</li><li>td-pyspark 19.07</li></ul></li>
+            <li>Digdag-anaconda3:2019.03<ul><li>continuumio/anaconda3:2019.03</li><li>pytd version "0.5.0"</li><li>td-pyspark 19.07</li></ul></li>
+        </ul>
+        <p>&#160;</p>
+        <h1><a name="Example"></a>Example Treasure Workflow Custom Script Syntax</h1>
+        <p>The following snippet is an example from a workflow:</p><pre>+py_custom_code:
+		docker:
+		image: "digdag/digdag-python:3.7"
+		py&gt;: tasks.printMessage</pre>
+        <h1><a name="Installi"></a>Installing your own Python Libraries</h1>
+        <p>The Python scripts in TD Workflows are managed and run by Treasure Data in isolated Docker containers. Treasure Data provides a number of base Docker images to run in the container.</p>
+        <p>&#160;</p>
+        <p>In addition to the libraries provided by the Docker image, you can install additional 3rd party libraries using the pip install command within the Python script.</p>
+        <p>&#160;</p>
+        <p> You can pick the appropriate Docker image to run your Python script in, based on the Python version and libraries supported by the image.</p>
+        <p>&#160;</p>
+        <p>Older versions of Docker image require the use of the restricted user in the pip install command. </p>
+        <p>&#160;</p>
+        <h3>Recommended methodology</h3>
+        <p> Installing libraries to the root directory is permitted for these versions of the Docker images:</p>
+        <p>&#160;</p>
+        <ul>
+            <li>digdag-python:3.7</li>
+            <li>digdag-anaconda3:2019.03</li>
+        </ul>
+        <p>&#160;</p>
+        <p style="text-align: left;">From within your Python script, add the following syntax to install libraries from the Python script:</p><pre>os.system(f”{sys.executable} -m pip install tensorflow”)</pre>
+        <p>&#160;</p>
+        <h3>Alternate Methodology for Older Docker Images</h3>
+        <p>With older versions of the Docker images, installing to the root directory is only allowed for restricted users. The pip install command must be used with the --user option and the path to the user directory must be appended to the system path, for these versions of the Docker images:</p>
+        <p>&#160;</p>
+        <ul>
+            <li>digdag-anaconda3:5.3.0</li>
+            <li>digdag-python:3.6.8-stretch</li>
+            <li>digdag-python:3.7.3-stretch</li>
+        </ul>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>From within your Python script, add the following syntax to install libraries as restricted user and append to path from the Python script:</p>
+        <p>&#160;</p><pre>os.system(f"{sys.executable} -m pip install --user tensorflow")</pre>
+        <p>&#160;</p>
+        <h1><a name="Links"></a>Links to Other Articles</h1>
+        <p><a href="AddCustomPythonScript.htm">Adding a custom Python script within your workflow</a>
+        </p>
+        <p>Python scripts can be run from TD Workflow, using the Python operator (py&gt;). </p>
+        <p><a href="workflow_parameters_to_custom_scripts.htm">Passing parameters to Custom Scripts</a>
+        </p>
+        <p>You can use environment variables to pass parameters and credentials to the Custom Script using _env. </p>
+        <p><a href="workflow_parallel_tasks.htm">Executing custom script tasks in parallel within a workflow</a>
+        </p>
+        <p>Multiple Python scripts can be run in parallel within a workflow, using the _parallel operator. </p>
+        <p><a href="customPYexampleTutorial.htm">Workflow Tutorial</a>
+        </p>
+        <p>To walkthrough a complete Custom Scripts tutorial.</p>
+    </body>
+</html>

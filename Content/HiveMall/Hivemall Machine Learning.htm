@@ -1,0 +1,680 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" xml:lang="en-us">
+    <head><title></title>
+        <link href="../Resources/Stylesheets/hive2.css" rel="stylesheet" />
+    </head>
+    <h1>Hivemall: Machine Learning in TD Hive</h1>
+    <p>To me Hivemall is an almost totally separate topic – deserves its own top level heading apart from Hadoop, or belongs in the ML section. </p>
+    <h2> Determining your version of Hivemall</h2>
+    <p>You can determine your version of Hivemall by executing the following syntax from the query window within the TD Console:</p>
+    <p><span class="class_1">SELECT</span><span class="span_4"> HIVEMALL_VERSION()</span>
+    </p>
+    <h2> Approximate functions</h2>
+    <h3> APPROX_COUNT_DISTINCT</h3>
+    <h5>Signature</h5>
+    <p>approx_count_distinct(column)</p>
+    <p>approx_distinct(column)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">APPROX_COUNT_DISTINCT</span><span class="span_4">&#160;and its alias&#160;</span><span class="span_5">APPROX_DISTINCT</span><span class="span_4">&#160;approximately compute the number of unique elements in a column. This function corresponds to&#160;</span><a href="../../../../transfer/hive2.docx#approx_distinct">Presto’s&#160;APPROX_DISTINCT</a><span class="span_4">. See&#160;</span><a href="https://hivemall.incubator.apache.org/userguide/misc/approx.html">Hivemall documentation</a><span class="span_4">&#160;for detail.</span>
+    </p>
+    <h2> NLP and Text processing functions</h2>
+    <h3> BASE91</h3>
+    <h5>Signature</h5>
+    <p>base91(binary)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">BASE91</span><span class="span_4">&#160;converts the argument from binary to a BASE91 string</span>
+    </p>
+    <h5>Example</h5>
+    <p><span class="class_1">SELECT</span><span class="span_4"> base91(deflate(</span><span class="delimiter_1">'</span><span class="delimiter_1">aaaaaaaaaaaaaaaabbbbccc</span><span class="delimiter_1">'</span><span class="span_4">));</span>
+    </p>
+    <p>&gt; AA+=kaIM|WTt!+wbGAA</p>
+    <h3> UNBASE91</h3>
+    <h5>Signature</h5>
+    <p>unbase91(string)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">UNBASE91</span><span class="span_4">&#160;converts a BASE91 string to a binary</span>
+    </p>
+    <h5>Example</h5>
+    <p><span class="class_1">SELECT</span><span class="span_4"> inflate(unbase91(base91(deflate(</span><span class="delimiter_1">'</span><span class="delimiter_1">aaaaaaaaaaaaaaaabbbbccc</span><span class="delimiter_1">'</span><span class="span_4">))));</span>
+    </p>
+    <p>&gt; aaaaaaaaaaaaaaaabbbbccc</p>
+    <h3>IS_STOPWORD</h3>
+    <h5>Signature</h5>
+    <p>is_stopword(string word)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">IS_STOPWORD</span><span class="span_4">&#160;determines whether a word is an English stop word or not. Stop words&#160;are words that are filtered out before or after the&#160;processing of text.</span>
+    </p>
+    <h3>NORMALIZE_UNICODE</h3>
+    <h5>Signature</h5>
+    <p>normalize_unicode(string str [, string form])</p>
+    <h5>Description</h5>
+    <p><span class="span_5">NORMALIZE_UNICODE</span><span class="span_4">&#160;transforms str to the specified normalization form. The form takes one of NFC (default), NFD, NFKC, or NFKD.</span>
+    </p>
+    <h5>Example</h5>
+    <p><span class="class_1">select</span><span class="span_4"> normalize_unicode(</span><span class="delimiter_1">'</span><span class="delimiter_1">ﾊﾝｶｸｶﾅ</span><span class="delimiter_1">'</span><span class="span_4">,</span><span class="delimiter_1">'</span><span class="delimiter_1">NFKC</span><span class="delimiter_1">'</span><span class="span_4">);</span>
+    </p>
+    <p class="error_1">ハンカクカナ</p>
+    <p><span class="class_1">select</span><span class="span_4"> normalize_unicode(</span><span class="delimiter_1">'</span><span class="delimiter_1">㈱㌧㌦Ⅲ</span><span class="delimiter_1">'</span><span class="span_4">,</span><span class="delimiter_1">'</span><span class="delimiter_1">NFKC</span><span class="delimiter_1">'</span><span class="span_4">);</span>
+    </p>
+    <p><span class="span_4">(</span><span class="error_1">株</span><span class="span_4">)</span><span class="error_1">トンドル</span><span class="span_4">III</span>
+    </p>
+    <h3>SINGULARIZE</h3>
+    <h5>Signature</h5>
+    <p>singularize(string word)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">SINGULARIZE</span><span class="span_4">&#160;returns the singular form of a given English word. For more information, see&#160;</span><a href="../../../../transfer/hive2.docx#text-processing-functions">Hivemall user guide</a><span class="span_4">.</span>
+    </p>
+    <h3>SPLIT_WORDS</h3>
+    <h5>Signature</h5>
+    <p>split_words(string query [, string regex])</p>
+    <h5>Description</h5>
+    <p><span class="span_5">SPLIT_WORDS</span><span class="span_4">&#160;returns an array that contains split strings.</span>
+    </p>
+    <h3>TOKENIZE</h3>
+    <h5>Signature</h5>
+    <p>tokenize(string englishText [, boolean toLowerCase])</p>
+    <h5>Description</h5>
+    <p><span class="span_5">TOKENIZE</span><span class="span_4">&#160;returns the words in an array.</span>
+    </p>
+    <h3>TOKENIZE_JA</h3>
+    <h5>Signature</h5>
+    <p>tokenize_ja(String line [, const string mode = "normal", const list&lt;string&gt; stopWords, const list&lt;string&gt; stopTags, const array&lt;string&gt; userDict (or string userDictURL)])</p>
+    <h5>Description</h5>
+    <p><span class="span_5">TOKENIZE_JA</span><span class="span_4">&#160;returns tokenized strings in an array. You can use a given predefined dictionary as an array or as a URL to a file uploaded to somewhere like Amazon S3.&#160;</span><a href="../../../../transfer/hive2.docx#japanese-tokenizer">Hivemall user guide</a><span class="span_4">.</span>
+    </p>
+    <h5>Example</h5>
+    <p><span class="class_1">select</span><span class="span_4"> tokenize_ja(</span><span class="delimiter_1">"</span><span class="delimiter_1">kuromoji</span><span class="delimiter_1">を使った分かち書きのテストです。第二引数には</span><span class="delimiter_1">normal/search/extended</span><span class="delimiter_1">を指定できます。デフォルトでは</span><span class="delimiter_1">normal</span><span class="delimiter_1">モードです。</span><span class="delimiter_1">"</span><span class="span_4">);</span>
+    </p>
+    <p><span class="span_4">[</span><span class="delimiter_1">"</span><span class="delimiter_1">kuromoji</span><span class="delimiter_1">"</span><span class="span_4">,</span><span class="delimiter_1">"</span><span class="delimiter_1">使う</span><span class="delimiter_1">"</span><span class="span_4">,</span><span class="delimiter_1">"</span><span class="delimiter_1">分かち書き</span><span class="delimiter_1">"</span><span class="span_4">,</span><span class="delimiter_1">"</span><span class="delimiter_1">テスト</span><span class="delimiter_1">"</span><span class="span_4">,</span><span class="delimiter_1">"</span><span class="delimiter_1">第</span><span class="delimiter_1">"</span><span class="span_4">,</span><span class="delimiter_1">"</span><span class="delimiter_1">二</span><span class="delimiter_1">"</span><span class="span_4">,</span><span class="delimiter_1">"</span><span class="delimiter_1">引数</span><span class="delimiter_1">"</span><span class="span_4">,</span><span class="delimiter_1">"</span><span class="delimiter_1">normal</span><span class="delimiter_1">"</span><span class="span_4">,</span><span class="delimiter_1">"</span><span class="delimiter_1">search</span><span class="delimiter_1">"</span><span class="span_4">,</span><span class="delimiter_1">"</span><span class="delimiter_1">extended</span><span class="delimiter_1">"</span><span class="span_4">,</span><span class="delimiter_1">"</span><span class="delimiter_1">指定</span><span class="delimiter_1">"</span><span class="span_4">,</span><span class="delimiter_1">"</span><span class="delimiter_1">デフォルト</span><span class="delimiter_1">"</span><span class="span_4">,</span><span class="delimiter_1">"</span><span class="delimiter_1">normal</span><span class="delimiter_1">"</span><span class="span_4">,</span><span class="delimiter_1">"</span> <span class="delimiter_1">モード</span><span class="delimiter_1">"</span><span class="span_4">]</span></p>
+    <p>&#160;</p>
+    <p><span class="class_1">select</span><span class="span_4"> tokenize_ja(</span><span class="delimiter_1">"</span><span class="delimiter_1">関西国際空港</span><span class="delimiter_1">"</span><span class="span_4">, </span><span class="delimiter_1">"</span><span class="delimiter_1">normal</span><span class="delimiter_1">"</span><span class="span_4">, </span><span class="predefined-constant_1">null</span><span class="span_4">, </span><span class="predefined-constant_1">null</span><span class="span_4">,</span>
+    </p>
+    <p><span class="span_4">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; array(</span><span class="delimiter_1">"</span><span class="delimiter_1">関西国際空港</span><span class="delimiter_1">,</span><span class="delimiter_1">関西</span> <span class="delimiter_1">国際</span> <span class="delimiter_1">空港</span><span class="delimiter_1">,</span><span class="delimiter_1">カンサイ</span> <span class="delimiter_1">コクサイ</span> <span class="delimiter_1">クウコウ</span><span class="delimiter_1">,</span><span class="delimiter_1">カスタム名詞</span><span class="delimiter_1">"</span><span class="span_4">));</span></p>
+    <p><span class="span_4">[</span><span class="delimiter_1">"</span><span class="delimiter_1">関西</span><span class="delimiter_1">"</span><span class="span_4">,</span><span class="delimiter_1">"</span><span class="delimiter_1">国際</span><span class="delimiter_1">"</span><span class="span_4">,</span><span class="delimiter_1">"</span><span class="delimiter_1">空港</span><span class="delimiter_1">"</span><span class="span_4">]</span>
+    </p>
+    <p>&#160;</p>
+    <p class="comment_2">-- using pre-defined library</p>
+    <p><span class="class_1">select</span><span class="span_4"> tokenize_ja(</span><span class="delimiter_1">"</span><span class="delimiter_1">関西国際空港</span><span class="delimiter_1">"</span><span class="span_4">, </span><span class="delimiter_1">"</span><span class="delimiter_1">normal</span><span class="delimiter_1">"</span><span class="span_4">, </span><span class="predefined-constant_1">null</span><span class="span_4">, </span><span class="predefined-constant_1">null</span><span class="span_4">, </span><span class="delimiter_1">"</span><span class="span_4">https://raw.githubusercontent.com/atilika/kuromoji/909fd6b32bf4e9dc86b7599de5c9b50ca8f004a1/kuromoji-core/src/test/resources/userdict.txt</span><span class="delimiter_1">"</span><span class="span_4">); </span><span class="span_4"><br />[</span><span class="delimiter_1">"</span><span class="delimiter_1">関西</span><span class="delimiter_1">"</span><span class="span_4">,</span><span class="delimiter_1">"</span><span class="delimiter_1">国際</span><span class="delimiter_1">"</span><span class="span_4">,</span><span class="delimiter_1">"</span><span class="delimiter_1">空港</span><span class="delimiter_1">"</span><span class="span_4">]</span>
+    </p>
+    <h3>TOKENIZE_JA_NEOLOGD</h3>
+    <h5>Signature</h5>
+    <p>tokenize_ja_neologd(String line [, const string mode = "normal", const list&lt;string&gt; stopWords, const list&lt;string&gt; stopTags, const array&lt;string&gt; userDict (or string userDictURL)])</p>
+    <h5>Description</h5>
+    <p><span class="span_5">TOKENIZE_JA_NEOLOGD</span><span class="span_4">&#160;returns tokenized strings in an array by using the&#160;</span><a href="https://github.com/neologd/mecab-ipadic-neologd">NEologd</a><span class="span_4">&#160;dictionary.&#160;</span>
+    </p>
+    <p><span class="span_4">mecab-ipadic-NEologd is customized system dictionary for MeCab, it&#160;includes new words, that are extracted from many different language resources on the Web.&#160;</span><a href="https://github.com/takuti/hive-udf-neologd">More details</a><span class="span_4">.</span>
+    </p>
+    <h5>Example</h5>
+    <p><span class="class_1">select</span><span class="span_4"> tokenize_ja_neologd(); -- returns current UDF version with corresponding NEologd version date</span>
+    </p>
+    <p>["0.1.0-20180524"]</p>
+    <p><span class="span_4"><br /></span><span class="class_1">select</span><span class="span_4"> tokenize_ja_neologd(</span><span class="delimiter_1">"</span><span class="delimiter_1">彼女はペンパイナッポーアッポーペンと恋ダンスを踊った。</span><span class="delimiter_1">"</span><span class="span_4">);</span>
+    </p>
+    <p><span class="span_4">["</span><span class="span_4">彼女</span><span class="span_4">","</span><span class="span_4">ペンパイナッポーアッポーペン</span><span class="span_4">","</span><span class="span_4">恋ダンス</span><span class="span_4">","</span><span class="span_4">踊る</span><span class="span_4">"]</span>
+    </p>
+    <h3>WORD_NGRAMS</h3>
+    <h5>Signature</h5>
+    <p>word_ngrams(array&lt;string&gt; words, int minSize, int maxSize)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">WORD_NGRAMS</span><span class="span_4">&#160;returns list of n-grams where minSize &lt;= n &lt;= maxSize. For more information, see&#160;</span><a href="../../../../transfer/hive2.docx#text-processing-functions">Hivemall user guide</a><span class="span_4">.</span>
+    </p>
+    <h2> GeoSpatial UDFs</h2>
+    <h3> TILE</h3>
+    <h5>Signature</h5>
+    <p>tile(double lat, double lon, int zoom)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">TILE</span><span class="span_4">&#160;returns a tile number in&#160;</span><span class="span_4">xtile(lon,zoom) + ytile(lat,zoom) * 2^z</span><span class="span_4">. The tile number is in the&#160; range&#160;</span><span class="span_4">[0,2^2z]</span><span class="span_4">. For more information, see&#160;</span><a href="../../../../transfer/hive2.docx#text-processing-functions">Hivemall user guide</a>
+    </p>
+    <h3> HAVERSINE_DISTANCE</h3>
+    <h5>Signature</h5>
+    <p>haversine_distance(double lat1, double lon1, double lat2, double lon2, [const boolean mile=false])</p>
+    <h5>Description</h5>
+    <p><span class="span_5">HAVERSINE_DISTANCE</span><span class="span_4">&#160;returns the Haversine distance between two Geo locations.For more information, see&#160;</span><a href="../../../../transfer/hive2.docx#text-processing-functions">Hivemall user guide</a><span class="span_4">.</span>
+    </p>
+    <h5>Example</h5>
+    <p class="comment_2">-- Tokyo (lat: 35.6833, lon: 139.7667), Osaka (lat: 34.6603, lon: 135.5232)</p>
+    <p class="class_1">select</p>
+    <p><span class="span_4">&#160; haversine_distance(</span><span class="span_4">35.6833</span><span class="span_4">, </span><span class="span_4">139.7667</span><span class="span_4">, </span><span class="span_4">34.6603</span><span class="span_4">, </span><span class="span_4">135.5232</span><span class="span_4">) </span><span class="keyword_1">as</span><span class="span_4"> km,</span>
+    </p>
+    <p><span class="span_4">&#160; haversine_distance(</span><span class="span_4">35.6833</span><span class="span_4">, </span><span class="span_4">139.7667</span><span class="span_4">, </span><span class="span_4">34.6603</span><span class="span_4">, </span><span class="span_4">135.5232</span><span class="span_4">, </span><span class="predefined-constant_1">true</span><span class="span_4">) </span><span class="keyword_1">as</span><span class="span_4"> mile;</span>
+    </p>
+    <p><span class="span_4">402.09212137829684</span><span class="span_4">&#160;&#160;&#160; </span><span class="span_4">249.8484608500711</span>
+    </p>
+    <h2> Array functions</h2>
+    <h3> ARRAY_APPEND</h3>
+    <h5>Signature</h5>
+    <p>array_append(array&lt;T&gt; arr, T elem)</p>
+    <h5>Description</h5>
+    <p>Append an element to the end of an array.</p>
+    <h5>Example</h5>
+    <p><span class="span_4">SELECT</span><span class="span_4"> array_append(</span><span class="span_4">array</span><span class="span_4">(</span><span class="span_4">1</span><span class="span_4">,</span><span class="span_4">2</span><span class="span_4">),</span><span class="span_4">3</span><span class="span_4">);</span>
+    </p>
+    <p>&gt; 1,2,3</p>
+    <p>&#160;</p>
+    <p><span class="span_4">SELECT</span><span class="span_4"> array_append(</span><span class="span_4">array</span><span class="span_4">(</span><span class="span_4">'a'</span><span class="span_4">,</span><span class="span_4">'b'</span><span class="span_4">),</span><span class="span_4">'c'</span><span class="span_4">);</span>
+    </p>
+    <p>&gt; "a","b","c"</p>
+    <h3> ARRAY_AVG</h3>
+    <h5>Signature</h5>
+    <p>array_avg(array&lt;number&gt;)</p>
+    <h5>Description</h5>
+    <p>Returns an array&lt;double&gt; where each element is the mean of a set of numbers. This is an aggregate function.</p>
+    <h5>Example</h5>
+    <p><span class="span_4">WITH input as (</span><span class="span_4"><br /> select array(1.0, 2.0, 3.0) as nums</span><span class="span_4"><br /> UNION ALL</span><span class="span_4"><br /> select array(2.0, 3.0, 4.0) as nums</span><span class="span_4"><br />)</span><span class="span_4"><br />select </span><span class="span_4"><br /> array_avg(nums)</span><span class="span_4"><br />from</span><span class="span_4"><br /> input</span><span class="span_4"><br /></span><span class="span_4"><br />&gt; ["1.5","2.5","3.5"]</span>
+    </p>
+    <h3> ARRAY_CONCAT</h3>
+    <h5>Signature</h5>
+    <p>array array_concat(array&lt;ANY&gt; x1, array&lt;ANY&gt; x2, ..)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">The ARRAY_CONCAT</span><span class="span_4">&#160;function returns a concatenated array.</span>
+    </p>
+    <h5>Example</h5>
+    <p><span class="class_1">select</span><span class="span_4"> array_concat(array(</span><span class="integer_1">1</span><span class="span_4">),array(</span><span class="integer_1">2</span><span class="span_4">,</span><span class="integer_1">3</span><span class="span_4">))</span>
+    </p>
+    <p><span class="span_4">&gt; [</span><span class="integer_1">1</span><span class="span_4">,</span><span class="integer_1">2</span><span class="span_4">,</span><span class="integer_1">3</span><span class="span_4">]</span>
+    </p>
+    <h3> ARRAY_FLATTEN</h3>
+    <h5>Signature</h5>
+    <p>array_flatten(array&lt;array&lt;ANY&gt;&gt;)</p>
+    <h5>Description</h5>
+    <p>Returns an array with the elements flattened.</p>
+    <h5>Example</h5>
+    <p><span class="span_4">SELECT</span><span class="span_4"> array_flatten(</span><span class="span_4">array</span><span class="span_4">(</span><span class="span_4">array</span><span class="span_4">(</span><span class="span_4">1</span><span class="span_4">,</span><span class="span_4">2</span><span class="span_4">,</span><span class="span_4">3</span><span class="span_4">),</span><span class="span_4">array</span><span class="span_4">(</span><span class="span_4">4</span><span class="span_4">,</span><span class="span_4">5</span><span class="span_4">),</span><span class="span_4">array</span><span class="span_4">(</span><span class="span_4">6</span><span class="span_4">,</span><span class="span_4">7</span><span class="span_4">,</span><span class="span_4">8</span><span class="span_4">)));</span>
+    </p>
+    <p>&gt; [1,2,3,4,5,6,7,8]</p>
+    <h3> ARRAY_INTERSECT</h3>
+    <h5>Signature</h5>
+    <p>array_intersect(array&lt;ANY&gt; x1, array&lt;ANY&gt; x2, ..)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">The ARRAY_INTERSECT</span><span class="span_4">&#160;function returns an intersect of given arrays.</span>
+    </p>
+    <h5>Example</h5>
+    <p><span class="class_1">select</span><span class="span_4"> array_intersect(array(</span><span class="integer_1">1</span><span class="span_4">,</span><span class="integer_1">3</span><span class="span_4">,</span><span class="integer_1">4</span><span class="span_4">),array(</span><span class="integer_1">2</span><span class="span_4">,</span><span class="integer_1">3</span><span class="span_4">,</span><span class="integer_1">4</span><span class="span_4">),array(</span><span class="integer_1">3</span><span class="span_4">,</span><span class="integer_1">5</span><span class="span_4">))</span>
+    </p>
+    <p><span class="span_4">&gt; [</span><span class="integer_1">3</span><span class="span_4">]</span>
+    </p>
+    <h3>6. ARRAY_REMOVE</h3>
+    <h5>Signature</h5>
+    <p>array_remove(array&lt;int|text&gt; original, int|text|array&lt;int&gt; target)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">ARRAY_REMOVE</span><span class="span_4">&#160;returns an array where the target is removed from the original array.</span>
+    </p>
+    <h5>Example</h5>
+    <p><span class="class_1">select</span><span class="span_4"> array_remove(array(</span><span class="integer_1">1</span><span class="span_4">,</span><span class="predefined-constant_1">null</span><span class="span_4">,</span><span class="integer_1">3</span><span class="span_4">),array(</span><span class="integer_1">1</span><span class="span_4">));</span>
+    </p>
+    <p><span class="span_4">&gt; [</span><span class="predefined-constant_1">null</span><span class="span_4">,</span><span class="integer_1">3</span><span class="span_4">]</span>
+    </p>
+    <p>&#160;</p>
+    <p><span class="class_1">select</span><span class="span_4"> array_remove(array(</span><span class="delimiter_1">"</span><span class="delimiter_1">aaa</span><span class="delimiter_1">"</span><span class="span_4">,</span><span class="delimiter_1">"</span><span class="delimiter_1">bbb</span><span class="delimiter_1">"</span><span class="span_4">),</span><span class="delimiter_1">"</span><span class="delimiter_1">bbb</span><span class="delimiter_1">"</span><span class="span_4">);</span>
+    </p>
+    <p><span class="span_4">&gt; [</span><span class="delimiter_1">"</span><span class="delimiter_1">aaa</span><span class="delimiter_1">"</span><span class="span_4">]</span>
+    </p>
+    <h3> ARRAY_SLICE</h3>
+    <h5>Signature</h5>
+    <p>array_slice(array&lt;ANY&gt; values, int offset [, int length])</p>
+    <h5>Description</h5>
+    <p>Slices the given array by the given offset and length parameters.</p>
+    <h5>Example</h5>
+    <p><span class="span_4">SELECT </span><span class="span_4"><br /> array_slice(array(1,2,3,4,5,6),2,4),</span><span class="span_4"><br /> array_slice(</span><span class="span_4"><br /> array("zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"),</span><span class="span_4"><br /> 0, -- offset</span><span class="span_4"><br /> 2 -- length</span><span class="span_4"><br /> ),</span><span class="span_4"><br /> array_slice(</span><span class="span_4"><br /> array("zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"),</span><span class="span_4"><br /> 6, -- offset</span><span class="span_4"><br /> 3 -- length</span><span class="span_4"><br /> ),</span><span class="span_4"><br /> array_slice(</span><span class="span_4"><br /> array("zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"),</span><span class="span_4"><br /> 6, -- offset</span><span class="span_4"><br /> 10 -- length</span><span class="span_4"><br /> ),</span><span class="span_4"><br /> array_slice(</span><span class="span_4"><br /> array("zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"),</span><span class="span_4"><br /> 6 -- offset</span><span class="span_4"><br /> ),</span><span class="span_4"><br /> array_slice(</span><span class="span_4"><br /> array("zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"),</span><span class="span_4"><br /> -3 -- offset</span><span class="span_4"><br /> ),</span><span class="span_4"><br /> array_slice(</span><span class="span_4"><br /> array("zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"),</span><span class="span_4"><br /> -3, -- offset</span><span class="span_4"><br /> 2 -- length</span><span class="span_4"><br /> );</span><span class="span_4"><br /></span><span class="span_4"><br />&gt; [3,4]</span><span class="span_4"><br />&gt; ["zero","one"] </span><span class="span_4"><br />&gt; ["six","seven","eight"]</span><span class="span_4"><br />&gt; ["six","seven","eight","nine","ten"]</span><span class="span_4"><br />&gt; ["six","seven","eight","nine","ten"]</span><span class="span_4"><br /></span><span class="span_4">&gt; ["eight","nine","ten"]</span><span class="span_4"><br />&gt; ["eight","nine"]</span>
+    </p>
+    <h3> ARRAY_SUM</h3>
+    <h5>Signature</h5>
+    <p>array_sum(array&lt;NUMBER&gt;)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">ARRAY_SUM</span><span class="span_4">&#160;returns an array where each element is summed up.</span>
+    </p>
+    <h5>Example</h5>
+    <p><span class="span_4">WITH input as (</span><span class="span_4"><br /> select array(1.0, 2.0, 3.0) as nums</span><span class="span_4"><br /> UNION ALL</span><span class="span_4"><br /> select array(2.0, 3.0, 4.0) as nums</span><span class="span_4"><br />)</span><span class="span_4"><br />select </span><span class="span_4"><br /> array_sum(nums)</span><span class="span_4"><br />from</span><span class="span_4"><br /> input</span><span class="span_4"><br /></span><span class="span_4"><br />&gt; ["3.0","5.0","7.0"]</span>
+    </p>
+    <h3> ARRAY_TO_STR</h3>
+    <h5>Signature</h5>
+    <p>array_to_str(array arr [, string sep=','])</p>
+    <h5>Description</h5>
+    <p>Converts an array to a string using a separator.</p>
+    <h5>Example</h5>
+    <p><span class="span_4">SELECT</span><span class="span_4"> array_to_str(</span><span class="span_4">array</span><span class="span_4">(</span><span class="span_4">1</span><span class="span_4">,</span><span class="span_4">2</span><span class="span_4">,</span><span class="span_4">3</span><span class="span_4">),</span><span class="span_4">'-'</span><span class="span_4">);</span>
+    </p>
+    <p>&gt; 1-2-3</p>
+    <h3>50. ARRAY_UNION</h3>
+    <h5>Signature</h5>
+    <p>array_union(array1, array2, ...)</p>
+    <h5>Description</h5>
+    <p>Returns the union of a set of arrays.</p>
+    <h5>Example</h5>
+    <p><span class="span_4">SELECT</span><span class="span_4"> array_union(</span><span class="span_4">array</span><span class="span_4">(</span><span class="span_4">1</span><span class="span_4">,</span><span class="span_4">2</span><span class="span_4">),</span><span class="span_4">array</span><span class="span_4">(</span><span class="span_4">1</span><span class="span_4">,</span><span class="span_4">2</span><span class="span_4">));</span>
+    </p>
+    <p>&gt; [1,2]</p>
+    <p>&#160;</p>
+    <p><span class="span_4">SELECT</span><span class="span_4"> array_union(</span><span class="span_4">array</span><span class="span_4">(</span><span class="span_4">1</span><span class="span_4">,</span><span class="span_4">2</span><span class="span_4">),</span><span class="span_4">array</span><span class="span_4">(</span><span class="span_4">2</span><span class="span_4">,</span><span class="span_4">3</span><span class="span_4">),</span><span class="span_4">array</span><span class="span_4">(</span><span class="span_4">2</span><span class="span_4">,</span><span class="span_4">5</span><span class="span_4">));</span>
+    </p>
+    <p>&gt; [1,2,3,5]</p>
+    <h3>CONDITIONAL_EMIT</h3>
+    <h5>Signature</h5>
+    <p>conditional_emit(array&lt;boolean&gt; conditions, array&lt;primitive&gt; features)</p>
+    <h5>Description</h5>
+    <p>Emit the features of a row according to various conditions.</p>
+    <h5>Example</h5>
+    <p>WITH input as (</p>
+    <p><span class="span_4">&#160;&#160; </span><span class="span_4">select</span> <span class="span_4">array</span><span class="span_4">(</span><span class="span_4">true</span><span class="span_4">, </span><span class="span_4">false</span><span class="span_4">, </span><span class="span_4">true</span><span class="span_4">) </span><span class="span_4">as</span><span class="span_4"> conditions, </span><span class="span_4">array</span><span class="span_4">(</span><span class="span_4">"one"</span><span class="span_4">, </span><span class="span_4">"two"</span><span class="span_4">, </span><span class="span_4">"three"</span><span class="span_4">) </span><span class="span_4">as</span><span class="span_4"> features</span></p>
+    <p><span class="span_4">&#160;&#160; </span><span class="span_4">UNION</span><span class="span_4"> ALL</span>
+    </p>
+    <p><span class="span_4">&#160;&#160; </span><span class="span_4">select</span> <span class="span_4">array</span><span class="span_4">(</span><span class="span_4">true</span><span class="span_4">, </span><span class="span_4">true</span><span class="span_4">, </span><span class="span_4">false</span><span class="span_4">), </span><span class="span_4">array</span><span class="span_4">(</span><span class="span_4">"four"</span><span class="span_4">, </span><span class="span_4">"five"</span><span class="span_4">, </span><span class="span_4">"six"</span><span class="span_4">)</span></p>
+    <p>)</p>
+    <p class="float_1">SELECT</p>
+    <p>&#160; conditional_emit(</p>
+    <p>&#160;&#160;&#160;&#160; conditions, features</p>
+    <p>&#160; )</p>
+    <p><span class="span_4">FROM</span> </p>
+    <p><span class="span_4">&#160; </span><span class="span_4">input</span><span class="span_4">;</span><span class="span_4"><br /></span>
+    </p>
+    <p>&gt; one</p>
+    <p>&gt; three</p>
+    <p>&gt; four</p>
+    <p>&gt; five</p>
+    <h3>ELEMENT_AT</h3>
+    <h5>Signature</h5>
+    <p>element_at(array&lt;T&gt; list, int pos)</p>
+    <h5>Description</h5>
+    <p>Returns an element at the given position</p>
+    <h5>Example</h5>
+    <p><span class="span_4">SELECT</span><span class="span_4"> element_at(</span><span class="span_4">array</span><span class="span_4">(</span><span class="span_4">1</span><span class="span_4">,</span><span class="span_4">2</span><span class="span_4">,</span><span class="span_4">3</span><span class="span_4">,</span><span class="span_4">4</span><span class="span_4">),</span><span class="span_4">0</span><span class="span_4">);</span>
+    </p>
+    <p>&gt; 1</p>
+    <p>&#160;</p>
+    <p><span class="span_4">SELECT</span><span class="span_4"> element_at(</span><span class="span_4">array</span><span class="span_4">(</span><span class="span_4">1</span><span class="span_4">,</span><span class="span_4">2</span><span class="span_4">,</span><span class="span_4">3</span><span class="span_4">,</span><span class="span_4">4</span><span class="span_4">),</span><span class="span_4">-2</span><span class="span_4">);</span>
+    </p>
+    <p>&gt; 3</p>
+    <h3>FIRST_ELEMENT</h3>
+    <h5>Description</h5>
+    <p>Returns the first element in an array.</p>
+    <h5>Example</h5>
+    <p><span class="span_4">SELECT</span><span class="span_4"> first_element(</span><span class="span_4">array</span><span class="span_4">(</span><span class="span_4">'a'</span><span class="span_4">,</span><span class="span_4">'b'</span><span class="span_4">,</span><span class="span_4">'c'</span><span class="span_4">));</span>
+    </p>
+    <p>&gt; a</p>
+    <p>&#160;</p>
+    <p><span class="span_4">SELECT</span><span class="span_4"> first_element(</span><span class="span_4">array</span><span class="span_4">());</span>
+    </p>
+    <p>&gt; NULL</p>
+    <h3>FLOAT_ARRAY</h3>
+    <h5>Signature</h5>
+    <p>float_array(nDims)</p>
+    <h5>Description</h5>
+    <p>Returns an array&lt;float&gt; of nDims elements.</p>
+    <h3>LAST_ELEMENT</h3>
+    <h5>Description</h5>
+    <p>Return the last element in an array.</p>
+    <h5>Example</h5>
+    <p><span class="span_4">SELECT</span><span class="span_4"> last_element(</span><span class="span_4">array</span><span class="span_4">(</span><span class="span_4">'a'</span><span class="span_4">,</span><span class="span_4">'b'</span><span class="span_4">,</span><span class="span_4">'c'</span><span class="span_4">));</span><span class="span_4"><br />&gt; c</span>
+    </p>
+    <h3>SELECT_K_BEST</h3>
+    <h5>Signature</h5>
+    <p>select_k_best(array&lt;number&gt; array, const array&lt;number&gt; importance, const int k)</p>
+    <h5>Description</h5>
+    <p>Returns selected top-k elements as array&lt;double&gt;</p>
+    <h3>SORT_AND_UNIQ_ARRAY</h3>
+    <h5>Signature</h5>
+    <p class="HTMLPreformatted_4">sort_and_uniq_array(array&lt;int&gt;)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">SORT_AND_UNIQ_ARRAY</span><span class="span_4">&#160;takes an array of type int and returns a sorted array in a natural order with duplicate elements eliminated.</span>
+    </p>
+    <h5>Example</h5>
+    <p class="HTMLPreformatted_5"><span class="span_4">SELECT</span><span class="span_4"> sort_and_uniq_array(array(</span><span class="span_4">3</span><span class="span_4">,</span><span class="span_4">1</span><span class="span_4">,</span><span class="span_4">1</span><span class="span_4">,</span><span class="span_4">-2</span><span class="span_4">,</span><span class="span_4">10</span><span class="span_4">));</span><span class="span_4"><br />&gt; [-2,1,3,10]</span>
+    </p>
+    <h3>SUBARRAY</h3>
+    <h5>Signature</h5>
+    <p>subarray(array&lt;int&gt; orignal, int fromIndex, int toIndex)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">SUBARRAY</span><span class="span_4">&#160;returns a slice of the original array between the inclusive fromIndex and the exclusive toIndex.</span>
+    </p>
+    <h5>Example</h5>
+    <p><span class="class_1">SELECT</span><span class="span_4"> subarray(array(</span><span class="integer_1">1</span><span class="span_4">,</span><span class="integer_1">2</span><span class="span_4">,</span><span class="integer_1">3</span><span class="span_4">,</span><span class="integer_1">4</span><span class="span_4">,</span><span class="integer_1">5</span><span class="span_4">,</span><span class="integer_1">6</span><span class="span_4">), </span><span class="integer_1">2</span><span class="span_4">,</span><span class="integer_1">4</span><span class="span_4">)</span>
+    </p>
+    <p><span class="span_4">&gt; [</span><span class="integer_1">3</span><span class="span_4">,</span><span class="integer_1">4</span><span class="span_4">]</span>
+    </p>
+    <h3>SUBARRAY_ENDWITH</h3>
+    <h5>Signature</h5>
+    <p>subarray_endwith(array&lt;int|text&gt; original, int|text key)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">SUBARRAY_ENDWITH</span><span class="span_4">&#160;returns an array that ends with the specified key</span>
+    </p>
+    <h5>Example</h5>
+    <p><span class="class_1">SELECT</span><span class="span_4"> subarray_endwith(array(</span><span class="integer_1">1</span><span class="span_4">,</span><span class="integer_1">2</span><span class="span_4">,</span><span class="integer_1">3</span><span class="span_4">,</span><span class="integer_1">4</span><span class="span_4">), </span><span class="integer_1">3</span><span class="span_4">);</span>
+    </p>
+    <p><span class="span_4">&gt; [</span><span class="integer_1">1</span><span class="span_4">,</span><span class="integer_1">2</span><span class="span_4">,</span><span class="integer_1">3</span><span class="span_4">]</span>
+    </p>
+    <h3>50. SUBARRAY_STARTWITH</h3>
+    <h5>Signature</h5>
+    <p>subarray_startwith(array&lt;int|text&gt; original, int|text key)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">SUBARRAY_STARTWITH</span><span class="span_4">&#160;returns an array that starts with the specified key.</span>
+    </p>
+    <h5>Example</h5>
+    <p><span class="class_1">SELECT</span><span class="span_4"> subarray_startwith(array(</span><span class="integer_1">1</span><span class="span_4">,</span><span class="integer_1">2</span><span class="span_4">,</span><span class="integer_1">3</span><span class="span_4">,</span><span class="integer_1">4</span><span class="span_4">), </span><span class="integer_1">2</span><span class="span_4">);</span>
+    </p>
+    <p><span class="span_4">&gt; [</span><span class="integer_1">2</span><span class="span_4">,</span><span class="integer_1">3</span><span class="span_4">,</span><span class="integer_1">4</span><span class="span_4">]</span>
+    </p>
+    <h3>TO_STRING_ARRAY</h3>
+    <h5>Signature</h5>
+    <p>to_string_array(array&lt;ANY&gt;)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">TO_STRING_ARRAY</span><span class="span_4">&#160;returns an array of strings</span>
+    </p>
+    <h5>Example</h5>
+    <p>SELECT to_string_array(array(1.0,2.0,3.0));</p>
+    <p>&gt; ["1.0","2.0","3.0"]</p>
+    <h3>TO_ORDERED_LIST</h3>
+    <h5>Signature</h5>
+    <p>to_ordered_list(PRIMITIVE value [, PRIMITIVE key, const string options])</p>
+    <p>to_ordered_list(value, key [, const string options])</p>
+    <h5>Description</h5>
+    <p><span class="span_5">TO_ORDERED_LIST</span><span class="span_4">&#160;returns list of values sorted by value itself or specific key. For more information, see&#160;</span><a href="../../../../transfer/hive2.docx#text-processing-functions">Hivemall user guide</a><span class="span_4">.</span>
+    </p>
+    <h5>Example</h5>
+    <p>WITH t as (</p>
+    <p><span class="span_4">&#160;&#160;&#160; </span><span class="span_4">SELECT</span> <span class="span_4">5</span> <span class="span_4">as</span> <span class="span_4">key</span><span class="span_4">, </span><span class="span_4">'apple'</span> <span class="span_4">as</span> <span class="span_4">value</span></p>
+    <p><span class="span_4">&#160;&#160;&#160; </span><span class="span_4">UNION</span><span class="span_4"> ALL</span>
+    </p>
+    <p><span class="span_4">&#160;&#160;&#160; </span><span class="span_4">SELECT</span> <span class="span_4">3</span> <span class="span_4">as</span> <span class="span_4">key</span><span class="span_4">, </span><span class="span_4">'banana'</span> <span class="span_4">as</span> <span class="span_4">value</span></p>
+    <p><span class="span_4">&#160;&#160;&#160; </span><span class="span_4">UNION</span><span class="span_4"> ALL</span>
+    </p>
+    <p><span class="span_4">&#160;&#160;&#160; </span><span class="span_4">SELECT</span> <span class="span_4">4</span> <span class="span_4">as</span> <span class="span_4">key</span><span class="span_4">, </span><span class="span_4">'candy'</span> <span class="span_4">as</span> <span class="span_4">value</span></p>
+    <p><span class="span_4">&#160;&#160;&#160; </span><span class="span_4">UNION</span><span class="span_4"> ALL</span>
+    </p>
+    <p><span class="span_4">&#160;&#160;&#160; </span><span class="span_4">SELECT</span> <span class="span_4">2</span> <span class="span_4">as</span> <span class="span_4">key</span><span class="span_4">, </span><span class="span_4">'donut'</span> <span class="span_4">as</span> <span class="span_4">value</span></p>
+    <p><span class="span_4">&#160;&#160;&#160; </span><span class="span_4">UNION</span><span class="span_4"> ALL</span>
+    </p>
+    <p><span class="span_4">&#160;&#160;&#160; </span><span class="span_4">SELECT</span> <span class="span_4">3</span> <span class="span_4">as</span> <span class="span_4">key</span><span class="span_4">, </span><span class="span_4">'egg'</span> <span class="span_4">as</span> <span class="span_4">value</span></p>
+    <p>)</p>
+    <p><span class="span_4">SELECT</span><span class="span_4">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span class="span_4">-- expected output</span>
+    </p>
+    <p><span class="span_4">&#160;&#160;&#160; to_ordered_list(</span><span class="span_4">value</span><span class="span_4">, </span><span class="span_4">key</span><span class="span_4">, </span><span class="span_4">'-reverse'</span><span class="span_4">),&#160;&#160;&#160;&#160;&#160;&#160; </span><span class="span_4">-- [apple, candy, (banana, egg | egg, banana), donut] (reverse order)</span>
+    </p>
+    <p><span class="span_4">&#160;&#160;&#160; to_ordered_list(</span><span class="span_4">value</span><span class="span_4">, </span><span class="span_4">key</span><span class="span_4">, </span><span class="span_4">'-k 2'</span><span class="span_4">),&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span class="span_4">-- [apple, candy] (top-k)</span>
+    </p>
+    <p><span class="span_4">&#160;&#160;&#160; to_ordered_list(</span><span class="span_4">value</span><span class="span_4">, </span><span class="span_4">key</span><span class="span_4">, </span><span class="span_4">'-k 100'</span><span class="span_4">),&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span class="span_4">-- [apple, candy, (banana, egg | egg, banana), dunut]</span>
+    </p>
+    <p><span class="span_4">&#160;&#160;&#160; to_ordered_list(</span><span class="span_4">value</span><span class="span_4">, </span><span class="span_4">key</span><span class="span_4">, </span><span class="span_4">'-k 2 -reverse'</span><span class="span_4">),&#160; </span><span class="span_4">-- [donut, (banana | egg)] (reverse top-k = tail-k)</span>
+    </p>
+    <p><span class="span_4">&#160;&#160;&#160; to_ordered_list(</span><span class="span_4">value</span><span class="span_4">, </span><span class="span_4">key</span><span class="span_4">),&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span class="span_4">-- [donut, (banana, egg | egg, banana), candy, apple] (natural order)</span>
+    </p>
+    <p><span class="span_4">&#160;&#160;&#160; to_ordered_list(</span><span class="span_4">value</span><span class="span_4">, </span><span class="span_4">key</span><span class="span_4">, </span><span class="span_4">'-k -2'</span><span class="span_4">),&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span class="span_4">-- [donut, (banana | egg)] (tail-k)</span>
+    </p>
+    <p><span class="span_4">&#160;&#160;&#160; to_ordered_list(</span><span class="span_4">value</span><span class="span_4">, </span><span class="span_4">key</span><span class="span_4">, </span><span class="span_4">'-k -100'</span><span class="span_4">),&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span class="span_4">-- [donut, (banana, egg | egg, banana), candy, apple]</span>
+    </p>
+    <p><span class="span_4">&#160;&#160;&#160; to_ordered_list(</span><span class="span_4">value</span><span class="span_4">, </span><span class="span_4">key</span><span class="span_4">, </span><span class="span_4">'-k -2 -reverse'</span><span class="span_4">), </span><span class="span_4">-- [apple, candy] (reverse tail-k = top-k)</span>
+    </p>
+    <p><span class="span_4">&#160;&#160;&#160; to_ordered_list(</span><span class="span_4">value</span><span class="span_4">, </span><span class="span_4">'-k 2'</span><span class="span_4">),&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span class="span_4">-- [egg, donut] (alphabetically)</span>
+    </p>
+    <p><span class="span_4">&#160;&#160;&#160; to_ordered_list(</span><span class="span_4">key</span><span class="span_4">, </span><span class="span_4">'-k -2 -reverse'</span><span class="span_4">),&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span class="span_4">-- [5, 4] (top-2 keys)</span>
+    </p>
+    <p><span class="span_4">&#160;&#160;&#160; to_ordered_list(</span><span class="span_4">key</span><span class="span_4">),&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span class="span_4">-- [2, 3, 3, 4, 5] (natural ordered keys)</span>
+    </p>
+    <p><span class="span_4">&#160;&#160;&#160; to_ordered_list(</span><span class="span_4">value</span><span class="span_4">, </span><span class="span_4">key</span><span class="span_4">, </span><span class="span_4">'-k 2 -kv_map'</span><span class="span_4">),&#160;&#160; </span><span class="span_4">-- {4:"candy",5:"apple"}</span>
+    </p>
+    <p><span class="span_4">&#160;&#160;&#160; to_ordered_list(</span><span class="span_4">value</span><span class="span_4">, </span><span class="span_4">key</span><span class="span_4">, </span><span class="span_4">'-k 2 -vk_map'</span><span class="span_4">)&#160;&#160;&#160; </span><span class="span_4">-- {"candy":4,"apple":5}</span>
+    </p>
+    <p class="float_1">FROM</p>
+    <p>&#160;&#160;&#160; t;</p>
+    <h2>6. Bitset functions</h2>
+    <h3>6. BITS_COLLECT</h3>
+    <h5>Signature</h5>
+    <p>bits_collect(int|long x)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">BITS_COLLECT</span><span class="span_4">&#160;returns a bit set in array. This function is an aggregate function.</span>
+    </p>
+    <h3>6. BITS_OR</h3>
+    <h5>Signature</h5>
+    <p>bits_or(array&lt;long&gt; b1, array&lt;long&gt; b2, ..)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">BITS_OR</span><span class="span_4">&#160;returns a logical OR given bit sets.</span>
+    </p>
+    <h5>Example</h5>
+    <p><span class="class_1">SELECT</span><span class="span_4"> unbits(bits_or(to_bits(array(</span><span class="integer_1">1</span><span class="span_4">,</span><span class="integer_1">4</span><span class="span_4">)),to_bits(array(</span><span class="integer_1">2</span><span class="span_4">,</span><span class="integer_1">3</span><span class="span_4">))));</span>
+    </p>
+    <p><span class="span_4">&gt; [</span><span class="integer_1">1</span><span class="span_4">,</span><span class="integer_1">2</span><span class="span_4">,</span><span class="integer_1">3</span><span class="span_4">,</span><span class="integer_1">4</span><span class="span_4">]</span>
+    </p>
+    <h3>6. TO_BITS</h3>
+    <h5>Signature</h5>
+    <p>to_bits(int[] indexes)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">TO_BITS</span><span class="span_4">&#160;returns an bitset representation if the given indexes in long[].</span>
+    </p>
+    <h5>Example</h5>
+    <p><span class="class_1">SELECT</span><span class="span_4"> to_bits(array(</span><span class="integer_1">1</span><span class="span_4">,</span><span class="integer_1">2</span><span class="span_4">,</span><span class="integer_1">3</span><span class="span_4">,</span><span class="integer_1">128</span><span class="span_4">));</span>
+    </p>
+    <p><span class="span_4">&gt; [</span><span class="integer_1">14</span><span class="span_4">,</span><span class="integer_1">-9223372036854775808</span><span class="span_4">]</span>
+    </p>
+    <h3>6. UNBITS</h3>
+    <h5>Signature</h5>
+    <p>unbits(long[] bitset)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">UNBITS</span><span class="span_4">&#160;returns a long array of the given bitset representation</span>
+    </p>
+    <h5>Example</h5>
+    <p><span class="class_1">SELECT</span><span class="span_4"> unbits(to_bits(array(</span><span class="integer_1">1</span><span class="span_4">,</span><span class="integer_1">4</span><span class="span_4">,</span><span class="integer_1">2</span><span class="span_4">,</span><span class="integer_1">3</span><span class="span_4">)));</span>
+    </p>
+    <p><span class="span_4">&gt; [</span><span class="integer_1">1</span><span class="span_4">,</span><span class="integer_1">2</span><span class="span_4">,</span><span class="integer_1">3</span><span class="span_4">,</span><span class="integer_1">4</span><span class="span_4">]</span>
+    </p>
+    <h2> Compression functions</h2>
+    <h3> DEFLATE</h3>
+    <h5>Signature</h5>
+    <p>deflate(TEXT data [, const int compressionLevel])</p>
+    <h5>Description</h5>
+    <p><span class="span_5">DEFLATE</span><span class="span_4">&#160;returns a compressed BINARY object by using Deflater. The compression level must be within the range [-1,9].</span>
+    </p>
+    <h5>Example</h5>
+    <p><span class="class_1">SELECT</span><span class="span_4"> base91(deflate(</span><span class="delimiter_1">'</span><span class="delimiter_1">aaaaaaaaaaaaaaaabbbbccc</span><span class="delimiter_1">'</span><span class="span_4">));</span>
+    </p>
+    <p>&gt; AA+=kaIM|WTt!+wbGAA</p>
+    <h3> INFLATE</h3>
+    <h5>Signature</h5>
+    <p>inflate(BINARY compressedData)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">INFLATE</span><span class="span_4">&#160;returns a decompressed STRING by using Inflater</span>
+    </p>
+    <h5>Example</h5>
+    <p><span class="class_1">SELECT</span><span class="span_4"> inflate(unbase91(base91(deflate(</span><span class="delimiter_1">'</span><span class="delimiter_1">aaaaaaaaaaaaaaaabbbbccc</span><span class="delimiter_1">'</span><span class="span_4">))));</span>
+    </p>
+    <p>&gt; aaaaaaaaaaaaaaaabbbbccc</p>
+    <h2> Datetime functions</h2>
+    <h3> SESSIONIZE</h3>
+    <h5>Signature</h5>
+    <p>sessionize(long timeInSec, long thresholdInSec [, String subject])</p>
+    <h5>Description</h5>
+    <p><span class="span_5">SESSIONIZE</span><span class="span_4">&#160;Returns a UUID string of a session.</span>
+    </p>
+    <h5>Example</h5>
+    <p><span class="span_4">SELECT </span><span class="span_4"><br /> sessionize(time, 3600, ip_addr) as session_id, </span><span class="span_4"><br /> time, ip_addr</span><span class="span_4"><br />FROM (</span><span class="span_4"><br /> SELECT time, ipaddr </span><span class="span_4"><br /> FROM weblog </span><span class="span_4"><br /> DISTRIBUTE BY ip_addr, time SORT BY ip_addr, time DESC</span><span class="span_4"><br />) t1;</span>
+    </p>
+    <h2> JSON functions</h2>
+    <h3> TO_JSON</h3>
+    <h5>Signature</h5>
+    <p>to_json(object)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">TO_JSON</span><span class="span_4">&#160;returns JSON string of given object.</span>
+    </p>
+    <h5>Example</h5>
+    <p>select to_json(ARRAY('a', 'b', 'c'));</p>
+    <p>'["a","b","c"]'</p>
+    <h3> FROM_JSON</h3>
+    <h5>Signature</h5>
+    <p>from_json(STRING json, const string type)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">FROM_JSON</span><span class="span_4">&#160;converts a given JSON string into an object of the specified type.</span>
+    </p>
+    <h5>Example</h5>
+    <p>select from_json('["a","b","c"]', 'array&lt;string&gt;');</p>
+    <p>["a","b","c"]</p>
+    <h2> Map functions</h2>
+    <h3> MAP_EXCLUDE_KEYS</h3>
+    <h5>Signature</h5>
+    <p>map_exclude_keys(Map&lt;K,V&gt; map, array&lt;K&gt; filteringKeys)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">MAP_EXCLUDE_KEYS</span><span class="span_4">&#160;returns the filtered entries of a map that excludes specified keys</span>
+    </p>
+    <h5>Example</h5>
+    <p><span class="span_4">SELECT map_exclude_keys(map(1,'one',2,'two',3,'three'),array(2,3));</span><span class="span_4"><br />&gt; {1:"one"}</span>
+    </p>
+    <h3> MAP_GET_SUM</h3>
+    <h5>Signature</h5>
+    <p>map_get_sum(map&lt;int,float&gt; src, array&lt;int&gt; keys)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">MAP_GET_SUM</span><span class="span_4">&#160;returns sum of values that are retrieved by keys.</span>
+    </p>
+    <h3> MAP_INCLUDE_KEYS</h3>
+    <h5>Signature</h5>
+    <p>map_include_keys(Map&lt;K,V&gt; map, array&lt;K&gt; filteringKeys)</p>
+    <h5>Description</h5>
+    <p class="HTMLTypewriter_1">MAP_INCLUDE_KEYS returns the filtered entries of a map having specified keys</p>
+    <h5>Example</h5>
+    <p><span class="span_4">SELECT map_include_keys(map(1,'one',2,'two',3,'three'),array(2,3));</span><span class="span_4"><br />&gt; {2:"two",3:"three"} </span>
+    </p>
+    <h3> MAP_KEY_VALUES</h3>
+    <h5>Signature</h5>
+    <p class="HTMLCode_1">array&lt;named_struct&lt;key,value&gt;&gt; map_key_values(Map&lt;K, V&gt; map)</p>
+    <h5>Description</h5>
+    <p class="HTMLTypewriter_1">MAP_KEY_VALUES returns a array of key-value pairs in array&lt;named_struct&lt;key,value&gt;&gt;</p>
+    <h5>Example</h5>
+    <p><span class="span_4">SELECT map_key_values(map("one",1,"two",2));</span><span class="span_4"><br />&gt; [{"key":"one","value":1},{"key":"two","value":2}]</span>
+    </p>
+    <h3> MAP_TAIL_N</h3>
+    <h5>Signature</h5>
+    <p>map_tail_n(map SRC, int N)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">MAP_TAIL_N</span><span class="span_4">&#160;returns the last N elements from a sorted array of SRC.</span>
+    </p>
+    <h3>6. MERGE_MAPS</h3>
+    <h5>Signature</h5>
+    <p class="HTMLCode_1">merge_maps(Map x)</p>
+    <h5>Description</h5>
+    <p class="HTMLTypewriter_1">MERGE_MAPS returns a map that contains the union of an aggregation of maps. An existing value of a key can be replaced with the other duplicate key entry.</p>
+    <h5>Example</h5>
+    <p><span class="span_4">SELECT </span><span class="span_4"><br /> merge_maps(m) </span><span class="span_4"><br />FROM (</span><span class="span_4"><br /> SELECT map('A',10,'B',20,'C',30) </span><span class="span_4"><br /> UNION ALL </span><span class="span_4"><br /> SELECT map('A',10,'B',20,'C',30)</span><span class="span_4"><br />) t;</span>
+    </p>
+    <h3> TO_MAP</h3>
+    <h5>Signature</h5>
+    <p>to_map(key, value)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">TO_MAP</span><span class="span_4">&#160;converts two aggregated columns into a key-value map.</span>
+    </p>
+    <h5>Example</h5>
+    <p><span class="span_4">WITH input as (</span><span class="span_4"><br /> select 'aaa' as key, 111 as value</span><span class="span_4"><br /> UNION all</span><span class="span_4"><br /> select 'bbb' as key, 222 as value</span><span class="span_4"><br />)</span><span class="span_4"><br />select to_map(key, value)</span><span class="span_4"><br />from input;</span><span class="span_4"><br /></span><span class="span_4"><br />&gt; {"bbb":222,"aaa":111}</span>
+    </p>
+    <h3>TO_ORDERED_MAP</h3>
+    <h5>Signature</h5>
+    <p>to_ordered_map(key, value [, const boolean reverseOrder=false])</p>
+    <h5>Description</h5>
+    <p><span class="span_5">TO_ORDERED_MAP</span><span class="span_4">&#160;converts two aggregated columns into an ordered key-value map.</span>
+    </p>
+    <h5>Example</h5>
+    <p><span class="span_4">with t as (</span><span class="span_4"><br /> select 10 as key, 'apple' as value</span><span class="span_4"><br /> union all</span><span class="span_4"><br /> select 3 as key, 'banana' as value</span><span class="span_4"><br /> union all</span><span class="span_4"><br /> select 4 as key, 'candy' as value</span><span class="span_4"><br />)</span><span class="span_4"><br />select</span><span class="span_4"><br /> to_ordered_map(key, value, true), -- {10:"apple",4:"candy",3:"banana"} (reverse)</span><span class="span_4"><br /> to_ordered_map(key, value, 1), -- {10:"apple"} (top-1)</span><span class="span_4"><br /> to_ordered_map(key, value, 2), -- {10:"apple",4:"candy"} (top-2)</span><span class="span_4"><br /> to_ordered_map(key, value, 3), -- {10:"apple",4:"candy",3:"banana"} (top-3)</span><span class="span_4"><br /> to_ordered_map(key, value, 100), -- {10:"apple",4:"candy",3:"banana"} (top-100)</span><span class="span_4"><br /> to_ordered_map(key, value), -- {3:"banana",4:"candy",10:"apple"} (natural)</span><span class="span_4"><br /> to_ordered_map(key, value, -1), -- {3:"banana"} (tail-1)</span><span class="span_4"><br /> to_ordered_map(key, value, -2), -- {3:"banana",4:"candy"} (tail-2)</span><span class="span_4"><br /> to_ordered_map(key, value, -3), -- {3:"banana",4:"candy",10:"apple"} (tail-3)</span><span class="span_4"><br /> to_ordered_map(key, value, -100) -- {3:"banana",4:"candy",10:"apple"} (tail-100)</span><span class="span_4"><br />from t;</span>
+    </p>
+    <h2>MapReduce functions</h2>
+    <h3>ROWID</h3>
+    <h5>Signature</h5>
+    <p>string rowid()</p>
+    <h5>Description</h5>
+    <p><span class="span_5">ROWID</span><span class="span_4">&#160;returns a generated row id of a form {TASK_ID}–{SEQUENCE_NUMBER}</span>
+    </p>
+    <h5>Example</h5>
+    <p>SELECT rowid() as rowid, col1, col2 FROM input</p>
+    <h3>ROWNUM</h3>
+    <h5>Signature</h5>
+    <p>long rownum()</p>
+    <h5>Description</h5>
+    <p><span class="span_5">ROWNUM returns</span><span class="span_4">&#160;a generated row number&#160;</span><span class="span_4">sprintf(</span><span class="span_4">%d%04d</span><span class="span_4">,sequence,taskId)</span><span class="span_4">&#160;in long</span>
+    </p>
+    <h5>Example</h5>
+    <p>SELECT rownum() as rowid, col1, col2 FROM input</p>
+    <h2> Math functions</h2>
+    <h3> INFINITY</h3>
+    <h5>Signature</h5>
+    <p>double infinity()</p>
+    <h5>Description</h5>
+    <p><span class="span_5">INFINITY</span><span class="span_4">&#160;returns the constant representing positive infinity.</span>
+    </p>
+    <h3> IS_FINITE</h3>
+    <h5>Signature</h5>
+    <p>boolean is_finite(number x)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">IS_FINITE</span><span class="span_4">&#160;determines if x is finite.</span>
+    </p>
+    <h5>Example</h5>
+    <p><span class="span_4">SELECT is_finite(333), is_finite(infinity());</span><span class="span_4"><br />&gt; true false</span>
+    </p>
+    <h3> IS_INFINITE</h3>
+    <h5>Signature</h5>
+    <p>boolean is_infinite(number x)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">IS_INFINITE</span><span class="span_4">&#160;determines if x is infinite.</span>
+    </p>
+    <h5>Example</h5>
+    <p><span class="span_4">SELECT is_infinite(333), is_infinite(infinity());</span><span class="span_4"><br />&gt; false true </span>
+    </p>
+    <h3> IS_NAN</h3>
+    <h5>Signature</h5>
+    <p>boolean is_nan(number x)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">IS_NAN</span><span class="span_4">&#160;determines if x is not-a-number.</span>
+    </p>
+    <h5>Example</h5>
+    <p><span class="span_4">SELECT is_nan(333), is_nan(nan());</span><span class="span_4"><br />&gt; false true</span>
+    </p>
+    <h3> L2_NORM</h3>
+    <h5>Signature</h5>
+    <p>double l2_norm(number x)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">L2_NORM return an&#160;</span><a href="http://mathworld.wolfram.com/L2-Norm.html">L2 norm</a><span class="span_5">&#160;of the given input x.</span>
+    </p>
+    <h5>Example</h5>
+    <p><span class="span_4">WITH input as (</span><span class="span_4"><br /> select generate_series(1,3) as v</span><span class="span_4"><br />)</span><span class="span_4"><br />select l2_norm(v) as l2norm</span><span class="span_4"><br />from input;</span><span class="span_4"><br /></span><span class="span_4"><br />&gt; 19.621416870348583 = sqrt(1^2+2^2+3^2))</span>
+    </p>
+    <h3>6. NAN</h3>
+    <h5>Signature</h5>
+    <p>double nan()</p>
+    <h5>Description</h5>
+    <p><span class="span_5">NAN</span><span class="span_4">&#160;returns the constant representing not-a-number.</span>
+    </p>
+    <h5>Example</h5>
+    <p><span class="span_4">SELECT nan(), is_nan(nan());</span><span class="span_4"><br />&gt; NaN true</span>
+    </p>
+    <h3> SIGMOID</h3>
+    <h5>Signature</h5>
+    <p>sigmoid(x)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">SIGMOID</span><span class="span_4">&#160;returns 1.0 / (1.0 + exp(-x))</span>
+    </p>
+    <h5>Example</h5>
+    <p><span class="span_4">WITH input as (</span><span class="span_4"><br /> SELECT 3.0 as x</span><span class="span_4"><br /> UNION ALL</span><span class="span_4"><br /> SELECT -3.0 as x</span><span class="span_4"><br />)</span><span class="span_4"><br />select </span><span class="span_4"><br /> 1.0 / (1.0 + exp(-x)),</span><span class="span_4"><br /> sigmoid(x)</span><span class="span_4"><br />from</span><span class="span_4"><br /> input;</span><span class="span_4"><br /></span><span class="span_4"><br />&gt; 0.04742587317756678 0.04742587357759476</span><span class="span_4"><br />&gt; 0.9525741268224334 0.9525741338729858</span>
+    </p>
+    <h2> Vector/Matrix functions</h2>
+    <h3> TRANSPOSE_AND_DOT</h3>
+    <h5>Signature</h5>
+    <p class="HTMLCode_1">transpose_and_dot(array&lt;number&gt; X, array&lt;number&gt; Y)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">TRANSPOSE_AND_DOT</span><span class="span_4">&#160;returns dot(X.T, Y) as array&lt;array&lt;double&gt;&gt;, shape = (X.#cols, Y.#cols)</span>
+    </p>
+    <h5>Example</h5>
+    <p><span class="span_4">WITH input as (</span><span class="span_4"><br /> select array(1.0, 2.0, 3.0, 4.0) as x, array(1, 2) as y</span><span class="span_4"><br /> UNION ALL</span><span class="span_4"><br /> select array(2.0, 3.0, 4.0, 5.0) as x, array(1, 2) as y</span><span class="span_4"><br />)</span><span class="span_4"><br />select</span><span class="span_4"><br /> transpose_and_dot(x, y) as xy,</span><span class="span_4"><br /> transpose_and_dot(y, x) as yx</span><span class="span_4"><br />from </span><span class="span_4"><br /> input;</span><span class="span_4"><br /></span><span class="span_4"><br />&gt; [["3.0","6.0"],["5.0","10.0"],["7.0","14.0"],["9.0","18.0"]] [["3.0","5.0","7.0","9.0"],["6.0","10.0","14.0","18.0"]]</span>
+    </p>
+    <h3>VECTOR_ADD</h3>
+    <h5>Signature</h5>
+    <p class="HTMLCode_1">vector_add(array&lt;NUMBER&gt; x, array&lt;NUMBER&gt; y)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">VECTOR_ADD</span><span class="span_4">&#160;perform vector ADD operation.</span>
+    </p>
+    <h5>Example</h5>
+    <p class="HTMLPreformatted_5"><span class="span_4">SELECT</span><span class="span_4"> vector_add(</span><span class="span_4">array</span><span class="span_4">(</span><span class="span_4">1.0</span><span class="span_4">,</span><span class="span_4">2.0</span><span class="span_4">,</span><span class="span_4">3.0</span><span class="span_4">), </span><span class="span_4">array</span><span class="span_4">(</span><span class="span_4">2</span><span class="span_4">, </span><span class="span_4">3</span><span class="span_4">, </span><span class="span_4">4</span><span class="span_4">));</span>
+    </p>
+    <p class="HTMLTypewriter_2">&gt; [3.0,5.0,7.0]</p>
+    <h3>VECTOR_DOT</h3>
+    <h5>Signature</h5>
+    <p class="HTMLCode_1">vector_dot(array&lt;NUMBER&gt; x, array&lt;NUMBER&gt; y)</p>
+    <h5>Description</h5>
+    <p><span class="span_5">VECTOR_DOT</span><span class="span_4">&#160;perform vector dot product.</span>
+    </p>
+    <h5>Example</h5>
+    <p class="HTMLPreformatted_5"><span class="span_4">SELECT vector_dot(array(1.0,2.0,3.0),array(2.0,3.0,4.0));</span><span class="span_4"><br /></span><span class="span_4">&gt; 20</span><span class="span_4"><br /></span><span class="span_4"><br /></span><span class="span_4">SELECT vector_dot(array(1.0,2.0,3.0),2);</span><span class="span_4"><br /></span><span class="span_4">&gt; [2.0,4.0,6.0]</span>
+    </p>
+    <p>&#160;</p>
+</html>

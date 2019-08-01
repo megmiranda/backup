@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head>
+    </head>
+    <body>
+        <h1>Using Hive 2 from the REST API</h1>
+        <p>The REST API also supports the <span class="span_1">engine_version</span> parameter in a request to run Hive 2.</p>
+        <p>&#160;</p>
+        <p class="p_5">Example - Current</p>
+        <table class="table_1">
+            <col style="width: 468pt;">
+            </col>
+            <tr>
+                <td class="td_2">
+                    <p class="p_7"><span class="span_3">curl -X POST</span><span class="span_3">https://api.treasuredata.com/v3/job/issue/hive/</span>db<br></br><span class="span_3">-H </span><span class="span_5">'authorization: TD1 YOUR_APIKEY'</span><br></br><span class="span_3">-H </span><span class="span_5">'content-type: application/json'</span><br></br><span class="span_3">-d </span><span class="span_5">'{"query": "select * from </span><span class="span_5">test_td_table</span><span class="span_5"> order by time", "priority": 0}'</span></p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p class="p_5">Example - Hive2</p>
+        <table class="table_1">
+            <col style="width: 468pt;">
+            </col>
+            <tr>
+                <td class="td_2">
+                    <p class="p_6"><span class="span_3">curl -X POST https://api.treasuredata.com/v3/job/issue/hive/db</span><span class="span_3"><br></br>-H </span><span class="span_5">'authorization: TD1 YOUR_APIKEY'</span><span class="span_3"><br></br>-H </span><span class="span_5">'content-type: application/json'</span><span class="span_3"><br></br>-d </span><span class="span_5">'{"query": "select * from </span><span class="span_5">test_td_table</span><span class="span_5"> order by time", "priority": 0, "</span><span class="span_8">engine_version</span><span class="span_5">":"experimental</span><span class="span_5">"}'</span>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p class="p_8">&#160;</p>
+    </body>
+</html>

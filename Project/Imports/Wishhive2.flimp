@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MsWordImport
+  PreserveSourceStyles="true"
+  KeepSourceLinks="false"
+  ConvertInlineFormatting="true"
+  AddContinuedLinks="false"
+  AddContinuedFromLinks="false"
+  ContinuedLinkFormat="(continued in {title})"
+  ContinuedFromLinkFormat="(continued from {title})"
+  UseMaxCharLimit="false"
+  UseMinCharLimit="true"
+  MaxCharLimit="10000"
+  MinCharLimit="50"
+  FilenameLength="24"
+  GeneratePageLayouts="false"
+  UseFirstHeadingAsTopicTitle="true"
+  ConvertEquations="true"
+  LastCollectTime="2019-06-18T12:17:32.5501206-07:00"
+  ProjectName="cleanxhtml"
+  ProjectFolder="C:\Users\megmir01\Documents\My Projects\cleanxhtml\"
+  AutoSync="false"
+  AutoFitTables="false"
+  UseHeaderRows="false"
+  LastImport="2019-06-18T12:17:54.6377486-07:00">
+  <Files>
+    <Url
+      Source="../../../../transfer/Wishhive2.docx"
+      AbsoluteSource="file:///C:/Users/megmir01/Documents/transfer/Wishhive2.docx" />
+  </Files>
+  <ExcludedFiles />
+  <CollectedSourceFiles />
+  <SkippedSourceFiles />
+  <GeneratedFiles>
+    <Url
+      Source="../../Content/Wishhive2/Hive 2 Upgrade Guide.htm"
+      TimeStamp="6/18/2019 12:17:50 PM" />
+    <Url
+      Source="../../Content/Wishhive2/Migration Best practices.htm"
+      TimeStamp="6/18/2019 12:17:50 PM" />
+    <Url
+      Source="../../Content/Wishhive2/How to use Hive 2.htm"
+      TimeStamp="6/18/2019 12:17:50 PM" />
+    <Url
+      Source="../../Content/Wishhive2/Hive 0 13 Syntax to Update.htm"
+      TimeStamp="6/18/2019 12:17:50 PM" />
+    <Url
+      Source="../../Content/Wishhive2/Specific Wish query examples.htm"
+      TimeStamp="6/18/2019 12:17:50 PM" />
+    <Url
+      Source="../../Content/Wishhive2/Appendix A List of Keywords.htm"
+      TimeStamp="6/18/2019 12:17:50 PM" />
+    <Url
+      Source="../TOCs/Wishhive2.fltoc"
+      TimeStamp="6/18/2019 12:17:50 PM" />
+    <Url
+      Source="../../Content/Resources/Stylesheets/Wishhive2.css"
+      TimeStamp="6/18/2019 12:17:50 PM" />
+  </GeneratedFiles>
+  <ParagraphStyles>
+    <Map
+      From="Heading 1"
+      To="h1.Heading 1" />
+    <Map
+      From="Heading 2"
+      To="h2.Heading 2" />
+    <Map
+      From="Heading 3"
+      To="h3.Heading 3" />
+    <Map
+      From="Heading 4"
+      To="h4.Heading 4" />
+    <Map
+      From="Heading 5"
+      To="h5.Heading 5" />
+    <Map
+      From="Heading 6"
+      To="h6.Heading 6" />
+  </ParagraphStyles>
+  <CharacterStyles>
+    <Map
+      From="Hyperlink"
+      To="a.(MS Word Style)" />
+  </CharacterStyles>
+  <NewTopicStyles>
+    <StyleName
+      Name="Heading 1" />
+  </NewTopicStyles>
+  <UsedParagraphStyles>
+    <StyleName
+      Name="Heading 1" />
+    <StyleName
+      Name="Heading 2" />
+    <StyleName
+      Name="Heading 3" />
+  </UsedParagraphStyles>
+  <UsedCharacterStyles>
+    <StyleName
+      Name="Hyperlink" />
+  </UsedCharacterStyles>
+</MsWordImport>

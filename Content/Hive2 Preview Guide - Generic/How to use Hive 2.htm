@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" xml:lang="en-us">
+    <head><title></title>
+        <link href="../Resources/Stylesheets/Hive2 Preview Guide - Generic.css" rel="stylesheet" />
+    </head>
+    <body>
+        <h1 class="Heading1"><a name="_ojdr93vrwfg"></a>How to use Hive 2</h1>
+        <h2 class="Heading2"><a name="_taceptuutd5e"></a>Using the TD Console&#160; </h2>
+        <p class="p_9">A new drop down item will be added for Hive 2 to run queries with Hive 2. The appearance will be roughly like this:</p>
+        <p class="p_10">&#160;</p>
+        <p class="p_9">
+            <img src="../Resources/Images/Hive2 Preview Guide - Generic/How to use Hive 2.png" style="height: 288px;width: 624px;" class="img_1" />
+        </p>
+        <p class="p_10">&#160;</p>
+        <p class="p_10">&#160;</p>
+        <p class="p_9">Hive 2019.1 is the new Hive release. Hive 0.13 is the current generally available Hive. In the preview period, Hive 0.13 will continue to be the default Hive release. </p>
+        <p>&#160;</p>
+        <h2 class="Heading2"><a name="_f2t5fyi75unt"></a><span class="span_5">Using the Command line tool (TD Toolbelt)</span><span class="span_5">　</span>
+        </h2>
+        <p><span class="span_3">Command Line Tool (td command) has supported</span><span class="span_3"> the </span><span class="span_6">--engine-version</span><span class="span_3"> option since v 0.16.4.</span>
+        </p>
+        <p class="p_7">The TD query command enables you to run queries with Hive 2 with the following syntax:</p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_5">
+                    <p class="p_12">$ td query -T hive --engine-version experimental --database xxx "select query" </p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p class="p_13">Example - Current</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr style="height: 71pt;">
+                <td class="td_6">
+                    <p class="p_11"><span class="span_8">td query -d db -T hive "</span><span class="span_8"><br /> </span><span class="span_9">select</span> <span class="span_10">time</span> <span class="span_9">from</span><span class="span_8"> tablename</span></p>
+                    <p class="p_11"> <span class="span_9">where</span><span class="span_8"> td_time_range(</span><span class="span_9">time</span><span class="span_8">, </span><span class="span_11">'-1h'</span><span class="span_8">,</span><span class="span_11">'America/Los_Angeles'</span><span class="span_8">)</span><span class="span_8"><br /></span><span class="span_11">" </span></p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p class="p_13">Example - Hive2</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_6">
+                    <p class="p_11"><span class="span_8">td query -d db -T hive </span><span class="span_12">--engine-version experimental</span><span class="span_13"> "</span><span class="span_8"><br />&#160; </span><span class="span_9">select</span> <span class="span_10">time</span> <span class="span_9">from</span><span class="span_8"> tablename</span></p>
+                    <p class="p_11"><span class="span_10">&#160; </span><span class="span_9">where</span><span class="span_8"> td_time_range(</span><span class="span_9">time</span><span class="span_8">, </span><span class="span_11">'-1h'</span><span class="span_8">,</span><span class="span_11">'America/Los_Angeles'</span><span class="span_8">)</span><span class="span_8"><br /></span><span class="span_11">" </span>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <h2 class="Heading2"><a name="_j4szlggdxj5k"></a>Using the REST API</h2>
+        <p><span class="span_3">The REST API also supports the </span><span class="span_6">engine_version</span><span class="span_3"> parameter in a request to run Hive 2.</span>
+        </p>
+        <p>&#160;</p>
+        <p class="p_13">Example - Current</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_6">
+                    <p class="p_14"><span class="span_8">curl -X POST</span> <span class="span_8">https://api.treasuredata.com/v3/job/issue/hive/</span><span class="span_10">db</span><span class="span_10"><br /></span><span class="span_8">-H </span><span class="span_11">'authorization: TD1 YOUR_APIKEY'</span><span class="span_10"><br /></span><span class="span_8">-H </span><span class="span_11">'content-type: application/json'</span><span class="span_10"><br /></span><span class="span_8">-d </span><span class="span_11">'{"query": "select * from test_td_table order by time", "priority": 0}'</span></p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p class="p_13">Example - Hive2</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_6">
+                    <p class="p_11"><span class="span_8">curl -X POST https://api.treasuredata.com/v3/job/issue/hive/db</span><span class="span_8"><br />-H </span><span class="span_11">'authorization: TD1 YOUR_APIKEY'</span><span class="span_8"><br />-H </span><span class="span_11">'content-type: application/json'</span><span class="span_8"><br />-d </span><span class="span_11">'{"query": "select * from test_td_table order by time", "priority": 0, "</span><span class="span_14">engine_version</span><span class="span_11">":"experimental"}'</span>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p class="p_15">&#160;</p>
+    </body>
+</html>

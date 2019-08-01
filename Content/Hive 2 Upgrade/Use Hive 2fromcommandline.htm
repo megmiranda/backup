@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" xml:lang="en-us">
+    <head><title></title>
+        <link href="../Resources/Stylesheets/Wishhive2.css" rel="stylesheet" />
+    </head>
+    <body>
+        <h1 class="Heading1">Using Hive 2 from the Command line tool (TD Toolbelt)</h1>
+        <p>The TD query command enables you to run queries with Hive 2 with the following syntax:</p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tbody>
+                <tr>
+                    <td class="td_1">
+                        <p class="p_4">$ td query -T hive --engine-version experimental --database xxx "select query" </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>&#160;</p>
+        <p><span class="span_2">The “experimental” option is for testing your batch or </span><span class="span_2">adhoc</span><span class="span_2"> scripts and converting them to Hive 2 syntax. Do not use this option for running your scripts in production. </span>
+        </p>
+        <p>&#160;</p>
+        <p class="p_5">Example - Current</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr style="height: 71pt;">
+                <td class="td_2">
+                    <p class="p_6"><span class="span_3">td query -d </span><span class="span_3">db</span><span class="span_3"> -T hive "</span><span class="span_3"><br /> </span><span class="span_4">select</span> time <span class="span_4">from</span> <span class="span_3">tablename</span></p>
+                    <p class="p_6"> <span class="span_4">where</span> <span class="span_3">td_time_</span><span class="span_3">range</span><span class="span_3">(</span><span class="span_4">time</span><span class="span_3">, </span><span class="span_5">'-1h'</span><span class="span_3">,</span><span class="span_5">'America/</span><span class="span_5">Los_Angeles</span><span class="span_5">'</span><span class="span_3">)</span><span class="span_3"><br /></span><span class="span_5">" </span></p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p class="p_5">Example - Hive 2</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_2">
+                    <p class="p_6"><span class="span_3">td query -d </span><span class="span_3">db</span><span class="span_3"> -T hive </span><span class="span_6">--engine-version experimental</span><span class="span_7"> "</span><span class="span_3"><br />&#160; </span><span class="span_4">select</span> time <span class="span_4">from</span> <span class="span_3">tablename</span></p>
+                    <p class="p_6">&#160; <span class="span_4">where</span> <span class="span_3">td_time_</span><span class="span_3">range</span><span class="span_3">(</span><span class="span_4">time</span><span class="span_3">, </span><span class="span_5">'-1h'</span><span class="span_3">,</span><span class="span_5">'America/</span><span class="span_5">Los_Angeles</span><span class="span_5">'</span><span class="span_3">)</span><span class="span_3"><br /></span><span class="span_5">" </span></p>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head>
+    </head>
+    <body>
+        <h2>Timeseries functions</h2>
+        <h3>MOVING_AVG</h3>
+        <h5>Signature</h5>
+        <p class="HTMLCode_1">moving_avg(NUMBER value, const int windowSize)</p>
+        <h5>Description</h5>
+        <p><span class="span_5">MOVING_AVG</span><span class="span_4">&#160;returns moving average of a time series using a given window</span>
+        </p>
+        <h5>Example</h5>
+        <p class="HTMLPreformatted_5"><span class="span_4">SELECT moving_avg(x, 3) FROM (SELECT explode(array(1.0,2.0,3.0,4.0,5.0,6.0,7.0)) as x) series;</span><span class="span_4"><br />&gt; 1.0</span><span class="span_4"><br /></span><span class="span_4">&gt; 1.5</span><span class="span_4"><br />&gt; 2.0</span><span class="span_4"><br />&gt; 3.0</span><span class="span_4"><br />&gt; 4.0</span><span class="span_4"><br />&gt; 5.0</span><span class="span_4"><br />&gt; 6.0</span>
+        </p>
+    </body>
+</html>

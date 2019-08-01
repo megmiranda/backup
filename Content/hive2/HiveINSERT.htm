@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head>
+    </head>
+    <body>
+        <h1>Hive INSERT Syntax in Treasure Data</h1>
+        <p>The Hive INSERT syntax conforms to ANSI SQL standards.</p>
+        <ul>
+            <li>INSERT INTO will append to the table, keeping the existing data intact.</li>
+            <li>If the record doesn’t include a&#160;<span>time</span>&#160;column, the&#160;<span>time</span>&#160;column is imported usibg TD_SCHEDULED_TIME().</li>
+            <li>If the record includes a&#160;<span>time</span>&#160;column,&#160;<span>time</span>&#160;column should be Unixtime.</li>
+            <li>All INSERT INTO statements require the FROM clause.</li>
+        </ul>
+        <p>Restrictions:</p>
+        <ul>
+            <li>All column aliases used in INSERT...SELECT statement should use a valid SQL column name to avoid failures setting the schema.</li>
+            <li>On tables NOT receiving streaming updates, INSERT OVERWRITE will delete any existing data in the table and write the new rows.</li>
+            <li>INSERT OVERWRITE is not recommended for use on tables receiving streaming updates. INSERT OVERWRITE will not delete recently received streaming update rows or updates that arrive during the execution of INSERT OVERWRITE. If you need to perform INSERT OVERWRITE on a table that normally receives streaming updates, stop the streaming update before performing INSERT OVERWRITE.</li>
+        </ul>
+        <h1>Syntax</h1>
+        <p><pre>INSERT OVERWRITE TABLE tablename1 [PARTITION (partcol1=val1, partcol2=val2 ...) [IF NOT EXISTS]] select_statement1 FROM from_statement;</pre>
+        </p>
+        <p>&#160;</p>
+        <p><pre xml:space="preserve">INSERT INTO TABLE tablename1 [PARTITION (partcol1=val1, partcol2=val2 ...)] select_statement1 FROM from_statement;</pre>
+        </p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <h1>Examples</h1>
+        <p>Append new rows to tablename1</p>
+        <p><pre>INSERT INTO TABLE tablename1 select_statement1 FROM from_statement; </pre>
+        </p>
+        <p>&#160;</p>
+        <p>Replace contents of tablename1</p><pre>INSERT OVERWRITE TABLE tablename1 select_statement1 FROM from_statement; </pre>
+        <p>&#160;</p>
+        <p>Example using WITH clause</p>
+        <p><pre>WITH tablename1 AS (select_statement1 FROM from_statement) INSERT [OVERWRITE/INTO] TABLE tablename2 select_statement2 FROM tablename1;</pre>
+        </p>
+    </body>
+</html>

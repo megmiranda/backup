@@ -1,0 +1,473 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" xml:lang="en-us">
+    <head>
+    </head>
+    <body>
+        <h1>Treasure Data Hive Function Reference</h1>
+        <p>&#160;</p>
+        <p>This article lists Treasure Data-specific UDFs available in our Hive environments.</p>
+        <h2>TD_TIME_RANGE</h2>
+        <h3>Syntax</h3><pre xml:space="preserve">boolean TD_TIME_RANGE(int/long unix_timestamp,
+  int/long/string start_time,  
+  int/long/string end_time [, string default_timezone = 'UTC'])</pre>
+        <h3>Description</h3>
+        <p>&#160;</p>
+        <p>We strongly recommend that you take advantage of time-based partitioning, see&#160;<a href="https://support.treasuredata.com/hc/en-us/sections/360000274268-SQL-and-Performance-Tuning-Tips">Performance Tuning</a>.
+        </p>
+        <p>This UDF returns true if&#160;unix_timestamp&#160;is equal to or later than&#160;start_time&#160;and older than&#160;end_time&#160;(start_time &lt;= time &amp;&amp; time &lt; end_time). If&#160;end_time&#160;is omitted or NULL, the UDF assumes it’s infinite. If&#160;start_time&#160;is NULL, the UDF assumes it’s 0.
+</p>
+        <p>        </p>
+        <p>start_time&#160;and&#160;end_time&#160;could be a string which represents a time (e.g. “2012-01-01 00:00:00 +0900”) or a UNIX timestamp (e.g. 1325343600). If the format of&#160;start_time&#160;or&#160;end_time&#160;strings is invalid, the UDF returns NULL.
+</p>
+        <p>        </p>
+        <p>default_timezone&#160;is used to interpret the timezone of&#160;start_time&#160;or&#160;end_time. If&#160;start_time&#160;or&#160;end_time&#160;themselves specify a timezone (e.g. “2012-01-01 +0700”), then&#160;default_timezone&#160;is ignored. If&#160;default_timezone&#160;is not specified while&#160;start_time&#160;or&#160;end_time&#160;also does not specify a timezone, then the UDF uses ‘UTC’ as the timezone for&#160;start_time&#160;or&#160;end_time. A list of supported time zones can be found&#160;<a href="https://gist.github.com/4533752">here</a>.
+        </p>
+        <h3>Example</h3>
+        <p>This example selects records with timestamps “2013-01-01 00:00:00 PDT” or later.</p><pre>SELECT ... WHERE TD_TIME_RANGE(&gt;time, '2013-01-01 PDT')SELECT ... WHERE TD_TIME_RANGE(&gt;time, '2013-01-01', NULL, 'PDT')</pre>
+        <p>&#160;</p>
+        <p>The time of day ("00:00:00") can be omitted, as shown above. Alternately, the time of day can be specified up to seconds. In general, the time string should be formatted as either "YYYY-MM-DD" or "YYYY-MM-DD hh:mm:ss", e.g., "2013-01-01" or "1999-01-01 07:00:00".</p>
+        <h2>TD_SCHEDULED_TIME</h2>
+        <h3>Syntax</h3><pre>long TD_SCHEDULED_TIME()</pre>
+        <h3>Description</h3>
+        <p>This UDF returns the exact time when the job was scheduled by the&#160;<a href="https://support.treasuredata.com/hc/en-us/articles/schedule">scheduled query&#160;</a>feature. The returned value may differ from NOW() because the actual query start time may be delayed.
+        </p>
+        <p>If the query is not a scheduled query, the UDF returns the time when the job was issued. You may use this UDF with TD_TIME_ADD for incremental aggregation.</p>
+        <h2>TD_TIME_ADD</h2>
+        <h3> Syntax</h3><pre xml:space="preserve">long TD_TIME_ADD(int/long/string time,
+     string duration[, string default_timezone = 'UTC'])</pre>
+        <h3>Description</h3>
+        <p>This UDF returns a timestamp equal to&#160;time&#160;offset by&#160;duration. The UDF supports the following formats for the&#160;duration:
+        </p>
+        <ul>
+            <li>"Nw": after N weeks (e.g.&#160;“1w”, “2w”, “5w”)</li>
+            <li>"-Nw": before N weeks (e.g.&#160;“-1w”, “-2w”, “-5w”)</li>
+            <li>“Nd”: after N days (e.g. “1d”, “2d”, “30d”)</li>
+            <li>“-Nd”: before N days (e.g. “-1d”, “-2d”, “-30d”)</li>
+            <li>“Nh”: after N hours (e.g. “1h”, “2h”, “48h”)</li>
+            <li>“-Nh”: before N hours (e.g. “-1h”, “-2h”, “-48h”)</li>
+            <li>“Nm”: after N minutes (e.g. “1m”, “2m”, “90m”)</li>
+            <li>“-Nm”: before N minutes (e.g. “-1m”, “-2m”, “-90m”)</li>
+            <li>“Ns”: after N seconds (e.g. “1s”, “2s”, “90s”)</li>
+            <li>“-Ns”: before N seconds (e.g. “-1s”, “-2s”, “-90s”)</li>
+        </ul>
+        <p>The formats above can be combined. For example, “1h30m” means “after 1 hour and 30 minutes”.</p>
+        <p>&#160;</p>
+        <p>default_timezone&#160;is used to interpret&#160;time. If&#160;time&#160;itself has timezone (e.g. “2012-01-01 +0700”), then&#160;default_timezone&#160;is ignored. If&#160;default_timezone&#160;is not specified while&#160;time&#160;also does not specify a timezone, then the UDF uses ‘UTC’ as the timezone for&#160;time. A list of supported time zones can be found&#160;<a href="https://gist.github.com/4533752">here</a>.
+        </p>
+        <p>If the formats of the&#160;time&#160;or&#160;duration&#160;strings are invalid, the UDF returns NULL.
+        </p>
+        <p>"year" and "month" durations are&#160;NOT&#160;supported, because these have complicated implications. A month can be 28, 29, 30, or 31 days, and a year could be 365 or 366 days. To implement these, this function will become a lot heavier and impact performance.
+        </p>
+        <h3>Example</h3>
+        <p>This example selects records with timestamps “2013-01-01 00:00:00 UTC” or later but older than “2013-01-02 00:00:00 UTC”.</p><pre>SELECT ... WHERE TD_TIME_RANGE(&gt;time,
+         &gt;&#160;&#160; '2013-01-01',
+          TD_TIME_ADD('2013-01-01', '1d'))
+        </pre>
+        <p>A typical use of this function within scheduled queries is in conjunction with&#160;TD_TIME_RANGE&#160;and&#160;TD_SCHEDULED_TIME&#160;to narrow the time range to determined set of days, hours, minutes, or seconds. For example:
+        </p><pre>SELECT ... WHERE TD_TIME_RANGE(&gt;time,
+        &gt;&#160; TD_TIME_ADD(TD_SCHEDULED_TIME(), '-1d'),
+        &#160;&#160;TD_SCHEDULED_TIME())</pre>
+        <h2>TD_TIME_FORMAT</h2>
+        <h3>Syntax</h3><pre>string TD_TIME_FORMAT(long unix_timestamp,&#160;string format&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; [, string timezone = 'UTC'])</pre>
+        <h3>Description</h3>
+        <p>This UDF converts a UNIX timestamp to a string with the specified format (see the&#160;<a href="https://support.treasuredata.com/hc/en-us/articles/360001490808">Supported time formats in TD_TIME_FORMAT UDF page</a>&#160;for available formats). For example, “yyyy-MM-dd-HH:mm:ss z” converts 1325376000 to “2012-01-01 00:00:00 UTC”. If no timezone is specified, the UDF uses UTC.
+        </p>
+        <h3>Example</h3>
+        <p>This example formats a UNIX timestamp into a date formatted string</p><pre>SELECT TD_TIME_FORMAT(&gt;time, 'yyyy-MM-dd HH:mm:ss z') ... FROM ...
+        SELECT TD_TIME_FORMAT(&gt;time, 'yyyy-MM-dd HH:mm:ss z', 'PST') ... FROM ...
+        SELECT TD_TIME_FORMAT(&gt;time, 'yyyy-MM-dd HH:mm:ss z', 'JST') ... FROM ...
+        </pre>
+        <h2>TD_TIME_PARSE</h2>
+        <h3>Syntax</h3><pre xml:space="preserve">long TD_TIME_PARSE(string time&#160;&#160; [, string default_timezone = 'UTC'])</pre>
+        <h3>Description</h3>
+        <p>This UDF converts a time string into a UNIX timestamp.</p>
+        <p>default_timezone&#160;is used to interpret&#160;time. If&#160;time&#160;itself has timezone (e.g. “2012-01-01 +0700”), then&#160;default_timezone&#160;is ignored. If&#160;default_timezone&#160;is not specified while&#160;time&#160;also does not specify a timezone, then the UDF uses ‘UTC’ as the timezone for&#160;time. A list of supported time zones can be found&#160;<a href="https://gist.github.com/4533752">here</a>.
+        </p>
+        <p>If the format of the&#160;time&#160;string is invalid, the UDF returns NULL.
+        </p>
+        <h2>TD_DATE_TRUNC</h2>
+        <h3>Syntax</h3><pre>long TD_DATE_TRUNC(string unit,&#160;long time&#160; [, string default_timezone = 'UTC'])</pre>
+        <h3> Description</h3>
+        <p>This UDF performs a timestamp truncation at the level specified by the ‘unit’ parameter. The supported units are:</p>
+        <ul>
+            <li>‘minute’</li>
+            <li>‘hour’</li>
+            <li>‘day’</li>
+            <li>‘week’</li>
+            <li>‘month’</li>
+            <li>‘quarter’</li>
+            <li>‘year’</li>
+        </ul>
+        <p>An optional ‘timezone’ parameter can be specified to indicate an alternative reference timezone the ‘unit’ is referenced to. While the input ‘time’ is in global Unix time format, in different timezones ‘day’ that is the start of a day corresponds to different times.</p>
+        <p>&#160;</p>
+        <p>This function mimics the functionality of native&#160;<a href="http://prestodb.io/docs/current/functions/datetime.html">Presto’s&#160;date_trunc</a>&#160;function, the main difference being that Presto’s&#160;date_trunc&#160;does not allow specification of the timezone, because it uses the sessions' reference timezone.
+        </p>
+        <h3>Example</h3><pre>SELECT TD_DATE_TRUNC('day', &gt;time) FROM tbl
+        </pre>
+        <p>with&#160;time&#160;equal&#160;1416787667&#160;corresponding to ‘2014-11-24 00:07:47 UTC’ will return&#160;1416787200&#160;corresponding to ‘2014-11-24 00:00:00 UTC’.
+        </p>
+        <p>With the same value and timezone ‘PST’ instead:</p><pre>SELECT TD_DATE_TRUNC('day', &gt;time, 'PST') FROM tbl
+        </pre>
+        <p>the function returns&#160;1416758400&#160;since the start of day for the ‘PST’ timezone is 8 hours behind the start of day for ‘UTC’.
+        </p>
+        <h2> TD_LAST</h2>
+        <h3>Syntax</h3><pre>TD_LAST(ret_col, cmp_col1, cmp_col2, ...)</pre>
+        <h3>Description</h3>
+        <p>This aggregate UDF finds the row with the largest value in the ‘comparison column’ (cmp_col1) and returns that row’s ‘retrieve column’ (ret_col) value. Additional comparison columns (cmp_col2, cmp_col3, etc.) are used as tiebreakers when the preceding comparison column has more than one row with the largest value.</p>
+        <h3>Example</h3>
+        <p>This example selects the URL of the most recent access log (the row with the largest time) for each user.</p><pre>SELECT user, TD_LAST(url, &gt;time) AS last_url FROM access_logs GROUP BY user</pre>
+        <h2> TD_FIRST</h2>
+        <h3>Syntax</h3><pre>TD_FIRST(ret_col, cmp_col1, cmp_col2, ...)</pre>
+        <h3>Description</h3>
+        <p>This aggregate UDF finds the row with the smallest value in the ‘comparison column’ (cmp_col1) and returns that row’s ‘retrieve column’ (ret_col) value. Additional comparison columns (cmp_col2, cmp_col3, etc.) are used as tiebreakers when the preceding comparison column has more than one row with the smallest value.</p>
+        <h3>Example</h3>
+        <p>This example selects the referer URL of the earliest access log (the row with the smallest time) for each page_id.</p><pre>SELECT page_id, TD_FIRST(referer, &gt;time) AS first_referer FROM access_logs GROUP BY page_id</pre>
+        <h2> TD_X_RANK</h2>
+        <h3>Syntax</h3><pre>long TD_X_RANK(keys)</pre>
+        <h3>Description</h3>
+        <p>Returns the rank of each row within the partition of the result set. The rank of a row is one plus the number of ranks that come before the row.</p>
+        <h3>Example</h3>
+        <p>You need to&#160;CLUSTER BY&#160;or&#160;ORDER BY&#160;within a sub query to use this feature.&#160;CLUSTER BY&#160;is more scalable than&#160;ORDER BY&#160;because it doesn’t require total order across multiple nodes, thus allowing us to process the query in parallel.
+        </p><pre>SELECT TD_X_RANK(c), c, u FROM
+        &#160; (SELECT country AS c, user_id AS u
+         &#160;&#160; FROM users CLUSTER BY c) t
+ 		160;SELECT TD_X_RANK(c, lc1), c, lc1, u FROM
+         &#160; (select country AS c, location1 AS lc1, user_id AS u
+         &#160;&#160; FROM users CLUSTER BY c, lc1) t
+        </pre>
+        <h2> TD_SESSIONIZE</h2>
+        <p>&#160;</p>
+        <h3>Syntax</h3><pre>string TD_SESSIONIZE(int/long unix_timestamp, int timeout, string sessionize_by)</pre>
+        <h3>Description</h3>
+        <p>Sessionization of a table of event data groups a series of event rows associated with users into individual sessions for analysis. As long as the series of events is associated with the same user identifier (typically IP address, email, cookie or similar identifier) and events are separated by no more than a chosen timeout interval, they will be grouped into a session.</p>
+        <p>This UDF takes three arguments:</p>
+        <ul>
+            <li class="li_1">The time field specified in&#160;<a href="http://en.wikipedia.org/wiki/Unix_time">unix epoch</a></li>
+            <li>A timeout window in seconds (when this amount of time elapses, it indicates the start of a new session)</li>
+            <li>The field name to sessionize by</li>
+        </ul>
+        <p>It returns a UUID for the session of the request.</p>
+        <h3>Example</h3>
+        <p>You need to&#160;ORDER BY&#160;the&#160;&gt;sessionize_by&#160;column and the&#160;unix_timestamp&#160;field within a sub query to use this UDF.&#160;The following query below sessionizes based on ip_address and the timestamp. You may want to use user_id or cookie_id instead of ip_address for non-anonymous logs.
+        </p><pre>SELECT TD_SESSIONIZE(&gt;time, 3600, ip_address) as session_id, &gt;time, ip_address, path
+         FROM (
+         &#160; SELECT &gt;time, ip_address, path &#160; from web_logs
+         &#160; order by ip_address, &gt;time ) t</pre>
+        <h2> TD_PARSE_USER_AGENT</h2>
+        <h3>Syntax</h3><pre>string TD_PARSE_USER_AGENT(user_agent string [, options string])</pre>
+        <h3>Description</h3>
+        <table>
+            <col style="width: 596pt;" />
+            <tr>
+                <td>
+                    <p>TD_PARSE_USER_AGENT&#160;is now deprecated, will not be updated from now on and will be disabled in future. We recommend to use&#160;TD_PARSE_AGENT.
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p>This UDF returns the result of parsing a user agent string. The user agent is parsed by the basis of&#160;<a href="https://raw.github.com/tobie/ua-parser/master/regexes.yaml">rules</a>. Accepts the following options as a string, as user options:
+        </p><pre>os, os_family, os_major, os_minor, ua, ua_family, ua_major, ua_minor, device</pre>
+        <p>os and ua return json. With _family, _major and _minor return a string. The device option also returns a string.</p>
+        <h3>Example</h3>
+        <p>The example shows the result of parsing user agent from access log.</p><pre>SELECT TD_PARSE_USER_AGENT(agent) AS agent FROM www_access
+         {"user_agent": {"family": "IE", "major": "9", "minor": "0", "patch": ""}, "os": {"family": "Windows 7", "major": "", "minor": "", "patch": "", "patch_minor": ""}, "device": {"family": "Other"}}
+         SELECT TD_PARSE_USER_AGENT(agent, 'os') AS agent_os FROM www_access
+         {"family": "Windows 7", "major": "", "minor": "", "patch": "", "patch_minor": ""}
+         SELECT TD_PARSE_USER_AGENT(agent, 'os_family') AS agent_os_family FROM www_access
+          Windows 7
+        </pre>
+        <h2> TD_PARSE_AGENT</h2>
+        <h3>Syntax</h3><pre>MAP(string,string) TD_PARSE_AGENT(user_agent string)</pre>
+        <p>This UDF returns a Map value of result to parse a user agent string. The UDF is implemented by&#160;<a href="https://github.com/woothee/woothee">Woothee</a>.
+        </p>
+        <h3>Example</h3>
+        <p>The example shows the result of parsing user agent from access log.</p><pre>SELECT TD_PARSE_AGENT(agent) AS parsed_agent, agent FROM www_access
+         {"os":"Windows 7","vendor":"Google","os_version":"NT 6.1","name":"Chrome","category":"pc","version":"16.0.912.77"},
+        </pre>
+        <p>Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.77 Safari/535.7
+        </p><pre>SELECT TD_PARSE_AGENT(agent)['os'] AS os FROM www_access
+        </pre>
+        <p>Windows 7 =&gt; os from user-agent, or carrier name of mobile phones
+        </p><pre>SELECT TD_PARSE_AGENT(agent)['vendor'] AS vendor FROM www_access
+        </pre>
+        <p>Google // =&gt; name of vendor
+        </p><pre>SELECT TD_PARSE_AGENT(agent)['os_version'] AS os_version FROM www_access
+        NT 6.1 // =&gt; "NT 6.3" (for Windows), "10.8.3" (for OSX), "8.0.1" (for iOS), ....
+        SELECT TD_PARSE_AGENT(agent)['name'] AS name FROM www_access
+        </pre>
+        <p>Chrome // =&gt; name of browser (or string like name of user-agent)
+        </p><pre>SELECT TD_PARSE_AGENT(agent)['category'] AS category FROM www_access
+         pc // =&gt; "pc", "smartphone", "mobilephone", "appliance", "crawler", "misc", "unknown"
+         SELECT TD_PARSE_AGENT(agent)['version'] AS version FROM www_access
+         16.0.912.77 =&gt; version of browser, or terminal type name of mobile phones
+        </pre>
+        <h2> TD_MD5</h2>
+        <h3> Syntax</h3><pre>string TD_MD5(col)</pre>
+        <h3>Description</h3>
+        <p>This UDF calculates the&#160;<a href="http://en.wikipedia.org/wiki/MD5">MD5</a>&#160;hash digest from a given string.
+        </p>
+        <h3>Example</h3><pre>SELECT TD_MD5(column) FROM tbl
+        </pre>
+        <h2> TD_URL_DECODE</h2>
+        <h3> Syntax</h3><pre>string TD_URL_DECODE(col)</pre>
+        <h3>Description</h3>
+        <p>This UDF applies URL decoding for a given string.</p>
+        <h3>Example</h3><pre>SELECT TD_URL_DECODE(column) FROM tbl
+        </pre>
+        <h2> TD_IP_TO_COUNTRY_CODE</h2>
+        <h3> Syntax</h3><pre>string TD_IP_TO_COUNTRY_CODE(string ip)</pre>
+        <h3>Description</h3>
+        <p>This UDF converts IP address to country code. This UDF supports IPv4 and IPv6.</p>
+        <h3>Example</h3>
+        <p>SELECT</p><pre>&#160;&#160;&#160; TD_IP_TO_COUNTRY_CODE('106.142.252.8') AS ipv4,
+         &#160;&#160;&#160; TD_IP_TO_COUNTRY_CODE('2001:268:d005:f5be:c43e:af35:81f:8f60') AS ipv6
+        </pre>
+        <p>The function returns&#160;JP&#160;in this example.
+        </p>
+        <h2> TD_IP_TO_COUNTRY_NAME</h2>
+        <h3>Syntax</h3><pre>string TD_IP_TO_COUNTRY_NAME(string ip)</pre>
+        <h3>Description</h3>
+        <p>This UDF converts IP address to country code. This UDF supports IPv4 and IPv6.</p>
+        <h3>Example</h3>
+        <p>SELECT</p><pre>&#160;&#160;&#160; TD_IP_TO_COUNTRY_NAME('106.142.252.8') AS ipv4,
+         &#160;&#160;&#160; TD_IP_TO_COUNTRY_NAME('2001:268:d005:f5be:c43e:af35:81f:8f60') AS ipv6
+        </pre>
+        <p>The function returns&#160;Japan&#160;in this example.
+        </p>
+        <h2> TD_IP_TO_SUBDIVISION_NAMES</h2>
+        <h3>Syntax</h3><pre>array&lt;string&gt; TD_IP_TO_SUBDIVISION_NAMES(string ip)</pre>
+        <h3>Description</h3>
+        <p>This UDF converts IP address to list of subdivisions (e.g. US states, JP prefectures, etc). This UDF supports IPv4 and IPv6.</p>
+        <h3>Example</h3>
+        <p>SELECT</p><pre>&#160;&#160;&#160; TD_IP_TO_SUBDIVISION_NAMES('106.142.252.8') AS ipv4,
+        &gt;&#160;&#160;&#160; TD_IP_TO_SUBDIVISION_NAMES('2001:268:d005:f5be:c43e:af35:81f:8f60') AS ipv6
+        </pre>
+        <p>&#160;</p>
+        <h2> TD_IP_TO_MOST_SPECIFIC_SUBDIVISION_NAME</h2>
+        <h3>Syntax</h3><pre>string TD_IP_TO_MOST_SPECIFIC_SUBDIVISION_NAME(string ip)</pre>
+        <h3>Description</h3>
+        <p>This UDF converts IP address to the most specific subdivisions (e.g. US states, JP prefectures, etc). This UDF supports IPv4 and IPv6.</p>
+        <h3>Example</h3>
+        <p>SELECT</p><pre>&#160;&#160;&#160; TD_IP_TO_MOST_SPECIFIC_SUBDIVISION_NAME('106.142.252.8') AS ipv4,
+         &#160;&#160;&#160; TD_IP_TO_MOST_SPECIFIC_SUBDIVISION_NAME('2001:268:d005:f5be:c43e:af35:81f:8f60') AS ipv6
+        </pre>
+        <h2> TD_IP_TO_LEAST_SPECIFIC_SUBDIVISION_NAME</h2>
+        <h3>Syntax</h3><pre>string TD_IP_TO_LEAST_SPECIFIC_SUBDIVISION_NAMES(string ip)</pre>
+        <h3>Description</h3>
+        <p>This UDF converts IP address to the least specific subdivisions (e.g. US states, JP prefectures, etc). This UDF supports IPv4 and IPv6.</p>
+        <h3>Example</h3>
+        <p>SELECT</p><pre>&#160;&#160;&#160; TD_IP_TO_LEAST_SPECIFIC_SUBDIVISION_NAME('106.142.252.8') AS ipv4,
+         &#160;&#160;&#160; TD_IP_TO_LEAST_SPECIFIC_SUBDIVISION_NAME('2001:268:d005:f5be:c43e:af35:81f:8f60') AS ipv6
+        </pre>
+        <p>&#160;</p>
+        <h2> TD_IP_TO_CITY_NAME</h2>
+        <h3>Syntax</h3><pre>string TD_IP_TO_CITY_NAME(string ip)</pre>
+        <h3>Description</h3>
+        <p>This UDF converts IP address to city name. This UDF supports IPv4 and IPv6.</p>
+        <h3>Example</h3>
+        <p>SELECT</p><pre>&#160;&#160;&#160; TD_IP_TO_CITY_NAME('106.142.252.8') AS ipv4,
+         &#160;&#160;&#160; TD_IP_TO_CITY_NAME('2001:268:d005:f5be:c43e:af35:81f:8f60') AS ipv6
+        </pre>
+        <h2> TD_IP_TO_LATITUDE</h2>
+        <h3>Syntax</h3><pre>string TD_IP_TO_LATITUDE(string ip)</pre>
+        <h3>Description</h3>
+        <p>This UDF converts IP address to latitude. This UDF supports IPv4 and IPv6.</p>
+        <h3>Example</h3>
+        <p>SELECT</p><pre>&#160;&#160;&#160; TD_IP_TO_LATITUDE('106.142.252.8') AS ipv4,
+         &#160;&#160;&#160; TD_IP_TO_LATITUDE('2001:268:d005:f5be:c43e:af35:81f:8f60') AS ipv6
+        </pre>
+        <h2> TD_IP_TO_LONGITUDE</h2>
+        <h3>Syntax</h3><pre>string TD_IP_TO_LONGITUDE(string ip)</pre>
+        <h3>Description</h3>
+        <p>This UDF converts IP address to longitude. This UDF supports IPv4 and IPv6.</p>
+        <h3>Example</h3>
+        <p>SELECT</p><pre>&#160;&#160;&#160; TD_IP_TO_LONGITUDE('106.142.252.8') AS ipv4,
+         &#160;&#160;&#160; TD_IP_TO_LONGITUDE('2001:268:d005:f5be:c43e:af35:81f:8f60') AS ipv6
+        </pre>
+        <h2> TD_IP_TO_METRO_CODE (US Only)</h2>
+        <h3>Syntax</h3><pre>string TD_IP_TO_METRO_CODE(string ip)</pre>
+        <h3>Description</h3>
+        <p>This UDF converts IP address to metro code (US Only). This UDF supports IPv4 and IPv6.</p>
+        <h3>Example</h3>
+        <p>SELECT</p><pre>&#160;&#160;&#160; TD_IP_TO_METRO_CODE('106.142.252.8') AS ipv4,
+         &#160;&#160;&#160; TD_IP_TO_METRO_CODE('2001:268:d005:f5be:c43e:af35:81f:8f60') AS ipv6
+        </pre>
+        <p>&#160;</p>
+        <h2> TD_IP_TO_TIME_ZONE</h2>
+        <h3>Syntax</h3><pre>string TD_IP_TO_TIME_ZONE(string ip)</pre>
+        <h3>Description</h3>
+        <p>This UDF converts IP address to time zone. This UDF supports IPv4 and IPv6.</p>
+        <h3>Example</h3>
+        <p>SELECT</p><pre>&#160;&#160;&#160; TD_IP_TO_TIME_ZONE('106.142.252.8') AS ipv4,
+         &#160;&#160;&#160; TD_IP_TO_TIME_ZONE('2001:268:d005:f5be:c43e:af35:81f:8f60') AS ipv6
+        </pre>
+        <h2> TD_IP_TO_POSTAL_CODE</h2>
+        <h3>Syntax</h3><pre>string TD_IP_TO_POSTAL_CODE(string ip)</pre>
+        <h3>Description</h3>
+        <p>This UDF converts IP address to postal code. This UDF supports IPv4 and IPv6.</p>
+        <h3>Example</h3>
+        <p>SELECT</p><pre>&#160;&#160;&#160; TD_IP_TO_POSTAL_CODE('106.142.252.8') AS ipv4,
+         &#160;&#160;&#160; TD_IP_TO_POSTAL_CODE('2001:268:d005:f5be:c43e:af35:81f:8f60') AS ipv6
+        </pre>
+        <h2> TD_IP_TO_CONNECTION_TYPE</h2>
+        <h3>Syntax</h3><pre>string TD_IP_TO_CONNECTION_TYPE(string ip)</pre>
+        <h3>Description</h3>
+        <p>This UDF converts IP address to connection type. This UDF supports IPv4 and IPv6.</p>
+        <h3>Example</h3>
+        <p>SELECT</p><pre>&#160;&#160;&#160; TD_IP_TO_CONNECTION_TYPE('106.142.252.8') AS ipv4,
+         &#160;&#160;&#160; TD_IP_TO_CONNECTION_TYPE('2001:268:d005:f5be:c43e:af35:81f:8f60') AS ipv6
+        </pre>
+        <p>Possible values are&#160;dial-up,&#160;cable/DSL,&#160;corporate&#160;or&#160;cellular.
+        </p>
+        <h2> TD_IP_TO_DOMAIN</h2>
+        <h3>Syntax</h3><pre>string TD_IP_TO_DOMAIN(string ip)</pre>
+        <h3>Description</h3>
+        <p>This UDF converts IP address to domain. This UDF supports IPv4 and IPv6.</p>
+        <h3>Example</h3>
+        <p>SELECT</p><pre>&#160;&#160;&#160; TD_IP_TO_DOMAIN('106.142.252.8') AS ipv4,
+         &#160;&#160;&#160; TD_IP_TO_DOMAIN('2001:268:d005:f5be:c43e:af35:81f:8f60') AS ipv6
+        </pre>
+        <h2> TD_LAT_LONG_TO_COUNTRY</h2>
+        <h3>Syntax</h3><pre>string TD_LAT_LONG_TO_COUNTRY(string type, double latitude, double longitude)</pre>
+        <h3>Description</h3>
+        <p>This UDF converts geo location information (latitude/longitude) to country name.</p>
+        <h3>Example</h3>
+        <p>SELECT</p><pre>&#160; TD_LAT_LONG_TO_COUNTRY('FULL_NAME',&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; 37, -122)
+         &#160; TD_LAT_LONG_TO_COUNTRY('THREE_LETTER_ABBREVIATION', 37, -122)
+         &#160; TD_LAT_LONG_TO_COUNTRY('POSTAL_ABBREVIATION',&#160;&#160;&#160;&#160;&#160;&#160; 37, -122)
+         &#160; TD_LAT_LONG_TO_COUNTRY('SORTABLE_NAME',&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; 37, -122)
+        </pre>
+        <p>&#160;</p>
+        <table>
+            <col style="width: 596pt;" />
+            <tr>
+                <td>
+                    <p>You might notice occasional, inconsistent results between Hive and Presto geolocation functions. Both Hive and Presto UDFs use a geolocation database supplied by Maxmind. However, due to release schedules, the release level of the Maxmind database used by Hive and Presto might be different.</p>
+                </td>
+            </tr>
+        </table>
+        <p>An example of different results is as follows:</p>
+        <table>
+            <col style="width: 72pt;" />
+            <col style="width: 49pt;" />
+            <col style="width: 135pt;" />
+            <col style="width: 121pt;" />
+            <col style="width: 131pt;" />
+            <col style="width: 145pt;" />
+            <thead>
+                <tr>
+                    <th>
+                        <p>jobid</p>
+                    </th>
+                    <th>
+                        <p>type</p>
+                    </th>
+                    <th>
+                        <p>td_ip_to_city_name_v6</p>
+                    </th>
+                    <th>
+                        <p>td_ip_to_latitude_v6</p>
+                    </th>
+                    <th>
+                        <p>td_ip_to_longitude_v6</p>
+                    </th>
+                    <th>
+                        <p>td_ip_to_postal_code_v6</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <p>218018944</p>
+                    </td>
+                    <td>
+                        <p>hive</p>
+                    </td>
+                    <td>
+                        <p>Tokyo</p>
+                    </td>
+                    <td>
+                        <p>35.685</p>
+                    </td>
+                    <td>
+                        <p>139.7514</p>
+                    </td>
+                    <td>
+                        <p>102-0082</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>218019099</p>
+                    </td>
+                    <td>
+                        <p>presto</p>
+                    </td>
+                    <td>
+                        <p>&#160;</p>
+                    </td>
+                    <td>
+                        <p>35.6594</p>
+                    </td>
+                    <td>
+                        <p>139.8533</p>
+                    </td>
+                    <td>
+                        <p>134-0087</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>&#160;</p>
+        <h2> TD_SUBSTRING_INENCODING</h2>
+        <h3>Syntax</h3><pre>string TD_SUBSTRING_INENCODING(string str, int max_len_inbytes, string charset)</pre>
+        <h3>Description</h3>
+        <p>This UDF returns the substring or slice of the byte array of&#160;str&#160;from the 0-index position at most&#160;max_len_inbytes&#160;with charset encoding.&#160;charset&#160;can be selected from&#160;java.nio.charset.Charset.
+        </p>
+        <h3>Example</h3><pre>SELECT TD_SUBSTRING_INENCODING(column, 10, 'UTF-8') FROM tbl
+        </pre>
+        <p>&#160;</p>
+        <h2> TD_DIVIDE</h2>
+        <h3>Syntax</h3><pre>double TD_DIVIDE(double numerator, double denominator)</pre>
+        <h3>Description</h3>
+        <p>This UDF returns the division of numeric types safely even if&#160;denominator&#160;is zero. If&#160;denominator&#160;is zero, it returns 0 and in other case it returns the&#160;numerator&#160;divided by&#160;denominator.
+        </p>
+        <h3>Example</h3><pre>SELECT TD_DIVIDE(nume, denom) FROM tbl;
+        </pre>
+        <h2> TD_SUMIF</h2>
+        <h3>Syntax</h3><pre>double TD_SUMIF(double column, boolean predicate)</pre>
+        <h3>Description</h3>
+        <p>This UDF returns the sum of the&#160;column&#160;which satisfies the&#160;predidate.
+        </p>
+        <h3>Example</h3><pre>SELECT TD_SUMIF(amount, amount &gt; 0) FROM tbl;
+        </pre>
+        <h2> TD_AVGIF</h2>
+        <h3>Syntax</h3><pre>double TD_AVGIF(double column, boolean predicate)</pre>
+        <h3>Description</h3>
+        <p>This UDF returns the average of&#160;column&#160;which satisfies the&#160;predicate.
+        </p>
+        <h3>Example</h3><pre>SELECT TD_AVGIF(age, age &gt; 20) FROM tbl;
+        </pre>
+        <h2> TD_NUMERIC_RANGE</h2>
+        <h3>Syntax</h3><pre>int TD_NUMERIC_RANGE(double column, boolean predicate)</pre>
+        <h3>Description</h3>
+        <p>This UDF generates a range of integers from a to b incremented by c or the elements of a map into multiple rows and columns.</p>
+        <h3>Example</h3><pre>SELECT TD_NUMERIC_RANGE(0,10,2)
+         =&gt; 0
+         &#160;&#160; 2
+         &#160;&#160; 4
+         &#160;&#160; 6
+         &#160;&#160; 8
+        </pre>
+        <h2> TD_ARRAY_INDEX</h2>
+        <h3>Syntax</h3><pre>int/long/string TD_ARRAY_INDEX(array column, int i)</pre>
+        <h3>Description</h3>
+        <p>This UDF returns an array’s value at the i’th index.</p>
+        <h3>Example</h3><pre>SELECT TD_ARRAY_INDEX( ARRAY(11,12,13), 2 )
+         =&gt; 13
+         SELECT TD_ARRAY_INDEX( ARRAY(11,12,13), 3 )
+         =&gt; NULL
+        </pre>
+    </body>
+</html>

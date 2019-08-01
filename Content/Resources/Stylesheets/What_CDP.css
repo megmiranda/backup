@@ -1,0 +1,71 @@
+/*<meta />*/
+
+p
+{
+	margin-bottom: 8pt;
+	font-size: 11pt;
+	margin-top: 0pt;
+}
+
+ol
+{
+	margin-bottom: 8pt;
+	font-size: 11pt;
+	margin-top: 0pt;
+}
+
+ul
+{
+	margin-bottom: 8pt;
+	font-size: 11pt;
+	margin-top: 0pt;
+}
+
+li
+{
+	margin-bottom: 8pt;
+	font-size: 11pt;
+	margin-top: 0pt;
+}
+
+td
+{
+	margin-bottom: 8pt;
+	font-size: 11pt;
+	vertical-align: top;
+}
+
+p.p_1
+{
+	font-weight: bold;
+	font-size: 14pt;
+}
+
+p.p_2
+{
+	font-weight: normal;
+}
+
+span.span_1
+{
+	font-weight: normal;
+}
+
+span.span_2
+{
+	font-weight: bold;
+}
+
+sup.sup_1
+{
+	font-weight: bold;
+}
+
+p.p_3
+{
+	margin-left: 0pt;
+	margin-right: 0pt;
+	text-align: left;
+	font-weight: normal;
+}
+

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CatapultToc
+  Version="1">
+  <TocEntry
+    Title="Presto DELETE Statment Reference"
+    Link="/Content/PrestoDeleteStatmentReference/Presto DELETE Statment Reference.htm">
+    <TocEntry
+      Title="[%=System.LinkedTitle%]"
+      Link="/Content/PrestoDeleteStatmentReference/Presto DELETE Statment Reference.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" />
+    <TocEntry
+      Title="Presto DELETE Statement Resource Consumption"
+      Link="/Content/PrestoDeleteStatmentReference/Resource Consumption During.htm" />
+    <TocEntry
+      Title="Presto DELETE Timeout Error"
+      Link="/Content/PrestoDeleteStatmentReference/Timeout Error During Delete.htm" />
+    <TocEntry
+      Title="Presto DELETE Statement Known Limitations"
+      Link="/Content/PrestoDeleteStatmentReference/Known Limitations.htm" />
+  </TocEntry>
+</CatapultToc>

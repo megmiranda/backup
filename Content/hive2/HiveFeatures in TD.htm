@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head>
+    </head>
+    <body>
+        <h1>Support of Hive Features in TD</h1>
+        <p>A number of Hive features familiar from other contexts are not relevant or not supported in Treasure Data. </p>
+        <h3 class="Heading3">Hadoop/HDFS data partitioning</h3>
+        <p>In a standard Hadoop/Hive cluster, users include more explicit information about partitioning and bucketing data and directory hierarchies for partition placement. Hive features like static and dynamic partitioning depend on this data being provided in each query. Our platform manages many of the storage details transparently.</p>
+        <p>&#160;</p>
+        <p> Treasure Data does support time-based and user-defined partitioning. </p>
+        <p>&#160;</p>
+        <p>However other Hive standard partitioning mechanisms are not relevant and are not supported.</p>
+        <h3 class="Heading3">DDL Operations Performed External to Hive</h3>
+        <p>Creating data schema objects using Hive DDL is limited because TD manages the creation of tables and definition of schema external to the Hive query language. For example, TD infers schema from ingested data. As a convenience some Hive DDL features are supported but other components in the platform may also manipulate schema.&#160; </p>
+        <p>&#160;</p>
+        <p>For more <a href="aboutHive2DmL.htm">About supported Hive DDL</a>. </p>
+        <h3 class="Heading3">Hive Data Types and TD Native Data Types</h3>
+        <p>While the full range Hive data types can be used in any expression, when inserting data values into TD tables, you may have to CAST the Hive data type to one supported for storing values in TD. <a href="https://support.treasuredata.com/hc/en-us/sections/360004643313-Upgrading-to-Hive-2">Upgrading to Hive 2</a></p>
+        <p> &#160; </p>
+        <h3 class="Heading3">Hive Metastore Not Needed</h3>
+        <p>Treasure Data’s platform manages table schema and partition metadata in its own metastore instead of using a standard Hive Metastore. This supports our flexible table schema capabilities. This is only a limitation if you use external tools to work with data lakes that rely on your TD Hive metastore. &#160; </p>
+        <h3 class="Heading3">Security and Authentication</h3>
+        <p>The security and authentication model for Hive in our platform follows the security and authentication model of the platform itself.&#160; </p>
+    </body>
+</html>

@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" xml:lang="en-us">
+    <head><title></title>
+        <link href="../Resources/Stylesheets/Wishhive2.css" rel="stylesheet" />
+    </head>
+    <body>
+        <h1 class="Heading1_1">Hive 0.13 Syntax to Update for Hive 2</h1>
+        <p>Here is a summary of the Hive 0.13 constructs that must be updated for Hive 2 compatibility.&#160; </p>
+        <ul>
+            <li>
+                <MadCap:xref href="#v">v column handling</MadCap:xref>
+            </li>
+            <li>
+                <MadCap:xref href="#Expanded">Expanded list of reserved words in Hive2 </MadCap:xref>
+            </li>
+            <li>
+                <MadCap:xref href="#Numeric">Numeric literals must be CAST to a number data type before storage in a TD table</MadCap:xref>
+            </li>
+            <li>
+                <MadCap:xref href="#Numeric2">Numeric literals in an Array must be CAST to a consistent data type</MadCap:xref>
+            </li>
+            <li>
+                <MadCap:xref href="#CROSS">CROSS JOIN requires a query hint to use</MadCap:xref>
+            </li>
+        </ul>
+        <h2 class="Heading2"><a name="v"></a>v column handling</h2>
+        <p class="p_9"><span class="span_9">v column</span><span class="span_10"> is not supported in Hive 2.</span><span class="span_10"><br />The following changes are required for any query using v </span><span class="span_10">column[</span><span class="span_10">] syntax:</span>
+        </p>
+        <p>&#160;</p>
+        <h3> v column values are always returned as STRING type. </h3>
+        <p class="p_10">In Hive 2, rather than use the v column syntax, reference the actual column and explicitly CAST it to the necessary data type. For example:</p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_2">
+                    <p class="p_6"><span class="span_3">v['</span><span class="span_3">country_code</span><span class="span_3">'] </span><span class="span_7">--&gt; cast(</span><span class="span_7">country_code</span><span class="span_7"> as STRING)</span><span class="span_7"><br /></span><span class="span_3"><br />cast(v['age'] as int) + 1 </span><span class="span_7">--&gt; cast(age as int) + 1</span><span class="span_3"><br /></span><span class="span_7">-- if the table already has an explicit schema with column 'age' as numeric, you may not need this cast.</span>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p class="p_10">If you use v column in Hive 2, you’ll see the following error message:</p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_2">
+                    <p class="p_3">Invalid table alias or column reference 'v'</p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <h3>Columns selected through v column where names start with underscore need to be escaped with back quotes (`)</h3>
+        <p>For example, change your syntax to something similar to:</p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_2">
+                    <p class="p_6"><span class="span_3">v['_</span><span class="span_3">country_code</span><span class="span_3">'] -&gt; </span><span class="span_3">CAST(</span><span class="span_3">`_</span><span class="span_3">country_code</span><span class="span_3">` AS STRING)</span><span><br /></span><span class="span_7">-- note the use of CAST</span>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <h2 class="Heading2"><a name="Expanded"></a>Expanded list of reserved words in Hive 2 </h2>
+        <p>&#160;</p>
+        <p class="p_10">Reserved words and UDF names used as column names must be escaped with backticks. The most common case of this is `date`. For example:</p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_2">
+                    <p class="p_11">date -&gt; `date`</p>
+                </td>
+            </tr>
+        </table>
+        <p class="p_6">&#160;</p>
+        <p><span class="span_10">Review the list of Hive 2 reserved words </span><span class="span_11">. </span><span class="span_10">UDF reference documentation is available at this </span><a href="https://support.treasuredata.com/hc/en-us/articles/360016256653">TD Documentation link</a><span class="span_10">. </span><span class="span_10">Hivemall</span><span class="span_10"> adds more UDFs, which are listed at this </span><a href="https://hivemall.incubator.apache.org/userguide/misc/funcs.html">HiveMall documentation link</a><span class="span_10">.</span>
+        </p>
+        <p>&#160;</p>
+        <p class="p_10">Example parse errors given by Hive 2: </p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_2">
+                    <p class="p_6"><span class="span_12">cannot recognize input near 'date' '&gt;=' '1548403200' in expression specification</span><span class="span_12"><br /></span><span class="span_12"><br />cannot recognize input near 'timestamp' '=' '1548835200' in expression specification</span><span class="span_12"><br /></span><span class="span_12"><br />cannot recognize input near 'AS' 'date' ',' in selection target</span>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <h2 class="Heading2"><a name="Numeric"></a>Numeric literals must be CAST to a number data type before storage in a TD table</h2>
+        <p>&#160;</p>
+        <p class="p_10">Numeric literals that are not integers, default to decimal. However, TD storage only supports DOUBLE. You must CAST any numeric value to DOUBLE before storing in a table. </p>
+        <p>&#160;</p>
+        <table class="table_2">
+            <col style="width: 470pt;" />
+            <tr class="tr_1">
+                <td class="td_2">
+                    <p class="p_6"><span class="span_3">51.51202 -&gt; </span><span class="span_3">CAST(</span><span class="span_3">51.51202 AS DOUBLE)</span>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p><span class="span_10">Without the casting, you may see an error </span><span class="span_10">similar to</span><span class="span_10"> this:</span>
+        </p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_3">
+                    <p><span class="span_10">FAILED: </span><span class="span_10">SemanticException</span> <span class="span_10">java.lang.IllegalArgumentException</span><span class="span_10">: Failed to cast hive type : decimal(6,4) (field : col1dc) to TD type, only following hive types can be casted to TD type : </span><span class="span_10">tinyint</span><span class="span_10">, </span><span class="span_10">smallint</span><span class="span_10">, int, </span><span class="span_10">bigint</span><span class="span_10">, float, double, string, binary, array, map, struct, </span><span class="span_10">uniontype</span></p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <h2 class="Heading2"><a name="Numeric2"></a>Numeric literals in an Array must be CAST to a consistent data type</h2>
+        <p>&#160;</p>
+        <p><span class="span_10">All numeric literals in an array must be CAST to a consistent data type.&#160; For storage into a table CAST all values to a DOUBLE data type, but, for other purposes such as computation, CAST them to data types recognized within Hive. For </span><span class="span_10">example,&#160; DECIMAL</span><span class="span_10">.</span>
+        </p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_2">
+                    <p class="p_6"><span class="span_3">Array(</span><span class="span_3">0, 0.0, 1.0)</span><span><br /></span><span class="span_3">-&gt;</span><span><br /></span><span class="span_3">Array(0, cast(0.0 as decimal(19,1)), cast(1.0 as decimal(19,1)))</span>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p class="p_12"><span class="span_10">Error you may see an error </span><span class="span_10">similar to</span><span class="span_10"> this: </span>
+        </p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_3">
+                    <p class="p_12"><span class="span_10">FAILED: </span><span class="span_10">SemanticException</span><span class="span_10"> [Error 10016]: Line 10:0 Argument type mismatch '0.980324074': Argument type "array&lt;</span><span class="span_10">decimal(</span><span class="span_10">19,9)&gt;" is different from preceding arguments. Previous type was "array&lt;</span><span class="span_10">decimal(</span><span class="span_10">10,0)&gt;"</span>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p class="p_12">&#160;</p>
+        <h2 class="Heading2"><a name="CROSS"></a>CROSS JOIN requires a query hint to use</h2>
+        <p>Hive 2 restricts the use of CROSS JOINs because they are often coding errors and are expensive to execute. If you intend to perform a cross join, apply the following query hint to bypass this protection:</p>
+        <p>&#160;</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr style="height: 37pt;">
+                <td class="td_4">
+                    <p class="p_6"><span class="span_7">-- @TD </span><span class="span_7">enable_cartesian_product</span><span class="span_7">: true</span>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p>Explicit cross join example:</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_2">
+                    <p class="p_6"><span class="span_3">&#160;&#160;&#160; </span><span class="span_4">SELECT</span><span class="span_3"> * </span><span class="span_4">FROM</span><span class="span_3"> employee </span><span class="span_4">CROSS</span> <span class="span_4">JOIN</span><span class="span_3"> department</span></p>
+                </td>
+            </tr>
+        </table>
+        <p>
+            <br />Implicit cross join example:</p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_2">
+                    <p class="p_6"><span class="span_3">&#160;&#160;&#160; </span><span class="span_4">SELECT</span><span class="span_3"> * </span><span class="span_4">FROM</span><span class="span_3"> employee, department</span>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p>&#160;</p>
+        <p>If you run a query with an explicit or implicit CROSS JOIN and no special “-- @TD enable_cartesian_product: true” hint to allow it to run, you’ll see an error like this:<br /></p>
+        <table class="table_1">
+            <col style="width: 468pt;" />
+            <tr>
+                <td class="td_2">
+                    <p class="p_6"><span class="span_3">FAILED: </span><span class="span_3">SemanticException</span><span class="span_3"> Cartesian products are disabled for safety reasons. If you know what you are doing, please </span><span class="span_4">set</span> <span class="span_3">hive.strict</span><span class="span_3">.checks.cartesian.product</span> <span class="span_4">to</span> <span class="span_4">false</span> <span class="span_4">and</span><span class="span_3"> that </span><span class="span_3">hive.mapred.mode</span> <span class="span_4">is</span> <span class="span_4">not</span> <span class="span_4">set</span> <span class="span_4">to</span> <span class="span_5">'strict'</span> <span class="span_4">to</span><span class="span_3"> proceed. Note that </span><span class="span_4">if</span><span class="span_3"> you may </span><span class="span_4">get</span> <span class="span_4">errors</span> <span class="span_4">or</span><span class="span_3"> incorrect results </span><span class="span_4">if</span><span class="span_3"> you make a mistake </span><span class="span_4">while</span> <span class="span_4">using</span> <span class="span_4">some</span> <span class="span_4">of</span><span class="span_3"> the </span><span class="span_4">unsafe</span><span class="span_3"> features.</span></p>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

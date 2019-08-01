@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MsWordImport
+  PreserveSourceStyles="true"
+  KeepSourceLinks="false"
+  ConvertInlineFormatting="true"
+  AddContinuedLinks="false"
+  AddContinuedFromLinks="false"
+  ContinuedLinkFormat="(continued in {title})"
+  ContinuedFromLinkFormat="(continued from {title})"
+  UseMaxCharLimit="false"
+  UseMinCharLimit="true"
+  MaxCharLimit="10000"
+  MinCharLimit="50"
+  FilenameLength="24"
+  GeneratePageLayouts="false"
+  UseFirstHeadingAsTopicTitle="true"
+  ConvertEquations="true"
+  LastCollectTime="2019-07-16T15:06:15.0401341-07:00"
+  ProjectName="cleanxhtml"
+  ProjectFolder="C:\Users\megmir01\Documents\TDdocs-master\"
+  AutoSync="false"
+  AutoFitTables="false"
+  UseHeaderRows="false"
+  LastImport="2019-07-16T15:07:06.3640316-07:00">
+  <Files>
+    <Url
+      Source="../../../../Downloads/Hive2 Preview Guide - Generic.docx"
+      AbsoluteSource="file:///C:/Users/megmir01/Downloads/Hive2 Preview Guide - Generic.docx" />
+  </Files>
+  <ExcludedFiles />
+  <CollectedSourceFiles />
+  <SkippedSourceFiles />
+  <GeneratedFiles>
+    <Url
+      Source="../../Content/Hive2 Preview Guide - Generic/Hive 2 Preview Guide.htm"
+      TimeStamp="7/16/2019 3:06:50 PM" />
+    <Url
+      Source="../../Content/Hive2 Preview Guide - Generic/Disclaimers.htm"
+      TimeStamp="7/16/2019 3:06:50 PM" />
+    <Url
+      Source="../../Content/Resources/Images/Hive2 Preview Guide - Generic/Overview.png"
+      TimeStamp="7/16/2019 3:06:49 PM" />
+    <Url
+      Source="../../Content/Hive2 Preview Guide - Generic/Overview.htm"
+      TimeStamp="7/16/2019 3:06:50 PM" />
+    <Url
+      Source="../../Content/Hive2 Preview Guide - Generic/Phased Introduction of Hive.htm"
+      TimeStamp="7/16/2019 3:06:50 PM" />
+    <Url
+      Source="../../Content/Resources/Images/Hive2 Preview Guide - Generic/How to use Hive 2.png"
+      TimeStamp="7/16/2019 3:06:49 PM" />
+    <Url
+      Source="../../Content/Hive2 Preview Guide - Generic/How to use Hive 2.htm"
+      TimeStamp="7/16/2019 3:06:50 PM" />
+    <Url
+      Source="../../Content/Hive2 Preview Guide - Generic/TD Hive 0 13 Syntax to Update.htm"
+      TimeStamp="7/16/2019 3:06:50 PM" />
+    <Url
+      Source="../../Content/Hive2 Preview Guide - Generic/Appendix A List of Hive Reserved.htm"
+      TimeStamp="7/16/2019 3:06:50 PM" />
+    <Url
+      Source="../TOCs/Hive2 Preview Guide - Generic.fltoc"
+      TimeStamp="7/16/2019 3:06:50 PM" />
+    <Url
+      Source="../../Content/Resources/MasterPages/Hive2 Preview Guide - Generic.flmsp"
+      TimeStamp="7/16/2019 3:06:50 PM" />
+    <Url
+      Source="../../Content/Resources/Stylesheets/Hive2 Preview Guide - Generic.css"
+      TimeStamp="7/16/2019 3:06:50 PM" />
+  </GeneratedFiles>
+  <ParagraphStyles>
+    <Map
+      From="Heading 1"
+      To="h1.Heading 1" />
+    <Map
+      From="Heading 2"
+      To="h2.Heading 2" />
+    <Map
+      From="Heading 3"
+      To="h3.Heading 3" />
+    <Map
+      From="Heading 4"
+      To="h4.Heading 4" />
+    <Map
+      From="Heading 5"
+      To="h5.Heading 5" />
+    <Map
+      From="Heading 6"
+      To="h6.Heading 6" />
+  </ParagraphStyles>
+  <CharacterStyles>
+    <Map
+      From="Hyperlink"
+      To="a.(MS Word Style)" />
+  </CharacterStyles>
+  <NewTopicStyles>
+    <StyleName
+      Name="Heading 1" />
+  </NewTopicStyles>
+  <UsedParagraphStyles>
+    <StyleName
+      Name="Heading 1" />
+    <StyleName
+      Name="Heading 2" />
+    <StyleName
+      Name="Heading 3" />
+    <StyleName
+      Name="Title" />
+  </UsedParagraphStyles>
+  <UsedCharacterStyles />
+</MsWordImport>

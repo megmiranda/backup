@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" xml:lang="en-us">
+    <head><title></title>
+        <link href="../Resources/Stylesheets/hive2.css" rel="stylesheet" />
+    </head>
+    <body>
+        <h1>TD Hive 2 Performance Tuning</h1>
+        <p>&#160;</p>
+        <p><a href="https://support.treasuredata.com/hc/en-us/articles/360001450788">See Hive Performance Tuning</a> which includes: </p>
+        <ul>
+            <li>Leveraging Time-based Partitioning<ul><li>WHERE time &lt;=&gt; Integer</li><li>TD_TIME_RANGE</li></ul></li>
+            <li>Set Custom Schema</li>
+            <li>DISTRIBUTE BY…SORT BY v. ORDER BY</li>
+            <li>Avoid “SELECT count(DISTINCT field) FROM tbl”</li>
+            <li>Considering the Cardinality within GROUP BY</li>
+            <li>Efficient Top-k Query Processing using each_top_k</li>
+            <li>Exploding multiple arrays at the same time with TD_NUMERIC_RANGE and TD_ARRAY_INDEX</li>
+        </ul>
+        <h2>Rewrite queries for better performance</h2>
+        <p>When running queries against tables that have terabytes worth of data, tuning your queries becomes an important mechanism to keep your systems in peak performance. </p>
+        <p>Sometimes a query is using too many mappers and can be rewritten to reduce the number of mappers that it requires. Or, if possible the query can be modified to take advantage of Tez or Spark.</p>
+        <p>hive.optimize.countdistinct is a parameter that determines whether to rewrite count distinct into 2 stages. The first stage uses multiple reducers with the count distinct key and the second stage uses a single reducer without key.</p>
+        <h2>Query hints can help with performance</h2>
+        <p>Hints let you make decisions usually made by the query engine. Because you know your data, you might know things that the optimizer does not know. Hints provide a mechanism to direct the query engine to process a query  based on the criteria that you specify.</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+    </body>
+</html>

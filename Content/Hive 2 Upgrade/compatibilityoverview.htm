@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head>
+    </head>
+    <body>
+        <h1>About Hive 0.13 Code Hive 2 Compatibility</h1>
+        <p>Most queries from Hive 0.13 should work with minimal or no modification in Hive 2. However, Hive 2 is stricter than Hive 0.13&#160; in the following areas: </p>
+        <ul>
+            <li>Hive 2 uses ANSI SQL syntax. Hive 0.13 used a MySQL-like dialect, called HiveQL, that borrowed many ANSI SQL features.</li>
+            <li>Hive 2 ANSI SQL has more reserved words than HiveQL, so these must be found and quoted with backticks.</li>
+            <li>There are slight differences in the handling of numeric data types; some values must be CAST explicitly to ensure the same behavior. </li>
+            <li> TD’s Hive 0.13 allowed some TD-specific syntax (such as v[] column) that is now obsolete and is unsupported in Hive 2. This syntax must be removed.</li>
+        </ul>
+        <p class="p_2">&#160;</p>
+        <p>&#160;</p>
+        <p>You can modify your existing queries according to the new, stricter rules, and test them in Hive 0.13 to ensure they return consistent results, before migrating production workloads to Hive 2.</p>
+        <p>&#160;</p>
+        <p>You can start writing new queries today that follow the rules of Hive 2, and they should run in both Hive 0.13 and Hive 2 correctly without modification.</p>
+    </body>
+</html>

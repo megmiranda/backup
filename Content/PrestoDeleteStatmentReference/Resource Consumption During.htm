@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" xml:lang="en-us">
+    <head><title></title>
+        <link href="../Resources/Stylesheets/PrestoDeleteStatmentReference.css" rel="stylesheet" />
+    </head>
+    <body>
+        <h1>Presto DELETE Statement Resource Consumption </h1>
+        <p>DELETE queries issue jobs and consume resources.Because of the storage and indexing methods used in Treasure Data, a DELETE query can be resource intensive. </p>
+        <p>&#160;</p>
+        <p>To prevent a DELETE query from performing a full table scan, you should use: </p>
+        <ul>
+            <li>a time expression, like TD_TIME_RANGE or TD_INTERVAL, if the table uses default time-based partitioning </li>
+            <li>an equality predicate on all partition keys, if the table uses user-defined partitioning </li>
+        </ul>
+        <p class="NormalWeb">For example, if your table is partitioned by time, and you are trying to delete a set of users that were created in June 2018, include the time restriction even if that’s not a critical parameter for your DELETE statement. </p>
+        <p class="NormalWeb">For example, you should:</p><pre><span class="class">DELETE</span> <span class="keyword">FROM</span> logtable <span class="keyword">WHERE</span> userid <span class="keyword">IN</span> (<span class="integer">1234</span>, <span class="integer">1235</span>, <span class="integer">1236</span>) <span class="keyword">AND</span> TD_TIME_RANGE(<span class="predefined-type">time</span>, <span class="delimiter">'</span><span class="content">2017-06-01</span><span class="delimiter">'</span>,<span class="delimiter">'</span><span class="content">2017-07-01</span><span class="delimiter">'</span>)</pre>
+        <p class="NormalWeb">Including the time restriction significantly improves the speed of your query, and reduces the resources this query consumes. </p>
+    </body>
+</html>
